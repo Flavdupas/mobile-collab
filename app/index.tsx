@@ -9,10 +9,13 @@ import {
 import slideData from "../src/data/auth/slideData";
 import OnBoarding from "../src/components/auth/OnBoarding";
 import Paginator from "../src/components/auth/Paginator";
-import { Link } from "expo-router";
+import { Link, Redirect, router } from "expo-router";
 import { useRef } from "react";
 const Index = () => {
   const scrollX = useRef(new Animated.Value(0)).current;
+  /*return (
+    <Redirect href={"/register/4"} />
+  )*/
   return (
     <View style={styles.body}>
       <View>
@@ -37,11 +40,11 @@ const Index = () => {
       </View>
 
       <View style={styles.containerBtn}>
-        <TouchableOpacity style={styles.btnRegister}>
+        <TouchableOpacity style={styles.btnRegister} onPress={() => router.push("/register/1")}>
           <Text style={styles.registerTxt}>Commencer</Text>
         </TouchableOpacity>
         <Text style={styles.txtLogin}>
-          Déjà un compte ? <Link href={"/"}>connecte-toi</Link>
+          Déjà un compte ? <Link href={"/login/"}>connecte-toi</Link>
         </Text>
       </View>
     </View>
@@ -76,6 +79,7 @@ const styles = StyleSheet.create({
   txtLogin: {
     color: "white",
     fontWeight: "bold",
+    marginTop:5,
   },
 });
 
