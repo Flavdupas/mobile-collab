@@ -33,7 +33,7 @@ const RegisterSix = () => {
           <View style={styles.containerItem}>
             {themeData.map((item) => {
               return (
-                <TouchableWithoutFeedback onPress={() => handleClick(item)}>
+                <TouchableWithoutFeedback onPress={() => handleClick(item)} key={item.id}>
                   <View
                     style={[
                       styles.item,
@@ -43,7 +43,6 @@ const RegisterSix = () => {
                           : "transparent",
                       },
                     ]}
-                    key={item.id}
                   >
                     <Text
                       style={[
@@ -66,7 +65,7 @@ const RegisterSix = () => {
             })}
           </View>
         </View>
-        <Button href="/" canGoNext={false} />
+        <Button href="/register/7" canGoNext={true} />
       </View>
     </RegisterLayout>
   );
