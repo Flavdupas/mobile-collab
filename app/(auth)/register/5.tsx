@@ -42,7 +42,7 @@ const RegisterFive = () => {
             }}
           />
         </View>
-        <Button canGoNext={false} href="/register/5" />
+        <Button canGoNext={true} href="/register/6" />
       </View>
     </RegisterLayout>
   );

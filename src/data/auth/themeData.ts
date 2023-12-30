@@ -1,0 +1,18 @@
+export default [
+  { id: 1, title: "Cours" },
+  { id: 2, title: "Informatiques" },
+  { id: 3, title: "Graphisme et design" },
+  { id: 4, title: "Sciences" },
+  { id: 5, title: "Littérature" },
+  { id: 6, title: "Évenement" },
+  { id: 7, title: "Langues" },
+  { id: 8, title: "Sport" },
+  { id: 9, title: "Bricollage" },
+  { id: 10, title: "Manga" },
+  { id: 11, title: "Photographie" },
+  { id: 12, title: "Cinéma" },
+  { id: 13, title: "Musique" },
+  { id: 14, title: "Jeux" },
+  { id: 15, title: "Podcast" },
+  { id: 16, title: "Fitness" },
+];

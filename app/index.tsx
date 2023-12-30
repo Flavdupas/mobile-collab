@@ -13,9 +13,9 @@ import { Link, Redirect, router } from "expo-router";
 import { useRef } from "react";
 const Index = () => {
   const scrollX = useRef(new Animated.Value(0)).current;
-  /*return (
-    <Redirect href={"/register/4"} />
-  )*/
+  return (
+    <Redirect href={"/register/6"} />
+  )
   return (
     <View style={styles.body}>
       <View>
