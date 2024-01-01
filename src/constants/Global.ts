@@ -6,7 +6,6 @@ const global = StyleSheet.create({
     justifyContent: "space-between",
     paddingBottom: 40,
     paddingHorizontal: 20,
-    paddingTop: 20,
   },
   title: {
     color: "#fff",

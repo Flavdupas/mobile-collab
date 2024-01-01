@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import global from "../../../constants/Global";
 import InputPhone from "../../../components/auth/input/Phone";
 import { memo, useEffect, useState } from "react";
@@ -24,7 +24,11 @@ const RegisterFourController = () => {
     <>
       <View>
         <Text style={global.title}>Numéro de téléphone</Text>
-        <InputPhoneController setDisabled={setDisabled} setShowError={setShowError} setPhone={setPhone} />
+        <InputPhoneController
+          setDisabled={setDisabled}
+          setShowError={setShowError}
+          setPhone={setPhone}
+        />
         {showError && (
           <Text style={global.error}>
             Numéro de téléphone portable invalide
@@ -51,8 +55,17 @@ const InputPhoneController: React.FC<InputBirthdayControllerProps> = ({
   setShowError,
   setDisabled,
 }) => {
+  /* Variable */
   const [value, setValue] = useState<string | null>(null);
   const REGEX = /^(0[679])(\d{8})$/;
+
+  /* Style */
+  const styles = StyleSheet.create({
+    input: {
+      marginVertical: 10,
+    },
+  });
+  /* Logique */
   useEffect(() => {
     if (value) {
       if (REGEX.test(value)) {
@@ -65,7 +78,7 @@ const InputPhoneController: React.FC<InputBirthdayControllerProps> = ({
       }
     }
   }, [value]);
-  return <InputPhone value={value} setValue={setValue} />;
+  return <InputPhone value={value} setValue={setValue} style={styles.input}/>;
 };
 
 /* Interface Button pour aller a la page suivante */

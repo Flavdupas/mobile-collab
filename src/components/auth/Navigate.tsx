@@ -9,6 +9,8 @@ interface NavigateProps {
   children?: ReactNode;
   setShowError?: (arg0: boolean) => void;
   onClick?: () => void;
+  defaultError?:string;
+  setError?: (arg0:string) => void;
 }
 
 const Navigate: React.FC<NavigateProps> = ({
@@ -17,6 +19,8 @@ const Navigate: React.FC<NavigateProps> = ({
   children,
   setShowError,
   onClick,
+  defaultError,
+  setError,
 }) => {
   /* LOGIQUE */
   const onPress = async () => {
@@ -28,6 +32,9 @@ const Navigate: React.FC<NavigateProps> = ({
       }
     } else {
       if (setShowError) {
+        if(defaultError && setError) {
+          setError(defaultError);
+        }
         setShowError(true);
       }
     }

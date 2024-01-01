@@ -1,15 +1,16 @@
-import { StyleSheet, TextInput, View } from "react-native";
+import { StyleSheet, TextInput, View, ViewStyle } from "react-native";
 import Phone from "../../icons/Phone";
 import { GRAY, MAIN_COLOR } from "../../../constants/Color";
 
 interface InputPhoneProps {
   value:string | null;
   setValue:(arg0:string) =>  void;
+  style?: ViewStyle;
 }
 
-const InputPhone: React.FC<InputPhoneProps> = ({value, setValue}) => {
+const InputPhone: React.FC<InputPhoneProps> = ({value, setValue,style}) => {
   return (
-    <View style={styles.body}>
+    <View style={[styles.body,style]}>
       <TextInput
         placeholder="Entrer votre numéro de téléphone"
         placeholderTextColor={"#A8A5AE"}

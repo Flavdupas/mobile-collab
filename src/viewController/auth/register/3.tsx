@@ -3,7 +3,7 @@ import Navigate from "../../../components/auth/Navigate";
 import { View, Text, StyleSheet } from "react-native";
 import InputBirthday from "../../../components/auth/input/Birthday";
 import BottomSheetDate from "../../../components/auth/input/BottomSheetDate";
-import { Route, router } from "expo-router";
+import { router } from "expo-router";
 import global from "../../../constants/Global";
 import { useDispatch } from "react-redux";
 import { updateBirthday } from "../../../store/register/register";

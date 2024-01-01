@@ -48,5 +48,5 @@ const registerSlice = createSlice({
   },
 });
 
-export const { updateEmail,updateBirthday,updatePhone,updateMeet,updateCarteEtudiante,updatePassword } = registerSlice.actions;
+export const { updateEmail,updateBirthday,updatePhone,updateMeet,updateThemes,updateCarteEtudiante,updatePassword } = registerSlice.actions;
 export default registerSlice.reducer;

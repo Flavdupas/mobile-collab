@@ -8,14 +8,16 @@ import {
 interface InputPasswordProps {
     placeholder?:string,
     style?:ViewStyle | TextStyle;
+    value:string | null;
+    setValue:(arg0:string) => void;
 }
 
-const InputPassword:React.FC<InputPasswordProps> = ({placeholder,style}) => {
+const InputPassword:React.FC<InputPasswordProps> = ({placeholder,style, value, setValue}) => {
   const [show, setShow] = useState(false);
 
   return (
     <View style={[styles.body,style]}>
-      <TextInput style={styles.text} placeholder={placeholder} secureTextEntry={!show} placeholderTextColor={"#A8A5AE"}/>
+      <TextInput style={styles.text} placeholder={placeholder} secureTextEntry={!show} placeholderTextColor={"#A8A5AE"} onChangeText={setValue} value={value ?? undefined}/>
       <TouchableWithoutFeedback onPress={() => setShow(!show)}>
         <Image
           source={

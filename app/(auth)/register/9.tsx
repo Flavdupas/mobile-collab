@@ -1,32 +1,31 @@
 import { View, StyleSheet,Text } from "react-native";
 import Button from "../../../src/components/auth/Navigate";
 import LottieView from "lottie-react-native";
+import RegisterNineController from "../../../src/viewController/auth/register/9";
+import global from "../../../src/constants/Global";
+import { MAIN_COLOR } from "../../../src/constants/Color";
 
 const RegisterNine = () => {
   return (
-    <View style={styles.body}>
+    <View style={[global.body, styles.body]}>
       <View style={styles.container}>
         <LottieView
           autoPlay
           loop={false}
           style={styles.lottie}
-          // Find more Lottie files at https://lottiefiles.com/featured
           source={require("../../../src/assets/animations/Success.json")}
         />
         <Text style={styles.title}>Félicitation</Text>
         <Text style={styles.text}>Votre inscription a bien été prise en compte, un mail vous sera envoyé quand votre compte sera validé par l’un de nos administrateur</Text>
       </View>
-      <Button canGoNext={true} href="/" />
+      <RegisterNineController />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   body: {
-    backgroundColor: "#261E35",
-    flex: 1,
-    justifyContent: "space-between",
-    paddingBottom: 40,
+    backgroundColor: MAIN_COLOR,
   },
   container: {
     paddingTop:125,
@@ -36,10 +35,11 @@ const styles = StyleSheet.create({
   title: {
     color:"#fff",
     fontSize:42,
-    fontWeight:"bold"
+    fontWeight:"bold",
+    marginBottom:5,
   },
   text: {
-    fontSize:18,
+    fontSize:16,
     color:"#fff",
     textAlign:"center",
   },

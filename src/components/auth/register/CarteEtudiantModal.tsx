@@ -6,6 +6,7 @@ import {
   View,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import { MAIN_COLOR } from "../../../constants/Color";
 
 interface CarteEtudiantModalProps {
   setShowModal: (arg0: boolean) => void;
@@ -24,7 +25,7 @@ const CarteEtudiantModal: React.FC<CarteEtudiantModalProps> = ({
       let result = await ImagePicker.launchCameraAsync({
         cameraType: ImagePicker.CameraType.back,
         allowsEditing: false,
-        aspect: [1, 1],
+        aspect: [2, 1],
         quality: 1,
       });
       if (!result.canceled) {
@@ -108,7 +109,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#261E35",
+    color:MAIN_COLOR,
   },
   option: {
     backgroundColor: "#EAEAEA",
@@ -123,7 +124,7 @@ const styles = StyleSheet.create({
     width: 45,
   },
   text: {
-    color: "#261E35",
+    color: MAIN_COLOR,
     fontWeight: "600",
     fontSize: 12,
   },

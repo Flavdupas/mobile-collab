@@ -2,20 +2,14 @@ import Button from "../../../src/components/auth/Navigate";
 import InputPassword from "../../../src/components/auth/input/Password";
 import RegisterLayout from "../../../src/components/auth/register/Layout";
 import { StyleSheet, Text, View } from "react-native";
+import global from "../../../src/constants/Global";
+import RegisterHeightController from "../../../src/viewController/auth/register/8";
 
 const RegisterHeight = () => {
   return (
     <RegisterLayout>
-      <View style={styles.body}>
-        <View>
-          <Text style={styles.title}>Mot de passe</Text>
-          <InputPassword
-            placeholder="Mot de passe"
-            style={styles.inputPassword}
-          />
-          <InputPassword placeholder="Confirmation mot de passe" />
-        </View>
-        <Button canGoNext={true} href="/register/9" />
+      <View style={global.body}>
+        <RegisterHeightController />
       </View>
     </RegisterLayout>
   );
