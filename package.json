@@ -16,6 +16,7 @@
     "@expo/vector-icons": "^13.0.0",
     "@react-native-community/datetimepicker": "7.2.0",
     "@react-navigation/native": "^6.0.2",
+    "@reduxjs/toolkit": "^2.0.1",
     "expo": "~49.0.15",
     "expo-font": "~11.4.0",
     "expo-image-picker": "^14.5.0",
@@ -27,6 +28,7 @@
     "expo-system-ui": "~2.4.0",
     "expo-web-browser": "~12.3.2",
     "install": "^0.13.0",
+    "lottie-react-native": "5.1.6",
     "moti": "^0.27.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -37,7 +39,8 @@
     "react-native-screens": "~3.22.0",
     "react-native-svg": "13.9.0",
     "react-native-toggle-element": "^2.0.1",
-    "react-native-web": "~0.19.6"
+    "react-native-web": "~0.19.6",
+    "react-redux": "^9.0.4"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

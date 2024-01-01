@@ -1,7 +1,7 @@
 import { View, Image, StyleSheet, Text, Platform } from "react-native";
 import RegisterLayout from "../../../src/components/auth/register/Layout";
 import Round from "../../../src/components/auth/Round";
-import Button from "../../../src/components/auth/Button";
+import Button from "../../../src/components/auth/Navigate";
 import { useState } from "react";
 import Toggle from "react-native-toggle-element/lib/toggle";
 
@@ -13,7 +13,7 @@ const RegisterFive = () => {
         <View style={styles.container}>
           <View style={styles.imageContainer}>
             <Image
-              source={require("../../../assets/images/auth/slide-3.png")}
+              source={require("../../../src/assets/images/auth/slide-3.png")}
               style={styles.image}
             />
             <Round size={16} color="#FAAEAE" bottom={30} right={0} />

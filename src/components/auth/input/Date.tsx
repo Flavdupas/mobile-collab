@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { TextInput, Text } from "react-native";
 
-const InputDate = () => {
+interface InputDateProps {
+  setDate: (arg0: Date) => void;
+}
+
+const InputDate: React.FC<InputDateProps> = ({ setDate }) => {
   const [value, setValue] = useState("");
   const [displayValue, setDisplayValue] = useState<string>();
 
@@ -37,6 +41,10 @@ const InputDate = () => {
       setDisplayValue(
         `${value.slice(0, 2)} / ${value.slice(2, 4)} / ${value.slice(4, 8)}`
       );
+      let day = parseInt(value.substring(0, 2), 10);
+      let month = parseInt(value.substring(2, 4), 10) - 1;
+      let year = parseInt(value.substring(4, 8), 10);
+      setDate(new Date(year, month, day));
     }
   }, [value]);
 
@@ -51,9 +59,9 @@ const InputDate = () => {
         maxLength={8}
         style={{
           flex: 1,
-          position:'absolute',
-          width:"100%",
-          opacity:0
+          position: "absolute",
+          width: "100%",
+          opacity: 0,
         }}
         placeholderTextColor={"#fff"}
       />

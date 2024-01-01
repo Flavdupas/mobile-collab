@@ -1,7 +1,13 @@
 import { StyleSheet, TextInput, View } from "react-native";
 import Phone from "../../icons/Phone";
+import { GRAY, MAIN_COLOR } from "../../../constants/Color";
 
-const InputPhone = () => {
+interface InputPhoneProps {
+  value:string | null;
+  setValue:(arg0:string) =>  void;
+}
+
+const InputPhone: React.FC<InputPhoneProps> = ({value, setValue}) => {
   return (
     <View style={styles.body}>
       <TextInput
@@ -10,6 +16,8 @@ const InputPhone = () => {
         style={styles.input}
         keyboardType="number-pad"
         maxLength={10}
+        value={value ?? undefined}
+        onChangeText={setValue}
       />
       <Phone style={styles.email} />
     </View>
@@ -27,7 +35,7 @@ const styles = StyleSheet.create({
     borderRadius:10,
     paddingHorizontal:10,
     paddingVertical:5,
-    shadowColor: "#C3C3C3",
+    shadowColor: GRAY,
       shadowOffset: {
         width: 0,
         height: 4,
@@ -35,7 +43,7 @@ const styles = StyleSheet.create({
       shadowOpacity: 1,
       shadowRadius: 0,
       elevation:5,
-      backgroundColor:'#261E35'
+      backgroundColor:MAIN_COLOR
   },
   input: {
     color: "white",

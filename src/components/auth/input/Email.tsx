@@ -1,13 +1,21 @@
 import { StyleSheet, TextInput, View } from "react-native";
 import Email from "../../icons/Email";
 
-const InputEmail = () => {
+interface InputEmailProps {
+  value: string;
+  onChangeText: (arg0:string) =>  void;
+}
+
+const InputEmail:React.FC<InputEmailProps> = ({value, onChangeText}) => {
+
   return (
     <View style={styles.body}>
       <TextInput
         placeholder="Entrer votre email"
         placeholderTextColor={"#A8A5AE"}
         style={styles.input}
+        value={value}
+        onChangeText={onChangeText}
       />
       <Email style={styles.email} />
     </View>
@@ -39,6 +47,7 @@ const styles = StyleSheet.create({
     color: "white",
     flex: 1,
     fontSize:14,
+    height:"100%",
   },
   email: {
     width: 25,

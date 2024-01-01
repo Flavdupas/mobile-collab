@@ -7,7 +7,7 @@ interface PlusProps {
 const Plus: React.FC<PlusProps> = ({ style }) => {
   return (
     <View style={[styles.body, style]}>
-      <Image style={styles.image}  source={require("../../../assets/images/auth/register/plus.png")} />
+      <Image style={styles.image}  source={require("../../assets/images/auth/register/plus.png")} />
     </View>
   );
 };

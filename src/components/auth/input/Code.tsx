@@ -1,6 +1,7 @@
 import { MotiView } from "moti";
 import { useEffect, useRef, useState } from "react";
 import { View, Text, TextInput, Dimensions, StyleSheet } from "react-native";
+import { GRAY, MAIN_COLOR, SOFT_PURPLE } from "../../../constants/Color";
 
 const { width } = Dimensions.get("window");
 
@@ -9,9 +10,14 @@ const pinContainerSize = width / 2;
 const pinSize = (pinContainerSize / pinLength) * 1.25;
 
 const _spacing = 20;
-const InputCode = () => {
-  const [canGoNext, setCanGoNext] = useState(true);
-  const [code, setCode] = useState<number[]>(Array(pinLength).fill(-1));
+
+interface InputCodeProps {
+  code: number[];
+  setCode: (arg0:number[]) => void;
+} 
+
+const InputCode:React.FC<InputCodeProps> = ({code,setCode}) => {
+
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
   const inputRefs = Array(pinLength)
     .fill(null)
@@ -50,16 +56,17 @@ const InputCode = () => {
   const handleBlur = () => {
     setFocusedIndex(null);
   };
-  const [backgroundColor, setBackgroundColor] = useState("#3F3655");
+  const [backgroundColor, setBackgroundColor] = useState<string>(MAIN_COLOR);
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
+    const intervalid = setInterval(() => {
       setBackgroundColor((prevColor) =>
-        prevColor === "#261E35" ? "#c3c3c3" : "#261E35"
+        prevColor === MAIN_COLOR ? GRAY : MAIN_COLOR
       );
     }, 1000);
-    return () => clearInterval(intervalId);
+    return () => clearInterval(intervalid);
   }, []);
+
   return (
     <View style={styles.containerInput}>
       {[...Array(pinLength).keys()].map((i) => {
@@ -118,7 +125,7 @@ const styles = StyleSheet.create({
   bubble: {
     width: pinSize,
     borderRadius: pinSize,
-    backgroundColor: "#3F3655",
+    backgroundColor: SOFT_PURPLE,
     justifyContent: "center",
     alignItems: "center",
   },

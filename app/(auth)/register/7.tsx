@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Pressable, Image } from "react-native";
 import RegisterLayout from "../../../src/components/auth/register/Layout";
-import Button from "../../../src/components/auth/Button";
+import Button from "../../../src/components/auth/Navigate";
 import Plus from "../../../src/components/icons/Plus";
 import { LinearGradient } from "expo-linear-gradient";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
@@ -11,10 +11,6 @@ import { useEffect, useState } from "react";
 const RegisterSeven = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [image, setSelectedImage] = useState<string>();
-
-  useEffect(() => {
-    console.log(image);
-  }, [image]);
 
   return (
     <>
@@ -39,11 +35,11 @@ const RegisterSeven = () => {
               </Pressable>
             </View>
           </View>
-          <Button canGoNext={false} href="/" />
+          <Button canGoNext={true} href="/register/8" />
         </View>
       </RegisterLayout>
       {showModal && (
-        <CarteEtudiantModal setShowModal={setShowModal} setSelectedImage={setSelectedImage} />
+        <CarteEtudiantModal title="Carte étudiante" setShowModal={setShowModal} setSelectedImage={setSelectedImage} />
       )}
     </>
   );

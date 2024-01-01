@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Platform } from "react-native";
 import RegisterLayout from "../../../src/components/auth/register/Layout";
 import themeData from "../../../src/data/auth/themeData";
-import Button from "../../../src/components/auth/Button";
+import Button from "../../../src/components/auth/Navigate";
 import { useState } from "react";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 

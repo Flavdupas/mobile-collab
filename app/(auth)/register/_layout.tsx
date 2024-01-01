@@ -5,9 +5,8 @@ const Tab = () => {
     <Stack
       screenOptions={{
         headerShown: false,
-        animation:"slide_from_right"
+        animation: "slide_from_right",
       }}
-
     >
       <Stack.Screen name="1" />
       <Stack.Screen name="2" />
@@ -16,6 +15,7 @@ const Tab = () => {
       <Stack.Screen name="5" />
       <Stack.Screen name="6" />
       <Stack.Screen name="7" />
+      <Stack.Screen name="8" />
     </Stack>
   );
 };

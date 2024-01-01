@@ -7,7 +7,7 @@ interface PhoneProps {
 const Phone: React.FC<PhoneProps> = ({ style }) => {
   return (
     <View style={[styles.body, style]}>
-      <Image style={styles.image}  source={require("../../../assets/images/auth/register/smartphone.png")} />
+      <Image style={styles.image}  source={require("../../assets/images/auth/register/smartphone.png")} />
     </View>
   );
 };

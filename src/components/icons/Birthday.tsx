@@ -7,7 +7,7 @@ interface BirthdayProps {
 const Birthday: React.FC<BirthdayProps> = ({ style }) => {
   return (
     <View style={[styles.body, style]}>
-      <Image style={styles.image}  source={require("../../../assets/images/auth/register/birthday.png")} />
+      <Image style={styles.image}  source={require("../../assets/images/auth/register/birthday.png")} />
     </View>
   );
 };

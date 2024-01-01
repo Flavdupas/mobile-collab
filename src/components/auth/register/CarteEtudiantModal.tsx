@@ -10,11 +10,13 @@ import * as ImagePicker from "expo-image-picker";
 interface CarteEtudiantModalProps {
   setShowModal: (arg0: boolean) => void;
   setSelectedImage: (arg0: string) => void;
+  title:string;
 }
 
 const CarteEtudiantModal: React.FC<CarteEtudiantModalProps> = ({
   setShowModal,
   setSelectedImage,
+  title,
 }) => {
   const handleCamera = async () => {
     try {
@@ -37,8 +39,6 @@ const CarteEtudiantModal: React.FC<CarteEtudiantModalProps> = ({
     });
     if (!result.canceled) {
       setSelectedImage(result.assets[0].uri);
-    } else {
-      alert("You did not select any image.");
     }
   };
 
@@ -51,13 +51,13 @@ const CarteEtudiantModal: React.FC<CarteEtudiantModalProps> = ({
       <View style={styles.body}>
         <TouchableWithoutFeedback onPress={() => console.log("hey")}>
           <View style={styles.modal}>
-            <Text style={styles.title}>Carte étudiante</Text>
+            <Text style={styles.title}>{title}</Text>
             <View style={styles.containerOptions}>
               <TouchableWithoutFeedback onPress={handleCamera}>
                 <View style={styles.option}>
                   <Image
                     style={styles.image}
-                    source={require("../../../../assets/images/auth/register/camera.png")}
+                    source={require("../../../assets/images/auth/register/camera.png")}
                   />
                   <Text style={styles.text}>Caméra</Text>
                 </View>
@@ -66,7 +66,7 @@ const CarteEtudiantModal: React.FC<CarteEtudiantModalProps> = ({
                 <View style={styles.option}>
                   <Image
                     style={styles.image}
-                    source={require("../../../../assets/images/auth/register/gallery.png")}
+                    source={require("../../../assets/images/auth/register/gallery.png")}
                   />
                   <Text style={styles.text}>Gallerie</Text>
                 </View>
@@ -75,7 +75,7 @@ const CarteEtudiantModal: React.FC<CarteEtudiantModalProps> = ({
                 <View style={styles.option}>
                   <Image
                     style={styles.image}
-                    source={require("../../../../assets/images/auth/register/trash.png")}
+                    source={require("../../../assets/images/auth/register/trash.png")}
                   />
                   <Text style={styles.text}>Supprimer</Text>
                 </View>
