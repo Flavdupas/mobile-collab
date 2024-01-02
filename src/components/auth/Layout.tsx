@@ -1,12 +1,12 @@
 import { ReactNode } from "react";
 import { Keyboard, Pressable, StyleSheet, View } from "react-native";
-import Header from "./Header";
+import Header from "./register/Header";
 
-interface RegisterLayoutProps {
+interface AuthLayoutProps {
   children: ReactNode;
 }
 
-const RegisterLayout: React.FC<RegisterLayoutProps> = ({ children }) => {
+const AuthLayout: React.FC<AuthLayoutProps> = ({ children }) => {
   const styles = StyleSheet.create({
     body: {
       backgroundColor: "#261E35",
@@ -22,4 +22,4 @@ const RegisterLayout: React.FC<RegisterLayoutProps> = ({ children }) => {
   );
 };
 
-export default RegisterLayout;
+export default AuthLayout;

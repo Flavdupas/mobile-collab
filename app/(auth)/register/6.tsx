@@ -1,15 +1,15 @@
 import { View } from "react-native";
-import RegisterLayout from "../../../src/components/auth/register/Layout";
+import AuthLayout from "../../../src/components/auth/Layout";
 import RegisterSixController from "../../../src/viewController/auth/register/6";
 import global from "../../../src/constants/Global";
 
 const RegisterSix = () => {
   return (
-    <RegisterLayout>
+    <AuthLayout>
       <View style={global.body}>
         <RegisterSixController />
       </View>
-    </RegisterLayout>
+    </AuthLayout>
   );
 };
 

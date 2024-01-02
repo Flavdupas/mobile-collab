@@ -5,7 +5,7 @@ import { Pressable, View, Image, Text, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import Plus from "../../../components/icons/Plus";
 import global from "../../../constants/Global";
-import RegisterLayout from "../../../components/auth/register/Layout";
+import AuthLayout from "../../../components/auth/Layout";
 import { useDispatch } from "react-redux";
 import { updateCarteEtudiante } from "../../../store/register/register";
 import { router } from "expo-router";
@@ -54,7 +54,7 @@ const RegisterSevenController = () => {
   /* Composants */
   return (
     <>
-      <RegisterLayout>
+      <AuthLayout>
         <View style={global.body}>
           <View style={{ flex: 1, paddingBottom: 20 }}>
             <Text style={global.title}>Carte étudiante</Text>
@@ -74,7 +74,7 @@ const RegisterSevenController = () => {
             setShowError={setShowError}
           />
         </View>
-      </RegisterLayout>
+      </AuthLayout>
       {showModal && (
         <CarteEtudiantModalController
           setShowModal={setShowModal}

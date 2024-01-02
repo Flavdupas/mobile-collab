@@ -1,11 +1,11 @@
-import RegisterLayout from "../../../src/components/auth/register/Layout";
+import AuthLayout from "../../../src/components/auth/Layout";
 import RegisterThreeController from "../../../src/viewController/auth/register/3";
 
 const RegisterThree = () => {
   return (
-    <RegisterLayout>
+    <AuthLayout>
         <RegisterThreeController />
-    </RegisterLayout>
+    </AuthLayout>
   );
 };
 

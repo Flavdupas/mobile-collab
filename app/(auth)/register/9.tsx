@@ -1,5 +1,4 @@
 import { View, StyleSheet,Text } from "react-native";
-import Button from "../../../src/components/auth/Navigate";
 import LottieView from "lottie-react-native";
 import RegisterNineController from "../../../src/viewController/auth/register/9";
 import global from "../../../src/constants/Global";

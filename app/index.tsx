@@ -11,6 +11,7 @@ import OnBoarding from "../src/components/auth/OnBoarding";
 import Paginator from "../src/components/auth/Paginator";
 import { Link, Redirect, router } from "expo-router";
 import { useRef } from "react";
+import { MAIN_COLOR } from "../src/constants/Color";
 const Index = () => {
   const scrollX = useRef(new Animated.Value(0)).current;
   /*return (
@@ -53,7 +54,7 @@ const Index = () => {
 
 const styles = StyleSheet.create({
   body: {
-    backgroundColor: "#261E35",
+    backgroundColor: MAIN_COLOR,
     flex: 1,
     flexDirection: "column",
     justifyContent: "space-around",

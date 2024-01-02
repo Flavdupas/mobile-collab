@@ -1,15 +1,15 @@
 import { View } from "react-native";
-import RegisterLayout from "../../../src/components/auth/register/Layout";
+import AuthLayout from "../../../src/components/auth/Layout";
 import RegisterTwoController from "../../../src/viewController/auth/register/2";
 import global from "../../../src/constants/Global";
 
 const RegisterTwo = () => {
   return (
-    <RegisterLayout>
+    <AuthLayout>
       <View style={global.body}>
         <RegisterTwoController />
       </View>
-    </RegisterLayout>
+    </AuthLayout>
   );
 };
 
