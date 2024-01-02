@@ -22,6 +22,14 @@ const global = StyleSheet.create({
     marginTop: 10,
     color: "#FF7373",
   },
+  logo: {
+    width: 73.04,
+    height: 80,
+  },
+   container: {
+      alignItems: "center",
+      gap: 15,
+    },
 });
 
 export default global;

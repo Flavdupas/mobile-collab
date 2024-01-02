@@ -21,10 +21,6 @@ const IndexController = () => {
         alignItems:"center",
         gap:15
     },
-    image: {
-      width: 73.04,
-      height: 80,
-    },
     txtLogin: {
       color: "white",
       fontWeight: "bold",
@@ -67,7 +63,7 @@ const IndexController = () => {
   return (
     <>
       <View style={styles.container}>
-        <Logo style={styles.image} />
+        <Logo style={global.logo} />
         <Text style={global.title}>Connexion</Text>
         <InputEmailController email={email} setEmail={setEmail} />
         <InputPasswordController
@@ -75,11 +71,11 @@ const IndexController = () => {
           setPassword={setPassword}
         />
         <Text style={styles.txtLogin}>
-          Mot de passe oublié ? <Link href={"/"}>cliquer ici</Link>
+          Mot de passe oublié ? <Link href={"/forgot/1"}>cliquer ici</Link>
         </Text>
         {showError && <Text style={global.error}>{error}</Text>}
       </View>
-      <ButtonNext disabled={disabled} onClick={onClick} />
+      <ButtonNext disabled={disabled} onClick={onClick} setError={setError} setShowError={setShowError}/>
     </>
   );
 };
@@ -117,10 +113,12 @@ const InputEmailController: React.FC<InputEmailControllerProps> = ({
 interface ButtonNextProps {
   onClick: () => void;
   disabled: boolean;
+  setShowError: (arg0: boolean) => void;
+  setError: (arg0: string) => void;
 }
-const ButtonNext: React.FC<ButtonNextProps> = memo(({ onClick, disabled }) => (
-  <Navigate disabled={disabled} onClick={onClick}>
-    Continuer
+const ButtonNext: React.FC<ButtonNextProps> = memo(({ onClick, disabled, setShowError, setError }) => (
+  <Navigate disabled={disabled} onClick={onClick} setShowError={setShowError} defaultError="Vous devez insérer vos identifiants" setError={setError}>
+    Se connecter
   </Navigate>
 ));
 
