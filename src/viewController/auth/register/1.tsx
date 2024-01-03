@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { updateEmail } from "../../../store/register/register";
 import global from "../../../constants/Global";
 import { router } from "expo-router";
+import RegisterViewModel from "../../../viewModel/auth/Register";
 
 const RegisterOneController = () => {
   /* Variables */
@@ -13,18 +14,19 @@ const RegisterOneController = () => {
   const [email, setEmail] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [showError, setShowError] = useState<boolean>(false);
+  const viewModel = new RegisterViewModel();
   const dispatch = useDispatch();
 
-  const onClick = () => {
-    const exist = true; //requette si email existe / oui = true / false = Message erreur a mettre dans var error soit compte existe pas ou deja cree
-    if (exist) {
-      router.push("/register/2");
-      if (email) {
+  const onClick = async () => {
+    if (email) {
+      const reponse = await viewModel.emailExists(email); //requette si email existe / oui = true / false = Message erreur a mettre dans var error soit compte existe pas ou deja cree
+      if (reponse.exists) {
+        router.push("/register/2");
         dispatch(updateEmail(email));
+      } else {
+        setError(reponse.message ?? "L'adresse mail fournie ne peut pas être inscrite");
+        setShowError(true);
       }
-    } else {
-      setError("L'adresse mail fournie ne correspond à aucun compte");
-      setShowError(true);
     }
   };
 

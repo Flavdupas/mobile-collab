@@ -25,7 +25,6 @@ const InputCode:React.FC<InputCodeProps> = ({code,setCode}) => {
 
   const handleChange = (value: string, index: number) => {
     const updatedCode = [...code];
-
     if (value === "" || value === null) {
       updatedCode[index] = -1;
       const nextIndex = index - 1;
@@ -35,7 +34,7 @@ const InputCode:React.FC<InputCodeProps> = ({code,setCode}) => {
         }
       }
     } else {
-      if (Number(value)) {
+      if (!isNaN(Number(value))) {
         updatedCode[index] = parseInt(value, 10);
         const nextIndex = index + 1;
         if (!(code[index - 1] >= 0 && code[nextIndex] >= 0)) {

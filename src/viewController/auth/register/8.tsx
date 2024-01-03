@@ -5,9 +5,11 @@ import global from "../../../constants/Global";
 import InputPassword from "../../../components/auth/input/Password";
 import { isCommom, validePassword } from "../../../utils/string";
 import { router } from "expo-router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updatePassword } from "../../../store/register/register";
 import resetHistory from "../../../utils/router";
+import RegisterViewModel from "../../../viewModel/auth/Register";
+import { RootState } from "../../../store/store";
 
 const RegisterHeightController = () => {
   /* Variables */
@@ -16,6 +18,14 @@ const RegisterHeightController = () => {
   const [error, setError] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
   const dispatch = useDispatch();
+  //
+  const viewModel = new RegisterViewModel();
+  const token = useSelector((state: RootState) => state.register.token);
+  const birthday = useSelector((state: RootState) => state.register.birthday);
+  const phone = useSelector((state: RootState) => state.register.phone);
+  const meet = useSelector((state: RootState) => state.register.meet);
+  const themes = useSelector((state: RootState) => state.register.themes);
+  const image = useSelector((state: RootState) => state.register.carteEtudiante);
 
   /* Style */
   const styles = StyleSheet.create({
@@ -26,11 +36,14 @@ const RegisterHeightController = () => {
 
   /* Logique */
   const onClick = () => {
-    if(password) {
+    if ((token && birthday && phone && meet && themes && image && password)) {
+      viewModel.register(token, birthday, phone, meet, themes, image, password);
+    }
+    /*if(password) {
       resetHistory();
       router.replace("/register/9");
       dispatch(updatePassword(password));
-    }
+    }*/
   };
 
   return (
@@ -127,12 +140,18 @@ interface ButtonNextProps {
   disabled: boolean;
   onClick: () => void;
   setShowError: (arg0: boolean) => void;
-  setError: (arg0:string) => void;
+  setError: (arg0: string) => void;
 }
 
 const ButtonNext: React.FC<ButtonNextProps> = memo(
   ({ disabled, onClick, setShowError, setError }) => (
-    <Navigate disabled={disabled} onClick={onClick} setShowError={setShowError} defaultError="Vous devez fournir un mot de passe" setError={setError}>
+    <Navigate
+      disabled={disabled}
+      onClick={onClick}
+      setShowError={setShowError}
+      defaultError="Vous devez fournir un mot de passe"
+      setError={setError}
+    >
       Continuer
     </Navigate>
   )

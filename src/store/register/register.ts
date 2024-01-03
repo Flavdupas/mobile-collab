@@ -8,6 +8,7 @@ interface State {
   themes: number[] | null,
   carteEtudiante: string | null,
   password:string | null,
+  token:string | null,
 }
 
 const initialState: State = {
@@ -18,6 +19,7 @@ const initialState: State = {
   themes: null,
   carteEtudiante:null,
   password:null,
+  token:null,
 };
 
 const registerSlice = createSlice({
@@ -44,9 +46,12 @@ const registerSlice = createSlice({
     },
     updatePassword: (state,action: PayloadAction<string>) => {
         state.password = action.payload;
-    }
+    },
+    updateToken: (state,action: PayloadAction<string>) => {
+        state.token = action.payload;
+    },
   },
 });
 
-export const { updateEmail,updateBirthday,updatePhone,updateMeet,updateThemes,updateCarteEtudiante,updatePassword } = registerSlice.actions;
+export const { updateEmail,updateBirthday,updatePhone,updateMeet,updateThemes,updateCarteEtudiante,updatePassword,updateToken } = registerSlice.actions;
 export default registerSlice.reducer;

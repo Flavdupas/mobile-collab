@@ -4,30 +4,43 @@ import global from "../../../constants/Global";
 import InputCode from "../../../components/auth/input/Code";
 import { router } from "expo-router";
 import resetHistory from "../../../utils/router";
+import RegisterViewModel from "../../../viewModel/auth/Register";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
+import { updateToken } from "../../../store/register/register";
 
 const RegisterTwoController = () => {
   /* Variables */
-  const PWD = 5648; //requete pour recuperer le PWD;
+  const email = useSelector((state: RootState) => state.register.email);
   const [code, setCode] = useState<number | null>(null);
   const [error, setError] = useState<string | null>();
   const [showError, setShowError] = useState<boolean>(false);
+  const viewModel = new RegisterViewModel();
+  const dispatch = useDispatch();
 
   /* Logique */
   useEffect(() => {
-    if (code !== null) {
-      if (code === PWD) {
-        //efface l'historique de navigation
-        resetHistory().then(() => {
-          //j'ajoute la route '/' a l'historique pour que le user puisse go back sans revenir au screen du code
-          router.push("/");
-          router.push("/register/3");
-        });
-        //requete pour valider le compte en async
-      } else {
-        setError("Code incorrect");
-        setShowError(true);
+    const fetchData = async () => {
+      //on regarde si le code est pas null et qu'on a bien recupere le mail du store
+      if (code !== null && email) {
+        const response = await viewModel.verifyCode(email, code);
+        if (response.correct) {
+          //efface l'historique de navigation
+          resetHistory().then(() => {
+            //j'ajoute la route '/' a l'historique pour que le user puisse go back sans revenir au screen du code
+            router.push("/");
+            router.push("/register/3");
+            if (response.token) {
+              dispatch(updateToken(response.token));
+            }
+          });
+        } else {
+          setError(response.message);
+          setShowError(true);
+        }
       }
-    }
+    };
+    fetchData();
   }, [code]);
 
   /* Style */
@@ -58,7 +71,7 @@ const RegisterTwoController = () => {
 
 interface InputCodeControllerProps {
   setCode: (arg0: number) => void;
-  setShowError:(arg0:boolean) => void;
+  setShowError: (arg0: boolean) => void;
 }
 const InputCodeController: React.FC<InputCodeControllerProps> = ({
   setCode,
