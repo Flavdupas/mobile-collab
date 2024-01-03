@@ -26,6 +26,31 @@ export default class RegisterModel {
     }
   }
 
+  public async getThemes(): Promise<{
+    id_theme: number;
+    libelle_theme: string;
+    path_logo: string;
+    color_hex: string;
+    created_at: Date;
+    updated_at: Date | null;
+  }[] | null> {
+    const apiUrl = process.env.EXPO_PUBLIC_API_URL;
+    try {
+      const response = await fetch(apiUrl + "/themes", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      //console.log(data);
+      return data;
+    } catch (error) {
+      return null;
+    }
+  }
+
   public async verifyCode(
     email: string,
     code: number
@@ -52,12 +77,21 @@ export default class RegisterModel {
     }
   }
 
-  public async register(token: string,birthday: number,phone: number,meet: boolean,themes: number[],image: string,password: string) {
+  public async register(
+    token: string,
+    birthday: number,
+    phone: number,
+    meet: boolean,
+    themes: number[],
+    image: string,
+    password: string
+  ) {
     const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
     // Créer un objet FormData
     const formData = new FormData();
-    const uri = Platform.OS === "android" ? image : image.replace("file://", "");
+    const uri =
+      Platform.OS === "android" ? image : image.replace("file://", "");
     const filename = image.split("/").pop();
 
     const match = /\.(\w+)$/.exec(filename as string);
@@ -78,7 +112,7 @@ export default class RegisterModel {
       const response = await fetch(apiUrl + "/register", {
         method: "POST",
         headers: {
-          'Authorization': 'Bearer ' + token,
+          Authorization: "Bearer " + token,
           "Content-Type": "multipart/form-data",
         },
         body: formData,

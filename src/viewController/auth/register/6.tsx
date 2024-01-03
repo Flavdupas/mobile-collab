@@ -13,6 +13,7 @@ import { router } from "expo-router";
 import { useDispatch } from "react-redux";
 import { updateThemes } from "../../../store/register/register";
 import Item from "../../../components/auth/register/Item";
+import RegisterViewModel from "../../../viewModel/auth/Register";
 
 const RegisterSixController = () => {
   /* Variables */
@@ -20,6 +21,24 @@ const RegisterSixController = () => {
   const [listId, setListId] = useState<number[]>([]);
   const [showError, setShowError] = useState<boolean>(false);
   const dispatch = useDispatch();
+  const viewModel = new RegisterViewModel();
+  const [themes, setThemes] = useState<{ id: number; title: string }[]>([
+    { id: 0, title: "" },
+  ]);
+  console.log(themes);
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await viewModel.getThemes();
+      if (data) {
+        const transformedData = data.map((theme) => ({
+          id: theme.id_theme,
+          title: theme.libelle_theme,
+        }));
+        setThemes(transformedData);
+      }
+    };
+    fetchData();
+  }, []);
 
   /* Style */
   const styles = StyleSheet.create({
@@ -74,7 +93,7 @@ const RegisterSixController = () => {
         </Text>
         <View style={styles.containerItem}>
           <ItemController
-            data={themeData}
+            data={themes}
             currentList={listId}
             handleClick={handleClick}
           />
