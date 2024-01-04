@@ -23,3 +23,12 @@ export const isCommom = (password: string) => {
 
   return false;
 };
+
+export const isValidDate = (year:number, month:number, day:number) => {
+    const proposedDate = new Date(year, month, day);
+    return (
+        proposedDate.getFullYear() === year &&
+        proposedDate.getMonth() === month &&
+        proposedDate.getDate() === day
+    );
+}

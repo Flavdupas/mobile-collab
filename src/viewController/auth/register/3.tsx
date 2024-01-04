@@ -21,26 +21,29 @@ const RegisterThreeController = () => {
 
   //regarde pour chaque date si elle est valide / oui => on l'enregistre / non => on affiche l'erreur
   useEffect(() => {
+   
     if (birthday) {
+
       let differenceYear = today.getFullYear() - birthday.getFullYear();
+       console.log(birthday);
       //La date est valide
-      if (differenceYear >= 16) {
+      if (differenceYear >= 16 && differenceYear <= 100) {
         //on enregistre dans le store
         setShowError(false);
         setDisabled(false);
       } else {
-          setDisabled(true);
-          setShowError(true);   
+        setDisabled(true);
+        setShowError(true);
       }
     }
   }, [birthday]);
 
   const onClick = () => {
-    if(birthday) {
-        router.push("/(auth)/register/4");
-        dispatch(updateBirthday(birthday.getTime()))
-    } 
-  }
+    if (birthday) {
+      router.push("/(auth)/register/4");
+      dispatch(updateBirthday(birthday.getTime()));
+    }
+  };
 
   return (
     <>
@@ -57,7 +60,11 @@ const RegisterThreeController = () => {
             <Text style={global.error}>Date de naissance invalide</Text>
           )}
         </View>
-        <ButtonNext onClick={onClick} setShowError={setShowError} disabled={disabled} />
+        <ButtonNext
+          onClick={onClick}
+          setShowError={setShowError}
+          disabled={disabled}
+        />
       </View>
 
       {showPicker && (
@@ -85,7 +92,6 @@ const InputBirthdayController: React.FC<InputBirthdayControllerProps> = ({
   showPicker,
   setShowPicker,
 }) => {
-
   /* Style */
   const styles = StyleSheet.create({
     input: {
@@ -134,11 +140,12 @@ interface ButtonNextProps {
   onClick: () => void;
 }
 
-
-const ButtonNext: React.FC<ButtonNextProps> = memo(({ disabled, setShowError, onClick }) => (
-  <Navigate disabled={disabled} onClick={onClick} setShowError={setShowError}>
-    Continuer
-  </Navigate>
-));
+const ButtonNext: React.FC<ButtonNextProps> = memo(
+  ({ disabled, setShowError, onClick }) => (
+    <Navigate disabled={disabled} onClick={onClick} setShowError={setShowError}>
+      Continuer
+    </Navigate>
+  )
+);
 
 export default RegisterThreeController;

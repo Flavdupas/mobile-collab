@@ -95,7 +95,6 @@ export default class RegisterModel {
     const match = /\.(\w+)$/.exec(filename as string);
     const ext = match?.[1];
     const type = match ? `image/${match[1]}` : `image`;
-    // Ajouter les données textuelles au FormData
     formData.append("birthday", birthday.toString()); //convertir le timestamp en chaine
     formData.append("phone", phone);
     formData.append("meet", meet.toString()); // Convertir le booléen en chaîne
@@ -121,7 +120,7 @@ export default class RegisterModel {
       console.log(data);
     } catch (error) {
       // Gérer les erreurs ici
-      console.log("Erreur lors de l'envoi de la requête :", error);
+      console.error("Erreur lors de l'envoi de la requête :", error);
     }
   }
 }

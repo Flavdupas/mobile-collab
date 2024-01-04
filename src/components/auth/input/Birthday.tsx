@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, StyleSheet, Pressable, Text, Platform, StyleSheetProperties, ViewStyle } from "react-native";
+import React from "react";
+import { View, StyleSheet, Pressable, Text, Platform, ViewStyle } from "react-native";
 import Birthday from "../../icons/Birthday";
 
 import InputDate from "./Date";

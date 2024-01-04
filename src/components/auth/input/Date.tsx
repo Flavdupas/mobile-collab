@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { TextInput, Text } from "react-native";
+import { isValidDate } from "../../../utils/string";
 
 interface InputDateProps {
   setDate: (arg0: Date) => void;
@@ -41,9 +42,11 @@ const InputDate: React.FC<InputDateProps> = ({ setDate }) => {
       setDisplayValue(
         `${value.slice(0, 2)} / ${value.slice(2, 4)} / ${value.slice(4, 8)}`
       );
-      let day = parseInt(value.substring(0, 2), 10);
-      let month = parseInt(value.substring(2, 4), 10) - 1;
-      let year = parseInt(value.substring(4, 8), 10);
+    }
+    let day = parseInt(value.substring(0, 2), 10);
+    let month = parseInt(value.substring(2, 4), 10) - 1;
+    let year = parseInt(value.substring(4, 8), 10);
+    if (isValidDate(year, month, day)) {
       setDate(new Date(year, month, day));
     }
   }, [value]);
