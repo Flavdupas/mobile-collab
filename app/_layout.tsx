@@ -1,23 +1,23 @@
-import { useFonts } from 'expo-font';
-import { SplashScreen, Stack } from 'expo-router';
-import { useEffect } from 'react';
-import { StatusBar } from 'react-native';
-import store from '../src/store/store';
-import { Provider } from "react-redux";
+import { useFonts } from "expo-font";
+import { SplashScreen, Stack, router } from "expo-router";
+import { useEffect } from "react";
+import { StatusBar } from "react-native";
+import store, { RootState, persistor } from "../src/store/store";
+import { Provider, useSelector } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
-} from 'expo-router';
+} from "expo-router";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    SpaceMono: require('../src/assets/fonts/SpaceMono-Regular.ttf'),
+    SpaceMono: require("../src/assets/fonts/SpaceMono-Regular.ttf"),
   });
-
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
     if (error) throw error;
@@ -33,16 +33,36 @@ export default function RootLayout() {
     return null;
   }
 
-  return <RootLayoutNav />;
+  return (
+    <>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <RootLayoutNav />
+        </PersistGate>
+      </Provider>
+    </>
+  );
 }
 
 function RootLayoutNav() {
+  const token = useSelector((state: RootState) => state.login.token);
+
+  useEffect(() => {
+    //on regarde si il est deja connecte donc possede un token
+    const isAuth = async () => {
+      if (token) {
+        router.replace("/home");
+      }
+    };
+    isAuth();
+  }, []);
+
   return (
-    <Provider store={store}>
-    <StatusBar hidden />
-    <Stack 
+    <>
+      <StatusBar hidden />
+      <Stack
         screenOptions={{
-          headerShown:false, 
+          headerShown: false,
         }}
       >
         <Stack.Screen name="index" />
@@ -50,7 +70,6 @@ function RootLayoutNav() {
         <Stack.Screen name="(connected)" />
         <Stack.Screen name="loading" />
       </Stack>
-    </Provider>
-      
+    </>
   );
 }

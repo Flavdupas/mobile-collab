@@ -10,10 +10,13 @@ import slideData from "../src/data/auth/slideData";
 import OnBoarding from "../src/components/auth/OnBoarding";
 import Paginator from "../src/components/auth/Paginator";
 import { Link, Redirect, router } from "expo-router";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { MAIN_COLOR } from "../src/constants/Color";
+import { useSelector } from "react-redux";
+import { RootState } from "../src/store/store";
 const Index = () => {
   const scrollX = useRef(new Animated.Value(0)).current;
+
   /*return (
     <Redirect href={"/register/10"} />
   )*/
@@ -37,11 +40,14 @@ const Index = () => {
             scrollEventThrottle={32}
           />
         </View>
-        <Paginator data={slideData} scrollX={scrollX}/>
+        <Paginator data={slideData} scrollX={scrollX} />
       </View>
 
       <View style={styles.containerBtn}>
-        <TouchableOpacity style={styles.btnRegister} onPress={() => router.push("/register/1")}>
+        <TouchableOpacity
+          style={styles.btnRegister}
+          onPress={() => router.push("/register/1")}
+        >
           <Text style={styles.registerTxt}>Commencer</Text>
         </TouchableOpacity>
         <Text style={styles.txtLogin}>
@@ -63,7 +69,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   containerItems: {
-    marginBottom:15
+    marginBottom: 15,
   },
   btnRegister: {
     height: 50,
@@ -80,7 +86,7 @@ const styles = StyleSheet.create({
   txtLogin: {
     color: "white",
     fontWeight: "bold",
-    marginTop:5,
+    marginTop: 5,
   },
 });
 
