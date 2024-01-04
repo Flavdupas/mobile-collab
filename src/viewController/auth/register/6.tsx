@@ -25,7 +25,6 @@ const RegisterSixController = () => {
   const [themes, setThemes] = useState<{ id: number; title: string }[]>([
     { id: 0, title: "" },
   ]);
-  console.log(themes);
   useEffect(() => {
     const fetchData = async () => {
       const data = await viewModel.getThemes();

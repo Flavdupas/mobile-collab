@@ -3,7 +3,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 interface State {
   email:string | null,
   birthday:number | null,
-  phone:number | null,
+  phone:string | null,
   meet:boolean,
   themes: number[] | null,
   carteEtudiante: string | null,
@@ -32,7 +32,7 @@ const registerSlice = createSlice({
     updateBirthday: (state,action: PayloadAction<number>) => {
       state.birthday = action.payload;
     },
-    updatePhone: (state,action: PayloadAction<number>) => {
+    updatePhone: (state,action: PayloadAction<string>) => {
         state.phone = action.payload;
     },
     updateMeet: (state, action: PayloadAction<boolean>) => {

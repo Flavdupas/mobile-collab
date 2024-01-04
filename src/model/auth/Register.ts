@@ -68,9 +68,7 @@ export default class RegisterModel {
           code: code,
         }),
       });
-      const data: { correct: boolean; message?: string; token?: string } =
-        await response.json();
-      console.log(data);
+      const data: { correct: boolean; message?: string; token?: string } = await response.json();
       return data;
     } catch (error) {
       return { correct: false };
@@ -80,7 +78,7 @@ export default class RegisterModel {
   public async register(
     token: string,
     birthday: number,
-    phone: number,
+    phone: string,
     meet: boolean,
     themes: number[],
     image: string,
@@ -98,8 +96,8 @@ export default class RegisterModel {
     const ext = match?.[1];
     const type = match ? `image/${match[1]}` : `image`;
     // Ajouter les données textuelles au FormData
-    formData.append("birthday", birthday.toString());
-    formData.append("phone", phone.toString()); // Convertir le numéro de téléphone en chaîne
+    formData.append("birthday", birthday.toString()); //convertir le timestamp en chaine
+    formData.append("phone", phone);
     formData.append("meet", meet.toString()); // Convertir le booléen en chaîne
     formData.append("themes", JSON.stringify(themes)); // Convertir le tableau en chaîne JSON
     formData.append("image", {

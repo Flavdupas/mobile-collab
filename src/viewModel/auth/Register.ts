@@ -52,7 +52,7 @@ export default class RegisterViewModel {
   public async register(
     token: string,
     birthday: number,
-    phone: number,
+    phone: string,
     meet: boolean,
     themes: number[],
     image: string,

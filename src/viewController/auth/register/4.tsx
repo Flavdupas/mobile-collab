@@ -16,7 +16,7 @@ const RegisterFourController = () => {
   const onClick = () => {
     if (phone) {
       router.push("/(auth)/register/5");
-      dispatch(updatePhone(Number(phone)));
+      dispatch(updatePhone(phone));
     }
   };
 
