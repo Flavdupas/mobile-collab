@@ -7,6 +7,10 @@ import InputPassword from "../../../components/auth/input/Password";
 import { Link, router } from "expo-router";
 import global from "../../../constants/Global";
 import resetHistory from "../../../utils/router";
+import LoginViewModel from "../../../viewModel/auth/Login";
+import LottieView from "lottie-react-native";
+import { useDispatch } from "react-redux";
+import { updateToken } from "../../../store/login/login";
 
 const IndexController = () => {
   /* Variables */
@@ -15,16 +19,24 @@ const IndexController = () => {
   const [error, setError] = useState<string | null>(null);
   const [showError, setShowError] = useState<boolean>(false);
   const [disabled, setDisabled] = useState<boolean>(true);
+  const [isLoading, setIsloading] = useState<boolean>(false);
+  const viewModel = new LoginViewModel();
+  const dispatch = useDispatch();
+
   /* Style */
   const styles = StyleSheet.create({
     container: {
-        alignItems:"center",
-        gap:15
+      alignItems: "center",
+      gap: 15,
     },
     txtLogin: {
       color: "white",
       fontWeight: "bold",
       marginTop: 5,
+    },
+    lottie: {
+      height: 40,
+      alignSelf: "center",
     },
   });
 
@@ -49,14 +61,26 @@ const IndexController = () => {
   }, [email, password]);
 
   /* Logique */
-  const onClick = () => {
-    const correctCredential = true; //requette bdd pour se connecter / true => on recupere le token pour le stocker dans le localstorage / false => on affiche une erreur
-    if(correctCredential) {
+  const onClick = async () => {
+    if (email && password) {
+      setDisabled(true);
+      setIsloading(true);
+      const response = await viewModel.login(email, password); //requette bdd pour se connecter / true => on recupere le token pour le stocker dans le localstorage / false => on affiche une erreur
+      if (response.login) {
+        setIsloading(false);
         resetHistory();
         router.replace("/home");
-    } else {
-        setError("Indentifiants incorrect");
+        if(response.token) {
+          console.log(response.token);
+          dispatch(updateToken(response.token));
+        }
+      } else {
+        setIsloading(false);
+        if (response.message) {
+          setError(response.message);
+        }
         setShowError(true);
+      }
     }
   };
 
@@ -74,8 +98,21 @@ const IndexController = () => {
           Mot de passe oublié ? <Link href={"/forgot/1"}>cliquer ici</Link>
         </Text>
         {showError && <Text style={global.error}>{error}</Text>}
+        {isLoading && (
+          <LottieView
+            autoPlay
+            loop
+            style={styles.lottie}
+            source={require("../../../assets/animations/Loading.json")}
+          />
+        )}
       </View>
-      <ButtonNext disabled={disabled} onClick={onClick} setError={setError} setShowError={setShowError}/>
+      <ButtonNext
+        disabled={disabled}
+        onClick={onClick}
+        setError={setError}
+        setShowError={setShowError}
+      />
     </>
   );
 };
@@ -116,10 +153,18 @@ interface ButtonNextProps {
   setShowError: (arg0: boolean) => void;
   setError: (arg0: string) => void;
 }
-const ButtonNext: React.FC<ButtonNextProps> = memo(({ onClick, disabled, setShowError, setError }) => (
-  <Navigate disabled={disabled} onClick={onClick} setShowError={setShowError} defaultError="Vous devez insérer vos identifiants" setError={setError}>
-    Se connecter
-  </Navigate>
-));
+const ButtonNext: React.FC<ButtonNextProps> = memo(
+  ({ onClick, disabled, setShowError, setError }) => (
+    <Navigate
+      disabled={disabled}
+      onClick={onClick}
+      setShowError={setShowError}
+      defaultError="Vous devez insérer vos identifiants"
+      setError={setError}
+    >
+      Se connecter
+    </Navigate>
+  )
+);
 
 export default IndexController;

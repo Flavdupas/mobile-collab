@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import register from './register/register';
 import forgot from './forgot/forgot';
+import login from './login/login';
 
 const store = configureStore({
   reducer: {
     register: register,
-    forgot:forgot,
+    forgot: forgot,
+    login: login,
   }
 });
 

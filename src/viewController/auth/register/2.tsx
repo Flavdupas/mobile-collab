@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Keyboard } from "react-native";
 import global from "../../../constants/Global";
 import InputCode from "../../../components/auth/input/Code";
 import { router } from "expo-router";
@@ -26,6 +26,7 @@ const RegisterTwoController = () => {
       //on regarde si le code est pas null et qu'on a bien recupere le mail du store
       if (code !== null && email) {
         setIsLoading(true);
+        Keyboard.dismiss();
         const response = await viewModel.verifyCode(email, code);
         if (response.correct) {
           //efface l'historique de navigation
