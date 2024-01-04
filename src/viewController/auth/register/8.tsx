@@ -1,5 +1,5 @@
 import { memo, useEffect, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Platform } from "react-native";
 import Navigate from "../../../components/auth/Navigate";
 import global from "../../../constants/Global";
 import InputPassword from "../../../components/auth/input/Password";
@@ -25,7 +25,9 @@ const RegisterHeightController = () => {
   const phone = useSelector((state: RootState) => state.register.phone);
   const meet = useSelector((state: RootState) => state.register.meet);
   const themes = useSelector((state: RootState) => state.register.themes);
-  const image = useSelector((state: RootState) => state.register.carteEtudiante);
+  const image = useSelector(
+    (state: RootState) => state.register.carteEtudiante
+  );
 
   /* Style */
   const styles = StyleSheet.create({
@@ -35,15 +37,26 @@ const RegisterHeightController = () => {
   });
 
   /* Logique */
-  const onClick = () => {
-    if ((token && birthday && phone && meet && themes && image && password)) {
-      viewModel.register(token, birthday, phone, meet, themes, image, password);
+  const onClick = async () => {
+    let data: { register: boolean } | null = null;
+    if (password) {
+      await resetHistory().then(() => {
+        router.replace("/loading/register");
+      });
+
+      if (token && birthday && phone && typeof meet === "boolean" && themes && image && password) {
+        data = await viewModel.register(token,birthday,phone,meet,themes,image,password);
+      }
+      if(data) {
+        if (data?.register) {
+            router.replace("/register/success");
+            dispatch(updatePassword(password));
+          } else {
+            router.replace("/register/error");
+        }
+      }
+      
     }
-    /*if(password) {
-      resetHistory();
-      router.replace("/register/9");
-      dispatch(updatePassword(password));
-    }*/
   };
 
   return (

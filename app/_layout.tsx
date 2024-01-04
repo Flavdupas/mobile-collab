@@ -47,6 +47,8 @@ function RootLayoutNav() {
       >
         <Stack.Screen name="index" />
         <Stack.Screen name="(auth)" />
+        <Stack.Screen name="(connected)" />
+        <Stack.Screen name="loading" />
       </Stack>
     </Provider>
       

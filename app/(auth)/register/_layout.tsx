@@ -16,6 +16,8 @@ const Tab = () => {
       <Stack.Screen name="6" />
       <Stack.Screen name="7" />
       <Stack.Screen name="8" />
+      <Stack.Screen name="success" />
+      <Stack.Screen name="error" />
     </Stack>
   );
 };

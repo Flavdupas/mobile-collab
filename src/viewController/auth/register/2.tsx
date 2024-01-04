@@ -8,6 +8,7 @@ import RegisterViewModel from "../../../viewModel/auth/Register";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { updateToken } from "../../../store/register/register";
+import LottieView from "lottie-react-native";
 
 const RegisterTwoController = () => {
   /* Variables */
@@ -15,6 +16,7 @@ const RegisterTwoController = () => {
   const [code, setCode] = useState<number | null>(null);
   const [error, setError] = useState<string | null>();
   const [showError, setShowError] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const viewModel = new RegisterViewModel();
   const dispatch = useDispatch();
 
@@ -23,6 +25,7 @@ const RegisterTwoController = () => {
     const fetchData = async () => {
       //on regarde si le code est pas null et qu'on a bien recupere le mail du store
       if (code !== null && email) {
+        setIsLoading(true);
         const response = await viewModel.verifyCode(email, code);
         if (response.correct) {
           //efface l'historique de navigation
@@ -33,8 +36,10 @@ const RegisterTwoController = () => {
             if (response.token) {
               dispatch(updateToken(response.token));
             }
+            setIsLoading(false);
           });
         } else {
+          setIsLoading(false);
           setError(response.message);
           setShowError(true);
         }
@@ -48,6 +53,10 @@ const RegisterTwoController = () => {
     text: {
       marginBottom: 15,
       textAlign: "center",
+    },
+    lottie: {
+      height: 40,
+      alignSelf: "center",
     },
   });
 
@@ -64,6 +73,14 @@ const RegisterTwoController = () => {
         </Text>
         <InputCodeController setShowError={setShowError} setCode={setCode} />
         {showError && <Text style={global.error}>{error}</Text>}
+        {isLoading && (
+          <LottieView
+            autoPlay
+            loop
+            style={styles.lottie}
+            source={require("../../../assets/animations/Loading.json")}
+          />
+        )}
       </View>
     </>
   );

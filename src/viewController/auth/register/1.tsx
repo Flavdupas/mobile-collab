@@ -10,12 +10,14 @@ import {
 import global from "../../../constants/Global";
 import { router } from "expo-router";
 import RegisterViewModel from "../../../viewModel/auth/Register";
+import LottieView from "lottie-react-native";
 
 const RegisterOneController = () => {
   /* Variables */
   const [disabled, setDisabled] = useState<boolean>(true);
   const [email, setEmail] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showError, setShowError] = useState<boolean>(false);
   const viewModel = new RegisterViewModel();
   const dispatch = useDispatch();
@@ -37,11 +39,15 @@ const RegisterOneController = () => {
 
   const onClick = async () => {
     if (email) {
+      setIsLoading(true);
+      setDisabled(true);
       const reponse = await viewModel.emailExists(email); //requette si email existe / oui = true / false = Message erreur a mettre dans var error soit compte existe pas ou deja cree
       if (reponse.exists) {
         router.push("/register/2");
         dispatch(updateEmail(email));
+        setIsLoading(false);
       } else {
+        setIsLoading(false);
         setError(
           reponse.message ?? "L'adresse mail fournie ne peut pas être inscrite"
         );
@@ -54,6 +60,10 @@ const RegisterOneController = () => {
   const styles = StyleSheet.create({
     text: {
       marginBottom: 15,
+    },
+    lottie: {
+      height: 40,
+      alignSelf: "center",
     },
   });
 
@@ -72,6 +82,14 @@ const RegisterOneController = () => {
           setEmail={setEmail}
         />
         {showError && <Text style={global.error}>{error}</Text>}
+        {isLoading && (
+          <LottieView
+            autoPlay
+            loop
+            style={styles.lottie}
+            source={require("../../../assets/animations/Loading.json")}
+          />
+        )}
       </View>
       <ButtonNext
         disabled={disabled}

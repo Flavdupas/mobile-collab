@@ -3,11 +3,10 @@ import Navigate from "../../../components/auth/Navigate";
 import resetHistory from "../../../utils/router";
 import { router } from "expo-router";
 
-const RegisterNineController = () => {
+const RegisterTenController = () => {
   const onClick = () => {
     resetHistory();
-    router.replace("/home");
-    //recuperer le token a stocker dans le localstorage
+    router.replace("/");
   }
   return <ButtonNext onClick={onClick} />;
 };
@@ -20,4 +19,4 @@ const ButtonNext: React.FC<ButtonNextProps> = memo(({onClick}) => (
   </Navigate>
 ));
 
-export default RegisterNineController;
+export default RegisterTenController;

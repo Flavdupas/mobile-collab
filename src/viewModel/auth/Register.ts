@@ -49,27 +49,14 @@ export default class RegisterViewModel {
     }
   }
 
-  public async register(
-    token: string,
-    birthday: number,
-    phone: string,
-    meet: boolean,
-    themes: number[],
-    image: string,
-    password: string
-  ) {
+  public async register(token: string,birthday: number,phone: string,meet: boolean,themes: number[],image: string,password: string): Promise<{ register: boolean }> {
     try {
-      this.model.register(
-        token,
-        birthday,
-        phone,
-        meet,
-        themes,
-        image,
-        password
-      );
+      const data = await this.model.register(token,birthday,phone,meet,themes,image,password);
+      console.log("registerViewModel")
+      return data
     } catch (error) {
       console.log(error);
+      return {register:false};
     }
   }
 }

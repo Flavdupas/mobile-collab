@@ -15,7 +15,7 @@ import { MAIN_COLOR } from "../src/constants/Color";
 const Index = () => {
   const scrollX = useRef(new Animated.Value(0)).current;
   /*return (
-    <Redirect href={"/register/8"} />
+    <Redirect href={"/register/10"} />
   )*/
   return (
     <View style={styles.body}>
