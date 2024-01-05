@@ -1,17 +1,20 @@
-import RegisterModel from "../../model/auth/Register";
+import AuthModel from "../../model/auth/Auth";
+import DataModel from "../../model/data/Data";
 
 export default class RegisterViewModel {
-  private model: RegisterModel;
+  private authModel: AuthModel;
+  private dataModel: DataModel;
 
   constructor() {
-    this.model = new RegisterModel();
+    this.authModel = new AuthModel();
+    this.dataModel = new DataModel();
   }
 
   public async emailExists(
     email: string
   ): Promise<{ exists: boolean; message?: string }> {
     try {
-      return this.model.emailExists(email);
+      return this.authModel.emailExistsRegister(email);
     } catch (error) {
       console.log(error);
       return { exists: false };
@@ -30,7 +33,7 @@ export default class RegisterViewModel {
     | null
   > {
     try {
-      const data = await this.model.getThemes();
+      const data = await this.dataModel.getThemes();
       return data;
     } catch (error) {
       console.log(error);
@@ -43,7 +46,7 @@ export default class RegisterViewModel {
     code: number
   ): Promise<{ correct: boolean; message?: string; token?: string }> {
     try {
-      return this.model.verifyCode(email, code);
+      return this.authModel.verifyCodeRegister(email, code);
     } catch (error) {
       return { correct: false };
     }
@@ -51,7 +54,7 @@ export default class RegisterViewModel {
 
   public async register(token: string,birthday: number,phone: string,meet: boolean,themes: number[],image: string,password: string): Promise<{ register: boolean }> {
     try {
-      const data = await this.model.register(token,birthday,phone,meet,themes,image,password);
+      const data = await this.authModel.register(token,birthday,phone,meet,themes,image,password);
       console.log("registerViewModel")
       return data
     } catch (error) {

@@ -15,7 +15,7 @@ const ForgotPasswordFour = () => {
           source={require("../../../src/assets/animations/Success.json")}
         />
         <Text style={styles.title}>Félicitation</Text>
-        <Text style={styles.text}>Votre mot de passe a été modifier avec succès</Text>
+        <Text style={styles.text}>Votre mot de passe a été modifié avec succès</Text>
       </View>
       <ForgotFourController />
     </View>

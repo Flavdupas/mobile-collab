@@ -1,10 +1,10 @@
-import LoginModel from "../../model/auth/Login";
+import AuthModel from "../../model/auth/Auth";
 
 export default class LoginViewModel {
-  private model: LoginModel;
+  private model: AuthModel;
 
   constructor() {
-    this.model = new LoginModel();
+    this.model = new AuthModel();
   }
 
   public async login(

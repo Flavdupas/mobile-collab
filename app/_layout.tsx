@@ -52,6 +52,7 @@ function RootLayoutNav() {
     const isAuth = async () => {
       if (token) {
         router.replace("/home");
+        //persistor.purge();
       }
     };
     isAuth();

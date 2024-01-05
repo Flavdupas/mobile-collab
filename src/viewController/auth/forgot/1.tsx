@@ -7,6 +7,8 @@ import global from "../../../constants/Global";
 import { router } from "expo-router";
 import Logo from "../../../components/icons/Logo";
 import { updateEmail } from "../../../store/forgot/forgot";
+import ForgotViewModel from "../../../viewModel/auth/Forgot";
+import LottieView from "lottie-react-native";
 
 const ForgotPasswordOneController = () => {
   /* Variables */
@@ -14,18 +16,26 @@ const ForgotPasswordOneController = () => {
   const [email, setEmail] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [showError, setShowError] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const dispatch = useDispatch();
+  const viewModel = new ForgotViewModel();
 
-  const onClick = () => {
-    const exist = true; //requette si email existe / oui = true / false = Message erreur a mettre dans var error compote existe pas ...
-    if (exist) {
-      router.push("/forgot/2");
-      if (email) {
+  const onClick = async () => {
+    if (email) {
+      setIsLoading(true);
+      setDisabled(true);
+      const reponse = await viewModel.emailExists(email); //requette si email existe / oui = true / false = Message erreur a mettre dans var error soit compte existe pas ou deja cree
+      if (reponse.exists) {
+        router.push("/forgot/2");
         dispatch(updateEmail(email));
+        setIsLoading(false);
+      } else {
+        setIsLoading(false);
+        setError(
+          reponse.message ?? "L'adresse mail fournie ne peut pas être inscrite"
+        );
+        setShowError(true);
       }
-    } else {
-      setError("L'adresse mail fournie ne correspond à aucun compte");
-      setShowError(true);
     }
   };
 
@@ -33,6 +43,10 @@ const ForgotPasswordOneController = () => {
   const styles = StyleSheet.create({
     text: {
       marginBottom: 15,
+    },
+    lottie: {
+      height: 40,
+      alignSelf: "center",
     },
   });
 
@@ -49,6 +63,14 @@ const ForgotPasswordOneController = () => {
           setEmail={setEmail}
         />
         {showError && <Text style={global.error}>{error}</Text>}
+        {isLoading && (
+          <LottieView
+            autoPlay
+            loop
+            style={styles.lottie}
+            source={require("../../../assets/animations/Loading.json")}
+          />
+        )}
       </View>
       <ButtonNext
         disabled={disabled}

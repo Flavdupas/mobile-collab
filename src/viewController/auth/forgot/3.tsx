@@ -5,10 +5,12 @@ import global from "../../../constants/Global";
 import InputPassword from "../../../components/auth/input/Password";
 import { isCommom, validePassword } from "../../../utils/string";
 import { router } from "expo-router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import resetHistory from "../../../utils/router";
 import Logo from "../../../components/icons/Logo";
-import { updatePassword } from "../../../store/forgot/forgot";
+import ForgotViewModel from "../../../viewModel/auth/Forgot";
+import { RootState } from "../../../store/store";
+import LottieView from "lottie-react-native";
 
 const ForgotPasswordThreeController = () => {
   /* Variables */
@@ -16,17 +18,35 @@ const ForgotPasswordThreeController = () => {
   const [showError, setShowError] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [password, setPassword] = useState<string | null>(null);
-  const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const viewModel = new ForgotViewModel();
+  const token = useSelector((state: RootState) => state.forgot.token);
   /* Logique */
-  const onClick = () => {
-    if (password) {
-      //requete changer le mdp
-      resetHistory().then(() => {
-        router.replace("/forgot/4");
-      });
-      dispatch(updatePassword(password));
+  const onClick = async () => {
+    if (password && token) {
+      setIsLoading(true);
+      const response = await viewModel.resetPassword(token, password);
+      if (response.changed) {
+        setIsLoading(false);
+        resetHistory().then(() => {
+          router.replace("/forgot/4");
+        });
+      } else {
+        setIsLoading(false);
+        if (response.message) {
+          setError(response.message);
+        }
+        setShowError(true);
+      }
     }
   };
+
+  const styles = StyleSheet.create({
+    lottie: {
+      height: 40,
+      alignSelf: "center",
+    },
+  });
 
   return (
     <>
@@ -40,6 +60,14 @@ const ForgotPasswordThreeController = () => {
           setDisabled={setDisabled}
         />
         {showError && <Text style={global.error}>{error}</Text>}
+        {isLoading && (
+          <LottieView
+            autoPlay
+            loop
+            style={styles.lottie}
+            source={require("../../../assets/animations/Loading.json")}
+          />
+        )}
       </View>
       <ButtonNext
         disabled={disabled}

@@ -2,12 +2,12 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 interface State {
   email: string | null;
-  password: string | null;
+  token: string | null;
 }
 
 const initialState: State = {
   email: null,
-  password: null,
+  token: null,
 };
 
 const forgotSlice = createSlice({
@@ -17,11 +17,11 @@ const forgotSlice = createSlice({
     updateEmail: (state, action: PayloadAction<string>) => {
       state.email = action.payload;
     },
-    updatePassword: (state, action: PayloadAction<string>) => {
-      state.password = action.payload;
+    updateToken: (state, action: PayloadAction<string>) => {
+      state.token = action.payload;
     },
   },
 });
 
-export const { updateEmail, updatePassword } = forgotSlice.actions;
+export const { updateEmail, updateToken } = forgotSlice.actions;
 export default forgotSlice.reducer;
