@@ -3,8 +3,10 @@ import { SplashScreen, Stack, router } from "expo-router";
 import { useEffect } from "react";
 import { StatusBar } from "react-native";
 import store, { RootState, persistor } from "../src/store/store";
-import { Provider, useSelector } from "react-redux";
+import { Provider, useDispatch, useSelector } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
+import ConnectedViewModel from "../src/viewModel/connected/Connected";
+import { updateEtudiant, updateNotifications, updateUtilisateur } from "../src/store/connected/connected";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -46,12 +48,21 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const token = useSelector((state: RootState) => state.login.token);
+  const viewModel = new ConnectedViewModel();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     //on regarde si il est deja connecte donc possede un token
     const isAuth = async () => {
       if (token) {
         router.replace("/home/");
+        const data = await viewModel.getUser(token);
+        if (data) {
+          dispatch(updateUtilisateur(data.utilisateur));
+          dispatch(updateEtudiant(data.etudiant));
+          dispatch(updateNotifications(data.notifications));
+        }
+
         //persistor.purge();
       }
     };

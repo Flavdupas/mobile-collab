@@ -4,6 +4,7 @@ import forgot from './forgot/forgot';
 import login from './login/login';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistReducer, persistStore } from 'redux-persist';
+import connected from './connected/connected';
 
 const loginPersistConfig = {
   key: 'login',
@@ -17,6 +18,7 @@ const store = configureStore({
     register: register,
     forgot: forgot,
     login: persistedLoginReducer,
+    connected:connected,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

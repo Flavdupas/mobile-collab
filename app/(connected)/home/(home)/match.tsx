@@ -1,11 +1,11 @@
 import { Text, StyleSheet, View } from 'react-native'
 import React, { Component } from 'react'
 
-export default class home extends Component {
+export default class match extends Component {
   render() {
     return (
-      <View style={{backgroundColor:"blue", flex:1}}>
-        <Text>home</Text>
+      <View style={{backgroundColor:"red", flex:1}}>
+        <Text>match</Text>
       </View>
     )
   }

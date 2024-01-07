@@ -1,8 +1,9 @@
+import { useState } from "react";
 import { Platform } from "react-native";
 
 export default class AuthModel {
   constructor() {}
-  
+
   /* METHODES REGISTER */
   public async emailExistsRegister(
     email: string
@@ -200,6 +201,78 @@ export default class AuthModel {
       return data;
     } catch (error) {
       return { changed: false };
+    }
+  }
+
+  public async getUser(token: string): Promise<any> {
+    const apiUrl = process.env.EXPO_PUBLIC_API_URL;
+    try {
+      const response = await fetch(apiUrl + "/connected/user", {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data: {
+        utilisateur: {
+          id_utilisateur: number;
+          email: string;
+          path_pp: string | null;
+        };
+        etudiant: {
+          credit: number;
+          nom: string;
+          prenom: string;
+          telephone: string;
+          date_naissance: string;
+          rencontre: boolean;
+        };
+        notifications: {
+          id_notification: number;
+          id_etudiant: number;
+          id_message: string | null;
+          id_post: number | null;
+          id_groupe: number | null;
+          titre: string;
+          date_notification: Date | null;
+        }[];
+      } = await response.json();
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  public async getPP(token: string): Promise<any> {
+    const apiUrl = process.env.EXPO_PUBLIC_API_URL;
+    try {
+      const response = await fetch(apiUrl + "/connected/pp", {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const blob = await response.blob();
+
+      const base64data = await new Promise<string | ArrayBuffer | null>(
+        (resolve) => {
+          const fileReaderInstance = new FileReader();
+          fileReaderInstance.onload = () => resolve(fileReaderInstance.result);
+          fileReaderInstance.readAsDataURL(blob);
+        }
+      );
+      return base64data;
+    } catch (err) {
+      console.error(err);
+      return "";
     }
   }
 }

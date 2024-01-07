@@ -10,7 +10,7 @@ export default function Layout() {
           headerShown: false,
           drawerStyle: {
             width:325
-          }
+          },
         }}
         
         drawerContent={(props) => <CustomDrawer props={props} />}

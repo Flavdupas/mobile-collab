@@ -6,6 +6,8 @@ import { usePathname } from "expo-router";
 import { useEffect } from "react";
 import { MAIN_COLOR } from "../../constants/Color";
 import DrawerItem from "./drawer/DrawerItem";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 interface CustomDrawerProps {
     props: DrawerContentComponentProps;

@@ -3,8 +3,22 @@ import Plus from "../../icons/PlusPurple";
 import Verify from "../../icons/Verify";
 import Money from "../../icons/Money";
 import { router } from "expo-router";
+import { RootState } from "../../../store/store";
+import { useSelector } from "react-redux";
+import AuthModel from "../../../model/auth/Auth";
+import { useEffect, useState } from "react";
 
 const HeaderDrawer = () => {
+  /* VARIABLES */
+  const etudiant = useSelector((state: RootState) => state.connected.etudiant);
+  const birthday = etudiant.date_naissance
+    ? new Date(etudiant.date_naissance)
+    : new Date();
+  const token = useSelector((state: RootState) => state.login.token);
+  const model = new AuthModel();
+  const [url, setUrl] = useState<string | null>(null);
+
+  /* STYLES */
   const styles = StyleSheet.create({
     /* HEADER */
     header: {
@@ -16,6 +30,7 @@ const HeaderDrawer = () => {
       height: 60,
       width: 60,
       borderRadius: 50,
+      resizeMode:"cover"
     },
     nameContainer: {
       flexDirection: "row",
@@ -40,7 +55,7 @@ const HeaderDrawer = () => {
       width: "100%",
       height: 50,
       borderRadius: 10,
-      marginTop:20,
+      marginTop: 20,
       padding: 5,
       flexDirection: "row",
       justifyContent: "space-between",
@@ -79,16 +94,34 @@ const HeaderDrawer = () => {
     },
   });
 
+  /* LOGIQUE */
+  useEffect(() => {
+    const fetchPP = async () => {
+      if (token) {
+        setUrl(await model.getPP(token));
+      }
+    };
+    fetchPP();
+  }, []);
+
   return (
     <View>
       <View style={styles.header}>
-        <Image source={{ uri: "https://pic.re/image" }} style={styles.logo} />
+        {url && <Image source={{ uri: url }} style={styles.logo} />}
         <View>
           <View style={styles.nameContainer}>
-            <Text style={styles.name}>Gon Freecs</Text>
+            <Text style={styles.name}>
+              {etudiant.prenom} {etudiant.nom}
+            </Text>
             <Verify style={styles.verify} />
           </View>
-          <Text style={styles.birthday}>10 Octobre 2003</Text>
+          <Text style={styles.birthday}>
+            {birthday.toLocaleDateString("fr-FR", {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+            })}
+          </Text>
         </View>
       </View>
       <TouchableOpacity
@@ -100,7 +133,7 @@ const HeaderDrawer = () => {
         </View>
         <View style={styles.headerTextContainer}>
           <Text style={styles.textCredit}>Mes crédits</Text>
-          <Text style={styles.credit}>201.50</Text>
+          <Text style={styles.credit}>{etudiant.credit}</Text>
         </View>
         <View style={styles.plusContainer}>
           <Plus />
