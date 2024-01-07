@@ -1,0 +1,86 @@
+import { DrawerContentComponentProps, DrawerContentScrollView} from "@react-navigation/drawer";
+import { View, Text, StyleSheet } from "react-native";
+import ButtonDrawer from "./drawer/Button";
+import HeaderDrawer from "./drawer/Header";
+import { usePathname } from "expo-router";
+import { useEffect } from "react";
+import { MAIN_COLOR } from "../../constants/Color";
+import DrawerItem from "./drawer/DrawerItem";
+
+interface CustomDrawerProps {
+    props: DrawerContentComponentProps;
+}
+
+const CustomDrawer:React.FC<CustomDrawerProps> = ({props}) => {
+  const pathname = usePathname();
+
+  useEffect(() => {
+    console.log(pathname);
+  }, [pathname]);
+
+  const styles = StyleSheet.create({
+    body: {
+      backgroundColor: MAIN_COLOR,
+      paddingHorizontal: 25,
+      paddingTop: 25,
+      paddingBottom:40,
+    },
+
+    /* SECTION */
+    titleSection: {
+      color: "#fff",
+      fontWeight: "600",
+      marginTop: 40,
+      fontSize: 14,
+    },
+  });
+
+  return (
+    <DrawerContentScrollView
+      {...props}
+      style={styles.body}
+      contentContainerStyle={{ justifyContent: "space-between", flex: 1 }}
+    >
+      <View>
+        <HeaderDrawer />
+        <View>
+          <Text style={styles.titleSection}>Paramètres</Text>
+          <DrawerItem
+            title="Mon compte"
+            href="/home/"
+            icon={require("../../../src/assets/images/connected/drawer/person.png")}
+          />
+          <Text style={styles.titleSection}>Compte</Text>
+          <DrawerItem
+            title="Mes services"
+            href="/home/"
+            icon={require("../../../src/assets/images/connected/drawer/service.png")}
+          />
+          <DrawerItem
+            title="Mes propositions"
+            href="/home/"
+            icon={require("../../../src/assets/images/connected/drawer/proposition.png")}
+          />
+          <Text style={styles.titleSection}>Support</Text>
+          <DrawerItem
+            title="Paramètres"
+            href="/home/"
+            icon={require("../../../src/assets/images/connected/drawer/setting.png")}
+            iconHeight={30}
+            iconWidth={30}
+          />
+          <DrawerItem
+            title="Nous contacter"
+            href="/home/"
+            icon={require("../../../src/assets/images/connected/drawer/contact.png")}
+            iconHeight={25}
+            iconWidth={25}
+          />
+        </View>
+      </View>
+      <ButtonDrawer />
+    </DrawerContentScrollView>
+  );
+}
+
+export default CustomDrawer;

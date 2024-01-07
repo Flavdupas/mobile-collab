@@ -3,7 +3,7 @@ import Navigate from "../../../components/auth/Navigate";
 import CarteEtudiantModal from "../../../components/auth/register/CarteEtudiantModal";
 import { Pressable, View, Image, Text, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import Plus from "../../../components/icons/Plus";
+import Plus from "../../../components/icons/PlusWhite";
 import global from "../../../constants/Global";
 import AuthLayout from "../../../components/auth/Layout";
 import { useDispatch } from "react-redux";

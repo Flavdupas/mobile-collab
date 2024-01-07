@@ -51,7 +51,7 @@ function RootLayoutNav() {
     //on regarde si il est deja connecte donc possede un token
     const isAuth = async () => {
       if (token) {
-        router.replace("/home");
+        router.replace("/home/");
         //persistor.purge();
       }
     };

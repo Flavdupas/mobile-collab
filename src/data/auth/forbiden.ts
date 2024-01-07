@@ -4,4 +4,5 @@ export const forbiddenWords = [
   'root',
   'user',
   'motdepasse',
+  'azerty',
 ];

@@ -1,5 +1,5 @@
 import { View, StyleSheet, TouchableWithoutFeedback } from "react-native";
-import Chevron from "../../icons/Chevron";
+import Chevron from "../../icons/ChevronWhite";
 import { router } from "expo-router";
 
 const Header = () => {
