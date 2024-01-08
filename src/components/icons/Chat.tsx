@@ -1,17 +1,17 @@
-import * as React from "react"
-import Svg, { Path } from "react-native-svg"
-const Chat = () => (
-  <Svg
-    width={30}
-    height={30}
-    fill="none"
-  >
+import * as React from "react";
+import { ColorValue } from "react-native";
+import Svg, { Path } from "react-native-svg";
+interface ChatProps {
+  color: ColorValue;
+}
+const Chat: React.FC<ChatProps> = ({ color }) => (
+  <Svg width={32} height={28} fill="none">
     <Path
-      stroke="#261E35"
+      stroke={color}
       strokeLinecap="round"
       strokeWidth={2.5}
-      d="M21.25 4.172A12.443 12.443 0 0 0 15 2.5C8.096 2.5 2.5 8.096 2.5 15c0 2 .47 3.89 1.304 5.566.222.445.296.954.167 1.435l-.744 2.782a1.625 1.625 0 0 0 1.99 1.99l2.782-.744c.48-.129.99-.055 1.435.167A12.447 12.447 0 0 0 15 27.5c6.904 0 12.5-5.596 12.5-12.5 0-2.277-.609-4.411-1.672-6.25"
+      d="M19.833 3.894A11.613 11.613 0 0 0 14 2.334C7.557 2.333 2.333 7.556 2.333 14c0 1.867.439 3.63 1.218 5.195.207.415.276.89.156 1.34l-.695 2.596a1.517 1.517 0 0 0 1.857 1.857l2.597-.694c.449-.12.924-.052 1.34.155A11.618 11.618 0 0 0 14 25.667c6.443 0 11.667-5.224 11.667-11.667 0-2.125-.569-4.117-1.561-5.833"
     />
   </Svg>
-)
+);
 export default Chat;

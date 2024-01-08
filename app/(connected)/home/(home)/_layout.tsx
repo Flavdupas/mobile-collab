@@ -1,5 +1,5 @@
 
-import CustomTabs from "../../../../src/components/connected/Tab";
+import CustomTabs from "../../../../src/components/connected/CustomTab";
 import { Tabs } from "expo-router";
 
 export default function () {
