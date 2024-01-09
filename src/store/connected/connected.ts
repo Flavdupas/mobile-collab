@@ -14,7 +14,8 @@ interface State {
     date_naissance: string | null;
     rencontre: boolean | null;
   };
-  notifications: {
+  notifications:
+    | {
         id_notification: number;
         id_etudiant: number;
         id_message: string | null;
@@ -24,6 +25,7 @@ interface State {
         date_notification: Date | null;
       }[]
     | null;
+  fetchData: { pp: string | null };
 }
 
 const initialState: State = {
@@ -41,6 +43,9 @@ const initialState: State = {
     rencontre: null,
   },
   notifications: null,
+  fetchData: {
+    pp: null,
+  },
 };
 
 const connectedSlice = createSlice({
@@ -86,8 +91,16 @@ const connectedSlice = createSlice({
     ) => {
       state.notifications = action.payload;
     },
+    updatePersonnalPhoto: (state, action: PayloadAction<string>) => {
+      state.fetchData.pp = action.payload;
+    },
   },
 });
 
-export const { updateUtilisateur, updateEtudiant, updateNotifications } = connectedSlice.actions;
+export const {
+  updateUtilisateur,
+  updateEtudiant,
+  updateNotifications,
+  updatePersonnalPhoto,
+} = connectedSlice.actions;
 export default connectedSlice.reducer;

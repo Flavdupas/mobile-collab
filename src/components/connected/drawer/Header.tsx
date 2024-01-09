@@ -5,8 +5,7 @@ import Money from "../../icons/Money";
 import { router } from "expo-router";
 import { RootState } from "../../../store/store";
 import { useSelector } from "react-redux";
-import AuthModel from "../../../model/auth/Auth";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const HeaderDrawer = () => {
   /* VARIABLES */
@@ -14,9 +13,9 @@ const HeaderDrawer = () => {
   const birthday = etudiant.date_naissance
     ? new Date(etudiant.date_naissance)
     : new Date();
-  const token = useSelector((state: RootState) => state.login.token);
-  const model = new AuthModel();
-  const [url, setUrl] = useState<string | null>(null);
+  const urlPersonnalPhoto = useSelector(
+    (state: RootState) => state.connected.fetchData.pp
+  );
 
   /* STYLES */
   const styles = StyleSheet.create({
@@ -30,7 +29,7 @@ const HeaderDrawer = () => {
       height: 60,
       width: 60,
       borderRadius: 50,
-      resizeMode:"cover"
+      resizeMode: "cover",
     },
     nameContainer: {
       flexDirection: "row",
@@ -94,20 +93,12 @@ const HeaderDrawer = () => {
     },
   });
 
-  /* LOGIQUE */
-  useEffect(() => {
-    const fetchPP = async () => {
-      if (token) {
-        setUrl(await model.getPP(token));
-      }
-    };
-    fetchPP();
-  }, []);
-
   return (
     <View>
       <View style={styles.header}>
-        {url && <Image source={{ uri: url }} style={styles.logo} />}
+        {urlPersonnalPhoto && (
+          <Image source={{ uri: urlPersonnalPhoto }} style={styles.logo} />
+        )}
         <View>
           <View style={styles.nameContainer}>
             <Text style={styles.name}>

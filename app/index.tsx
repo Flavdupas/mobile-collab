@@ -9,11 +9,10 @@ import {
 import slideData from "../src/data/auth/slideData";
 import OnBoarding from "../src/components/auth/OnBoarding";
 import Paginator from "../src/components/auth/Paginator";
-import { Link, Redirect, router } from "expo-router";
-import { useEffect, useRef } from "react";
+import { Link, router } from "expo-router";
+import { useRef } from "react";
 import { MAIN_COLOR } from "../src/constants/Color";
-import { useSelector } from "react-redux";
-import { RootState } from "../src/store/store";
+
 const Index = () => {
   const scrollX = useRef(new Animated.Value(0)).current;
 
