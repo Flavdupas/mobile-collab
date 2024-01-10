@@ -6,6 +6,7 @@ import { router } from "expo-router";
 import { RootState } from "../../../store/store";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import { Skeleton } from "moti/skeleton";
 
 const HeaderDrawer = () => {
   /* VARIABLES */
@@ -60,6 +61,15 @@ const HeaderDrawer = () => {
       justifyContent: "space-between",
       alignItems: "center",
     },
+    creditContainerSkeleton: {
+      width: "100%",
+      height: 50,
+      borderRadius: 10,
+      marginTop: 20,
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+    },
     moneyContainer: {
       borderWidth: 1,
       borderColor: "#7D7199",
@@ -99,37 +109,50 @@ const HeaderDrawer = () => {
         {urlPersonnalPhoto && (
           <Image source={{ uri: urlPersonnalPhoto }} style={styles.logo} />
         )}
-        <View>
-          <View style={styles.nameContainer}>
-            <Text style={styles.name}>
-              {etudiant.prenom} {etudiant.nom}
+        {!urlPersonnalPhoto && (
+          <Skeleton radius={"round"} height={60} width={60} />
+        )}
+        {etudiant.prenom && etudiant.nom && (
+          <View>
+            <View style={styles.nameContainer}>
+              <Text style={styles.name}>
+                {etudiant.prenom} {etudiant.nom}
+              </Text>
+              <Verify style={styles.verify} />
+            </View>
+            <Text style={styles.birthday}>
+              {birthday.toLocaleDateString("fr-FR", {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+              })}
             </Text>
-            <Verify style={styles.verify} />
           </View>
-          <Text style={styles.birthday}>
-            {birthday.toLocaleDateString("fr-FR", {
-              day: "numeric",
-              month: "long",
-              year: "numeric",
-            })}
-          </Text>
-        </View>
+        )}
+        {!etudiant.prenom || !etudiant.nom &&<Skeleton width={"86%"} height={45}/>}
       </View>
-      <TouchableOpacity
-        style={styles.creditContainer}
-        onPress={() => router.push("/home/")}
-      >
-        <View style={styles.moneyContainer}>
-          <Money />
+      {!etudiant.credit && (
+        <View style={styles.creditContainerSkeleton}>
+          <Skeleton width={"100%"} height={"100%"} />
         </View>
-        <View style={styles.headerTextContainer}>
-          <Text style={styles.textCredit}>Mes crédits</Text>
-          <Text style={styles.credit}>{etudiant.credit}</Text>
-        </View>
-        <View style={styles.plusContainer}>
-          <Plus />
-        </View>
-      </TouchableOpacity>
+      )}
+      {etudiant.credit && (
+        <TouchableOpacity
+          style={styles.creditContainer}
+          onPress={() => router.push("/home/")}
+        >
+          <View style={styles.moneyContainer}>
+            <Money />
+          </View>
+          <View style={styles.headerTextContainer}>
+            <Text style={styles.textCredit}>Mes crédits</Text>
+            <Text style={styles.credit}>{etudiant.credit}</Text>
+          </View>
+          <View style={styles.plusContainer}>
+            <Plus />
+          </View>
+        </TouchableOpacity>
+      )}
     </View>
   );
 };

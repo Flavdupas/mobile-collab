@@ -34,6 +34,7 @@ export default class ConnectedViewModel {
     try {
         return await this.authViewModel.getUser(token);
     } catch (error) {
+      console.log("Erreur : " + error)
         return null;
     }
   }

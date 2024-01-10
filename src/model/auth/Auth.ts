@@ -207,6 +207,7 @@ export default class AuthModel {
   public async getUser(token: string): Promise<any> {
     const apiUrl = process.env.EXPO_PUBLIC_API_URL;
     try {
+      console.log("chargement ...");
       const response = await fetch(apiUrl + "/connected/user", {
         method: "GET",
         headers: {
@@ -215,8 +216,8 @@ export default class AuthModel {
           "Content-Type": "application/json",
         },
       });
-
-      const data: {
+      console.log(response.status);
+      let data: {
         utilisateur: {
           id_utilisateur: number;
           email: string;
@@ -230,19 +231,24 @@ export default class AuthModel {
           date_naissance: string;
           rencontre: boolean;
         };
-        notifications: {
-          id_notification: number;
-          id_etudiant: number;
-          id_message: string | null;
-          id_post: number | null;
-          id_groupe: number | null;
-          titre: string;
-          date_notification: Date | null;
-        }[];
-      } = await response.json();
+        notifications:
+          | {
+              id_notification: number;
+              id_etudiant: number;
+              id_message: string | null;
+              id_post: number | null;
+              id_groupe: number | null;
+              titre: string;
+              date_notification: Date | null;
+            }[];
+      } | null = null;
+      if (response.ok) {
+        data = await response.json();
+      }
       return data;
     } catch (error) {
-      console.log(error);
+      console.log("Erreur ; " + error);
+      return null;
     }
   }
 

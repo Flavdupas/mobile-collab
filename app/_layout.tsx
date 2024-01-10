@@ -6,7 +6,11 @@ import store, { RootState, persistor } from "../src/store/store";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import ConnectedViewModel from "../src/viewModel/connected/Connected";
-import { updateEtudiant, updateNotifications, updateUtilisateur } from "../src/store/connected/connected";
+import {
+  updateEtudiant,
+  updateNotifications,
+  updateUtilisateur,
+} from "../src/store/connected/connected";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -56,13 +60,16 @@ function RootLayoutNav() {
     const isAuth = async () => {
       if (token) {
         router.replace("/home/");
-        const data = await viewModel.getUser(token);
-        if (data) {
-          dispatch(updateUtilisateur(data.utilisateur));
-          dispatch(updateEtudiant(data.etudiant));
-          dispatch(updateNotifications(data.notifications));
+        for (let attempt = 0; attempt <= 100; attempt++) {
+          const data = await viewModel.getUser(token);
+          if (data) {
+            dispatch(updateUtilisateur(data.utilisateur));
+            dispatch(updateEtudiant(data.etudiant));
+            dispatch(updateNotifications(data.notifications));
+            break;
+          }
+          console.log("Nouvelle tentative de chargement ...")
         }
-
         //persistor.purge();
       }
     };
