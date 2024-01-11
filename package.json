@@ -42,7 +42,8 @@
     "react-native-toggle-element": "^2.0.1",
     "react-native-web": "~0.19.6",
     "react-redux": "^9.0.4",
-    "redux-persist": "^6.0.0"
+    "redux-persist": "^6.0.0",
+    "expo-blur": "~12.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

@@ -32,3 +32,11 @@ export const isValidDate = (year:number, month:number, day:number) => {
         proposedDate.getDate() === day
     );
 }
+
+export const croppedText = (text: string): string => {
+  if (text.length <= 20) {
+    return text;
+  } else {
+    return text.substring(0, 20) + '...';
+  }
+};
