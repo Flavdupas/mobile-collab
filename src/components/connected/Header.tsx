@@ -99,7 +99,7 @@ const Header = () => {
       }
     };
     fetchPP();
-  }, []);
+  }, [token]);
   return (
     <View style={styles.body}>
       <View

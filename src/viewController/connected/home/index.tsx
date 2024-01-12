@@ -1,11 +1,23 @@
 import { useEffect, useState } from "react";
 import IndexViewModel from "../../../viewModel/connected/home/Index";
-import { FlatList, Image, StyleSheet, Text, View, Dimensions } from "react-native";
+import {
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+} from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Skeleton } from "moti/skeleton";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
-import { SOFT_PURPLE } from "../../../constants/Color";
+import {
+  LIGHT_PURPLE,
+  MAIN_COLOR,
+  SOFT_PURPLE,
+  SUPER_SOFT_PURPLE,
+} from "../../../constants/Color";
 import { BlurView } from "expo-blur";
 import { croppedText } from "../../../utils/string";
 import Polygone from "../../../components/icons/Polygone";
@@ -21,44 +33,44 @@ const IndexController = () => {
   const token = useSelector((state: RootState) => state.login.token);
   const [themes, setThemes] = useState<
     | {
-      id_theme: number;
-      libelle_theme: string;
-      path_logo: string;
-      color_hex: string;
-      created_at: Date;
-      updated_at: Date | null;
-    }[]
+        id_theme: number;
+        libelle_theme: string;
+        path_logo: string;
+        color_hex: string;
+        created_at: Date;
+        updated_at: Date | null;
+      }[]
     | null
   >(null);
   const [recentServices, setRecentServices] = useState<
     | {
-      id_service: number;
-      id_statutservice: number;
-      id_typeservice: number;
-      id_etudiant: number;
-      titre: string;
-      description: string;
-      date_debut: Date | null;
-      date_fin: Date | null;
-      created_at: Date | null;
-      updated_at: Date | null;
-      prix: number;
-      id_theme: number;
-      libelle_theme: string;
-      path_logo: string;
-      color_hex: string;
-      photos: {
         id_service: number;
-        id_photo: number;
-        path: string;
+        id_statutservice: number;
+        id_typeservice: number;
+        id_etudiant: number;
+        titre: string;
+        description: string;
+        date_debut: Date | null;
+        date_fin: Date | null;
         created_at: Date | null;
         updated_at: Date | null;
-      }[];
-      definir_themes: {
-        id_service: 5;
-        id_theme: 15;
-      }[];
-    }[]
+        prix: number;
+        id_theme: number;
+        libelle_theme: string;
+        path_logo: string;
+        color_hex: string;
+        photos: {
+          id_service: number;
+          id_photo: number;
+          path: string;
+          created_at: Date | null;
+          updated_at: Date | null;
+        }[];
+        definir_themes: {
+          id_service: 5;
+          id_theme: 15;
+        }[];
+      }[]
     | null
   >(null);
 
@@ -80,36 +92,36 @@ const IndexController = () => {
       fontSize: 24,
       color: "#fff",
       fontWeight: "bold",
-    }
+    },
   });
 
   /* LOGIQUE */
   useEffect(() => {
     const fetchData = async () => {
-      const themes = await viewModel.getThemes();
-      if (themes) {
-        setThemes([
-          {
-            id_theme: -1,
-            libelle_theme: "Tout",
-            path_logo: "",
-            color_hex: "",
-            created_at: new Date(),
-            updated_at: null,
-          },
-          ...themes,
-        ]);
-      }
       if (token) {
+        const themes = await viewModel.getThemes();
+        if (themes) {
+          setThemes([
+            {
+              id_theme: -1,
+              libelle_theme: "Tout",
+              path_logo: "",
+              color_hex: "",
+              created_at: new Date(),
+              updated_at: null,
+            },
+            ...themes,
+          ]);
+        }
         const recentServicesData = await viewModel.getRecentService(token);
-        //console.log(recentServicesData);
+        console.log(recentServicesData);
         if (recentServicesData) {
           setRecentServices(recentServicesData);
         }
       }
     };
     fetchData();
-  }, []);
+  }, [token]);
   return (
     <>
       <View>
@@ -117,7 +129,12 @@ const IndexController = () => {
         <RecentServices data={recentServices} />
         <View style={styles.containerTitle}>
           <Text style={styles.title}>Pour vous</Text>
-          <TouchableOpacity onPress={() => router.push("/home/")} style={styles.round}><Chevron /></TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => router.push("/home/")}
+            style={styles.round}
+          >
+            <Chevron />
+          </TouchableOpacity>
         </View>
         <ServiceForYou />
       </View>
@@ -127,15 +144,15 @@ const IndexController = () => {
 
 interface ThemesProps {
   data:
-  | {
-    id_theme: number;
-    libelle_theme: string;
-    path_logo: string;
-    color_hex: string;
-    created_at: Date;
-    updated_at: Date | null;
-  }[]
-  | null;
+    | {
+        id_theme: number;
+        libelle_theme: string;
+        path_logo: string;
+        color_hex: string;
+        created_at: Date;
+        updated_at: Date | null;
+      }[]
+    | null;
 }
 const Themes: React.FC<ThemesProps> = ({ data }) => {
   /* VARIABLES */
@@ -176,35 +193,35 @@ const Themes: React.FC<ThemesProps> = ({ data }) => {
 
 interface RecentServicesProps {
   data:
-  | {
-    id_service: number;
-    id_statutservice: number;
-    id_typeservice: number;
-    id_etudiant: number;
-    titre: string;
-    description: string;
-    date_debut: Date | null;
-    date_fin: Date | null;
-    created_at: Date | null;
-    updated_at: Date | null;
-    prix: number;
-    id_theme: number;
-    libelle_theme: string;
-    path_logo: string;
-    color_hex: string;
-    photos: {
-      id_service: number;
-      id_photo: number;
-      path: string;
-      created_at: Date | null;
-      updated_at: Date | null;
-    }[];
-    definir_themes: {
-      id_service: number;
-      id_theme: number;
-    }[];
-  }[]
-  | null;
+    | {
+        id_service: number;
+        id_statutservice: number;
+        id_typeservice: number;
+        id_etudiant: number;
+        titre: string;
+        description: string;
+        date_debut: Date | null;
+        date_fin: Date | null;
+        created_at: Date | null;
+        updated_at: Date | null;
+        prix: number;
+        id_theme: number;
+        libelle_theme: string;
+        path_logo: string;
+        color_hex: string;
+        photos: {
+          id_service: number;
+          id_photo: number;
+          path: string;
+          created_at: Date | null;
+          updated_at: Date | null;
+        }[];
+        definir_themes: {
+          id_service: number;
+          id_theme: number;
+        }[];
+      }[]
+    | null;
 }
 
 const RecentServices: React.FC<RecentServicesProps> = ({ data }) => {
@@ -276,7 +293,7 @@ const RecentServices: React.FC<RecentServicesProps> = ({ data }) => {
                   <BlurView intensity={5} style={styles.blur} />
                 </View>
                 <View style={styles.bottomContainer}>
-                  <Text style={styles.title}>{croppedText(item.titre)}</Text>
+                  <Text style={styles.title}>{croppedText(item.titre,20)}</Text>
                 </View>
                 <Polygone
                   background={`#${item.color_hex}`}
@@ -310,7 +327,6 @@ const RecentServices: React.FC<RecentServicesProps> = ({ data }) => {
 };
 
 const ServiceForYou = () => {
-
   /* STYLES */
   const styles = StyleSheet.create({
     body: {
@@ -319,66 +335,146 @@ const ServiceForYou = () => {
     },
     card: {
       height: "100%",
-      width: width * 90 / 100,
+      width: (width * 90) / 100,
       backgroundColor: SOFT_PURPLE,
       marginHorizontal: 20,
       borderRadius: 15,
       flexDirection: "row",
-      justifyContent: "space-between"
+      justifyContent: "space-between",
     },
 
     /* LEFT PART */
     leftPart: {
-      width:"55%"
+      width: "55%",
+      padding: 15,
+    },
+    containerType: {
+      backgroundColor: SUPER_SOFT_PURPLE,
+      width: 125,
+      paddingVertical: 2,
+      paddingHorizontal: 10,
+      borderRadius: 5,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    type: {
+      fontSize: 12,
+      fontWeight: "500",
+      color: "#fff",
+    },
+    containerTitle: {
+      justifyContent:"space-evenly",
+      flex:1
+    },
+    title: {
+      fontSize: 18,
+      color: "#fff",
+      fontWeight: "600",
+    },
+    containerInfo: {
+      flexDirection: "row",
+      gap: 8,
+    },
+    circle: {
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: MAIN_COLOR,
+      height: 40,
+      width: 40,
+      borderWidth: 1,
+      borderColor: "#776C90",
+      borderRadius: 25,
+    },
+    price: {
+      fontSize: 11,
+      color: "#fff",
+      fontWeight: "500",
+    },
+    containerText: {
+      justifyContent: "center",
+    },
+    text: {
+      color: "#fff",
+      fontSize: 10,
+    },
+    tinyText: {
+      color: "#fff",
+      fontSize: 8,
     },
 
     /* RIGHT PART */
     firstCircle: {
-      transform: [{translateX:-18},{rotate:'-5deg'}], position:"absolute", bottom:0
+      transform: [{ translateX: -18 }, { rotate: "-5deg" }],
+      position: "absolute",
+      bottom: 0,
     },
     secondCircle: {
-      transform: [{translateX:-10}], position:"absolute", top:20
+      transform: [{ translateX: -10 }],
+      position: "absolute",
+      top: 20,
     },
     image: {
-      borderRadius:150
+      borderRadius: 150,
     },
     rightPart: {
-      width:"45%", overflow: "hidden", justifyContent: "center", alignItems: "flex-start", paddingLeft:20
-    }
+      width: "45%",
+      overflow: "hidden",
+      justifyContent: "center",
+      alignItems: "flex-start",
+      paddingLeft: 20,
+    },
   });
 
   return (
     <>
       <View style={styles.body}>
-        <FlatList showsHorizontalScrollIndicator={false} pagingEnabled horizontal data={[1, 2, 3, 4]} renderItem={({ item }) => (
-          <View style={styles.card}>
-       
+        <FlatList
+          showsHorizontalScrollIndicator={false}
+          pagingEnabled
+          horizontal
+          data={[1, 2, 3, 4]}
+          renderItem={({ item }) => (
+            <View style={styles.card}>
               <View style={styles.leftPart}>
-                <Text>Informatiques</Text>
-                <Text>Création d'un site</Text>
-                <View>
-                    <View>
-                      <Text>20</Text>
-                      <Money />
+                <View style={styles.containerType}>
+                  <Text style={styles.type}>Informatiques</Text>
+                </View>
+                <View style={styles.containerTitle}>
+                  <Text style={styles.title}>{ croppedText('Création d\'un site internet',30)}</Text>
+                  <View style={styles.containerInfo}>
+                    <View style={styles.circle}>
+                      <Text style={styles.price}>20</Text>
+                      <Money height={15} />
                     </View>
-                    <View>
-                      <Text>Publié par Louison</Text>
-                      <Text>le 22 / 12 /2023</Text>
+                    <View style={styles.containerText}>
+                      <Text style={styles.text}>Publié par Louison</Text>
+                      <Text style={styles.tinyText}>le 22 / 12 /2023</Text>
                     </View>
+                  </View>
                 </View>
               </View>
-            
+
               <View style={styles.rightPart}>
                 <View>
-                  <Circle style={styles.firstCircle}/>
-                  <Circle style={styles.secondCircle} reversed/>
-                  <Image source={{ uri : "https://static.vecteezy.com/system/resources/previews/025/938/762/non_2x/night-scene-of-after-rain-city-in-cyberpunk-style-futuristic-nostalgic-80s-90s-neon-lights-vibrant-colorsrealistic-horizontal-illustration-ai-generated-free-photo.jpg"}} style={styles.image} width={200} height={200}/>
+                  <Circle style={styles.firstCircle} />
+                  <Circle style={styles.secondCircle} reversed />
+                  <Image
+                    source={{
+                      uri: "https://static.vecteezy.com/system/resources/previews/025/938/762/non_2x/night-scene-of-after-rain-city-in-cyberpunk-style-futuristic-nostalgic-80s-90s-neon-lights-vibrant-colorsrealistic-horizontal-illustration-ai-generated-free-photo.jpg",
+                    }}
+                    style={styles.image}
+                    width={200}
+                    height={200}
+                  />
                 </View>
               </View>
-          </View>)} />
+            </View>
+          )}
+        />
       </View>
     </>
-  )
-}
+  );
+};
 
 export default IndexController;

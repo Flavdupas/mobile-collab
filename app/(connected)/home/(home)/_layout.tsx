@@ -1,4 +1,3 @@
-import { View } from "react-native";
 import CustomTabs from "../../../../src/components/connected/CustomTab";
 import { Tabs } from "expo-router";
 import Header from "../../../../src/components/connected/Header";

@@ -33,10 +33,10 @@ export const isValidDate = (year:number, month:number, day:number) => {
     );
 }
 
-export const croppedText = (text: string): string => {
-  if (text.length <= 20) {
+export const croppedText = (text: string, length:number): string => {
+  if (text.length <= length) {
     return text;
   } else {
-    return text.substring(0, 20) + '...';
+    return text.substring(0, length) + '...';
   }
 };
