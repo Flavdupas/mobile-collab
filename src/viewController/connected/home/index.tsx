@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import IndexViewModel from "../../../viewModel/connected/home/Index";
-import { FlatList, Image, StyleSheet, Text, View } from "react-native";
+import { FlatList, Image, StyleSheet, Text, View, Dimensions } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Skeleton } from "moti/skeleton";
 import { useSelector } from "react-redux";
@@ -9,6 +9,11 @@ import { SOFT_PURPLE } from "../../../constants/Color";
 import { BlurView } from "expo-blur";
 import { croppedText } from "../../../utils/string";
 import Polygone from "../../../components/icons/Polygone";
+import Chevron from "../../../components/icons/Chevron";
+import { router } from "expo-router";
+import Money from "../../../components/icons/Money";
+import Circle from "../../../components/icons/Circle";
+const { width } = Dimensions.get("window");
 
 const IndexController = () => {
   /* VARIABLES */
@@ -16,46 +21,68 @@ const IndexController = () => {
   const token = useSelector((state: RootState) => state.login.token);
   const [themes, setThemes] = useState<
     | {
-        id_theme: number;
-        libelle_theme: string;
-        path_logo: string;
-        color_hex: string;
-        created_at: Date;
-        updated_at: Date | null;
-      }[]
+      id_theme: number;
+      libelle_theme: string;
+      path_logo: string;
+      color_hex: string;
+      created_at: Date;
+      updated_at: Date | null;
+    }[]
     | null
   >(null);
   const [recentServices, setRecentServices] = useState<
     | {
+      id_service: number;
+      id_statutservice: number;
+      id_typeservice: number;
+      id_etudiant: number;
+      titre: string;
+      description: string;
+      date_debut: Date | null;
+      date_fin: Date | null;
+      created_at: Date | null;
+      updated_at: Date | null;
+      prix: number;
+      id_theme: number;
+      libelle_theme: string;
+      path_logo: string;
+      color_hex: string;
+      photos: {
         id_service: number;
-        id_statutservice: number;
-        id_typeservice: number;
-        id_etudiant: number;
-        titre: string;
-        description: string;
-        date_debut: Date | null;
-        date_fin: Date | null;
+        id_photo: number;
+        path: string;
         created_at: Date | null;
         updated_at: Date | null;
-        prix: number;
-        id_theme: number;
-        libelle_theme: string;
-        path_logo: string;
-        color_hex: string;
-        photos: {
-          id_service: number;
-          id_photo: number;
-          path: string;
-          created_at: Date | null;
-          updated_at: Date | null;
-        }[];
-        definir_themes: {
-          id_service: 5;
-          id_theme: 15;
-        }[];
-      }[]
+      }[];
+      definir_themes: {
+        id_service: 5;
+        id_theme: 15;
+      }[];
+    }[]
     | null
   >(null);
+
+  /* STYLES */
+  const styles = StyleSheet.create({
+    containerTitle: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+    },
+    round: {
+      backgroundColor: "#893E76",
+      height: 25,
+      width: 25,
+      borderRadius: 25,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    title: {
+      fontSize: 24,
+      color: "#fff",
+      fontWeight: "bold",
+    }
+  });
+
   /* LOGIQUE */
   useEffect(() => {
     const fetchData = async () => {
@@ -88,6 +115,11 @@ const IndexController = () => {
       <View>
         <Themes data={themes} />
         <RecentServices data={recentServices} />
+        <View style={styles.containerTitle}>
+          <Text style={styles.title}>Pour vous</Text>
+          <TouchableOpacity onPress={() => router.push("/home/")} style={styles.round}><Chevron /></TouchableOpacity>
+        </View>
+        <ServiceForYou />
       </View>
     </>
   );
@@ -95,15 +127,15 @@ const IndexController = () => {
 
 interface ThemesProps {
   data:
-    | {
-        id_theme: number;
-        libelle_theme: string;
-        path_logo: string;
-        color_hex: string;
-        created_at: Date;
-        updated_at: Date | null;
-      }[]
-    | null;
+  | {
+    id_theme: number;
+    libelle_theme: string;
+    path_logo: string;
+    color_hex: string;
+    created_at: Date;
+    updated_at: Date | null;
+  }[]
+  | null;
 }
 const Themes: React.FC<ThemesProps> = ({ data }) => {
   /* VARIABLES */
@@ -144,35 +176,35 @@ const Themes: React.FC<ThemesProps> = ({ data }) => {
 
 interface RecentServicesProps {
   data:
-    | {
-        id_service: number;
-        id_statutservice: number;
-        id_typeservice: number;
-        id_etudiant: number;
-        titre: string;
-        description: string;
-        date_debut: Date | null;
-        date_fin: Date | null;
-        created_at: Date | null;
-        updated_at: Date | null;
-        prix: number;
-        id_theme: number;
-        libelle_theme: string;
-        path_logo: string;
-        color_hex: string;
-        photos: {
-          id_service: number;
-          id_photo: number;
-          path: string;
-          created_at: Date | null;
-          updated_at: Date | null;
-        }[];
-        definir_themes: {
-          id_service: number;
-          id_theme: number;
-        }[];
-      }[]
-    | null;
+  | {
+    id_service: number;
+    id_statutservice: number;
+    id_typeservice: number;
+    id_etudiant: number;
+    titre: string;
+    description: string;
+    date_debut: Date | null;
+    date_fin: Date | null;
+    created_at: Date | null;
+    updated_at: Date | null;
+    prix: number;
+    id_theme: number;
+    libelle_theme: string;
+    path_logo: string;
+    color_hex: string;
+    photos: {
+      id_service: number;
+      id_photo: number;
+      path: string;
+      created_at: Date | null;
+      updated_at: Date | null;
+    }[];
+    definir_themes: {
+      id_service: number;
+      id_theme: number;
+    }[];
+  }[]
+  | null;
 }
 
 const RecentServices: React.FC<RecentServicesProps> = ({ data }) => {
@@ -276,5 +308,77 @@ const RecentServices: React.FC<RecentServicesProps> = ({ data }) => {
     </>
   );
 };
+
+const ServiceForYou = () => {
+
+  /* STYLES */
+  const styles = StyleSheet.create({
+    body: {
+      height: 150,
+      width: "100%",
+    },
+    card: {
+      height: "100%",
+      width: width * 90 / 100,
+      backgroundColor: SOFT_PURPLE,
+      marginHorizontal: 20,
+      borderRadius: 15,
+      flexDirection: "row",
+      justifyContent: "space-between"
+    },
+
+    /* LEFT PART */
+    leftPart: {
+      width:"55%"
+    },
+
+    /* RIGHT PART */
+    firstCircle: {
+      transform: [{translateX:-18},{rotate:'-5deg'}], position:"absolute", bottom:0
+    },
+    secondCircle: {
+      transform: [{translateX:-10}], position:"absolute", top:20
+    },
+    image: {
+      borderRadius:150
+    },
+    rightPart: {
+      width:"45%", overflow: "hidden", justifyContent: "center", alignItems: "flex-start", paddingLeft:20
+    }
+  });
+
+  return (
+    <>
+      <View style={styles.body}>
+        <FlatList showsHorizontalScrollIndicator={false} pagingEnabled horizontal data={[1, 2, 3, 4]} renderItem={({ item }) => (
+          <View style={styles.card}>
+       
+              <View style={styles.leftPart}>
+                <Text>Informatiques</Text>
+                <Text>Création d'un site</Text>
+                <View>
+                    <View>
+                      <Text>20</Text>
+                      <Money />
+                    </View>
+                    <View>
+                      <Text>Publié par Louison</Text>
+                      <Text>le 22 / 12 /2023</Text>
+                    </View>
+                </View>
+              </View>
+            
+              <View style={styles.rightPart}>
+                <View>
+                  <Circle style={styles.firstCircle}/>
+                  <Circle style={styles.secondCircle} reversed/>
+                  <Image source={{ uri : "https://static.vecteezy.com/system/resources/previews/025/938/762/non_2x/night-scene-of-after-rain-city-in-cyberpunk-style-futuristic-nostalgic-80s-90s-neon-lights-vibrant-colorsrealistic-horizontal-illustration-ai-generated-free-photo.jpg"}} style={styles.image} width={200} height={200}/>
+                </View>
+              </View>
+          </View>)} />
+      </View>
+    </>
+  )
+}
 
 export default IndexController;

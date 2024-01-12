@@ -11,6 +11,8 @@ import LoginViewModel from "../../../viewModel/auth/Login";
 import LottieView from "lottie-react-native";
 import { useDispatch } from "react-redux";
 import { updateToken } from "../../../store/login/login";
+import { updateEtudiant, updateNotifications, updateUtilisateur } from "../../../store/connected/connected";
+import ConnectedViewModel from "../../../viewModel/connected/Connected";
 
 const IndexController = () => {
   /* Variables */
@@ -21,6 +23,7 @@ const IndexController = () => {
   const [disabled, setDisabled] = useState<boolean>(true);
   const [isLoading, setIsloading] = useState<boolean>(false);
   const viewModel = new LoginViewModel();
+  const connectedViewModel = new ConnectedViewModel();
   const dispatch = useDispatch();
 
   /* Style */
@@ -69,10 +72,20 @@ const IndexController = () => {
       if (response.login) {
         setIsloading(false);
         resetHistory();
-        router.replace("/home");
+        router.replace("/home/");
         if(response.token) {
           console.log(response.token);
           dispatch(updateToken(response.token));
+          for (let attempt = 0; attempt <= 100; attempt++) {
+            const data = await connectedViewModel.getUser(response.token);
+            if (data) {
+              dispatch(updateUtilisateur(data.utilisateur));
+              dispatch(updateEtudiant(data.etudiant));
+              dispatch(updateNotifications(data.notifications));
+              break;
+            }
+            console.log("Nouvelle tentative de chargement ...")
+          }
         }
       } else {
         setIsloading(false);
