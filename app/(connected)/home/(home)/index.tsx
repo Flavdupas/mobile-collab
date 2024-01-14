@@ -1,24 +1,39 @@
-import { Text, StyleSheet, View } from "react-native";
+import { Text, StyleSheet, View, ScrollView } from "react-native";
 import React, { Component } from "react";
 import { MAIN_COLOR } from "../../../../src/constants/Color";
 import connectedStyle from "../../../../src/constants/ConnectedStyle";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../src/store/store";
 import IndexController from "../../../../src/viewController/connected/home";
+import { Skeleton } from "moti/skeleton";
 
 const Index = () => {
   /* VARIABLES */
   const etudiant = useSelector((state: RootState) => state.connected.etudiant);
   /* STYLES */
-  const styles = StyleSheet.create({});
+  const styles = StyleSheet.create({
+    title: {
+      marginLeft: 20,
+    },
+    skeletonContainer: {
+      paddingHorizontal: 20,
+    },
+  });
   return (
-    <View style={connectedStyle.body}>
-      <Text style={connectedStyle.title}>Bonjour</Text>
-      <Text style={connectedStyle.title}>
-        {etudiant.prenom} {etudiant.nom}
-      </Text>
+    <ScrollView style={connectedStyle.body}>
+      <Text style={[connectedStyle.title, styles.title]}>Bonjour</Text>
+      {etudiant.nom && etudiant.prenom && (
+        <Text style={[connectedStyle.title, styles.title]}>
+          {etudiant.prenom} {etudiant.nom}
+        </Text>
+      )}
+      {(!etudiant.nom || !etudiant.prenom) && (
+        <View style={styles.skeletonContainer}>
+          <Skeleton height={40} width={"100%"} />
+        </View>
+      )}
       <IndexController />
-    </View>
+    </ScrollView>
   );
 };
 

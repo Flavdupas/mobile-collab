@@ -11,6 +11,7 @@ import {
   updateNotifications,
   updateUtilisateur,
 } from "../src/store/connected/connected";
+import { delay } from "../src/utils/time";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -68,6 +69,7 @@ function RootLayoutNav() {
             dispatch(updateNotifications(data.notifications));
             break;
           }
+          await delay(5000);
           console.log("Nouvelle tentative de chargement ...")
         }
         //persistor.purge();

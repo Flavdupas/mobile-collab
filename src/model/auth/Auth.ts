@@ -255,7 +255,7 @@ export default class AuthModel {
   public async getPP(token: string): Promise<any> {
     const apiUrl = process.env.EXPO_PUBLIC_API_URL;
     try {
-      const response = await fetch(apiUrl + "/connected/pp", {
+      const response = await fetch(apiUrl + "/connected/pp" + '?' + new Date(), {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
