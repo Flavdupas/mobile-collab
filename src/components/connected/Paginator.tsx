@@ -57,7 +57,7 @@ const Paginator: React.FC<PaginatorProps> = ({ data, scrollX }) => {
   const { width } = useWindowDimensions();
   return (
     <View style={styles.containerDot}>
-      {data && data.map((_, i) => {
+      {(data && data.length > 0 ) && data.map((_, i) => {
         const inputRange = [(i - 1) * width, i * width, (i + 1) * width];
         const color = scrollX.interpolate({
           inputRange,

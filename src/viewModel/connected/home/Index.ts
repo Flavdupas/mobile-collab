@@ -1,5 +1,41 @@
 import DataModel from "../../../model/data/Data";
+import PostModel from "../../../model/data/Post";
 import ServiceModel from "../../../model/data/Service";
+
+/* INTERFACES */
+interface Post {
+  id_post: number;
+  id_etudiant: number;
+  titre: string;
+  contenu: string;
+  path_image: string | null;
+  created_at: Date;
+  updated_at: Date | null;
+  id_utilisateur: number;
+  id_admin_refuser: number | null;
+  id_admin_valider: number;
+  credit: number;
+  nom: string;
+  prenom: string;
+  telephone: string;
+  date_naissance: Date;
+  rencontre: number;
+  path_carteetu: string;
+  date_traitement: Date;
+  date_demande: string;
+  date_validation: Date;
+  date_refus: Date | null;
+  commentaire_refus: Date | null;
+  date_sco: string;
+  id_classe: number;
+  id_section: number;
+  libelle_classe: string;
+  id_lycee: number;
+  libelle_section: string;
+  like_count: number;
+  comment_count: number;
+}
+
 
 interface Theme {
   id_theme: number;
@@ -82,10 +118,12 @@ interface Service {
 export default class IndexViewModel {
   private dataModel: DataModel;
   private serviceModel: ServiceModel;
+  private postModel: PostModel;
 
   constructor() {
     this.dataModel = new DataModel();
     this.serviceModel = new ServiceModel();
+    this.postModel = new PostModel();
   }
 
   public async getThemes(): Promise<Theme[] | null> {
@@ -103,7 +141,6 @@ export default class IndexViewModel {
   ): Promise<RecentService[] | null> {
     try {
       const data = await this.dataModel.getRecentServices(token);
-      console.log("Data : " + data);
       return data;
     } catch (error) {
       console.log(error);
@@ -114,6 +151,16 @@ export default class IndexViewModel {
   public async serviceRecommended(token: string): Promise<Service[] | null> {
     try {
       const data = await this.serviceModel.serviceRecommended(token);
+      return data;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
+
+  public async getRecentPost(token: string):Promise<Post[] | null> {
+    try {
+      const data = await this.postModel.getRecentPosts(token);
       return data;
     } catch (error) {
       console.log(error);

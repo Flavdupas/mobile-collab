@@ -32,6 +32,40 @@ import Logo from "../../../components/icons/Logo";
 const { width } = Dimensions.get("window");
 const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
+/* INTERFACES */
+interface Post {
+  id_post: number;
+  id_etudiant: number;
+  titre: string;
+  contenu: string;
+  path_image: string | null;
+  created_at: Date;
+  updated_at: Date | null;
+  id_utilisateur: number;
+  id_admin_refuser: number | null;
+  id_admin_valider: number;
+  credit: number;
+  nom: string;
+  prenom: string;
+  telephone: string;
+  date_naissance: Date;
+  rencontre: number;
+  path_carteetu: string;
+  date_traitement: Date;
+  date_demande: string;
+  date_validation: Date;
+  date_refus: Date | null;
+  commentaire_refus: Date | null;
+  date_sco: string;
+  id_classe: number;
+  id_section: number;
+  libelle_classe: string;
+  id_lycee: number;
+  libelle_section: string;
+  like_count: number;
+  comment_count: number;
+}
+
 interface Service {
   created_at: Date;
   date_debut: Date | null;
@@ -86,6 +120,7 @@ const IndexController = () => {
   const [serviceRecommended, setServiceRecommened] = useState<Service[] | null>(
     null
   );
+  const [recentPosts, setRecentPosts] = useState<Post[] | null>(null);
   const [themes, setThemes] = useState<
     | {
         id_theme: number;
@@ -171,15 +206,18 @@ const IndexController = () => {
           ]);
         }
         const recentServicesData = await viewModel.getRecentService(token);
-        console.log(recentServicesData);
         if (recentServicesData) {
           setRecentServices(recentServicesData);
         }
 
         const serviceRecommended = await viewModel.serviceRecommended(token);
-        console.log(serviceRecommended);
         if (serviceRecommended) {
           setServiceRecommened(serviceRecommended);
+        }
+
+        const recentPosts = await viewModel.getRecentPost(token);
+        if (recentPosts) {
+          setRecentPosts(recentPosts);
         }
       }
     };
@@ -209,7 +247,7 @@ const IndexController = () => {
             <Chevron />
           </TouchableOpacity>
         </View>
-        <RecentPost />
+        <RecentPost recentPosts={recentPosts} token={token ?? ""} />
       </View>
     </>
   );
@@ -311,6 +349,7 @@ const RecentServices: React.FC<RecentServicesProps> = ({ data, token }) => {
       flexDirection: "row",
       width: "100%",
       marginBottom: 10,
+      height: 160,
     },
     card: {
       width: 150,
@@ -538,8 +577,6 @@ const ServiceRecommended: React.FC<ServiceRecommendedProps> = ({
     },
   });
 
-  console.log("Les données : " + data);
-
   return (
     <>
       {data && (
@@ -561,7 +598,9 @@ const ServiceRecommended: React.FC<ServiceRecommendedProps> = ({
                 <TouchableOpacity style={styles.card}>
                   <View style={styles.leftPart}>
                     <View style={styles.containerType}>
-                      <Text style={styles.type}>{item.theme.libelle_theme}</Text>
+                      <Text style={styles.type}>
+                        {item.theme.libelle_theme}
+                      </Text>
                     </View>
                     <View style={styles.containerTitle}>
                       <Text style={styles.title}>
@@ -626,12 +665,16 @@ const ServiceRecommended: React.FC<ServiceRecommendedProps> = ({
   );
 };
 
-interface RecentPostProps {}
+interface RecentPostProps {
+  recentPosts: Post[] | null;
+  token: string;
+}
 
-const RecentPost: React.FC<RecentPostProps> = () => {
+const RecentPost: React.FC<RecentPostProps> = ({ recentPosts, token }) => {
   /* STYLES */
   const styles = StyleSheet.create({
     body: {
+      marginTop:10,
       marginBottom: 125,
       paddingHorizontal: 15,
     },
@@ -711,59 +754,72 @@ const RecentPost: React.FC<RecentPostProps> = () => {
   });
 
   return (
-    <></> /*
     <>
       <View style={styles.body}>
-        {[
-          { image: false },
-          { image: true },
-          { image: false },
-          { image: true },
-        ].map((item, _i) => {
-          return (
-            <TouchableOpacity style={styles.postContainer} key={_i}>
-              <Logo style={styles.logoApp} />
-              <View style={styles.header}>
-                <Image
-                  style={styles.pp}
-                  source={{
-                    uri: "https://c4.wallpaperflare.com/wallpaper/332/915/762/one-piece-roronoa-zoro-hd-wallpaper-preview.jpg",
-                  }}
-                />
-                {true && (
-                  <View>
-                    <View style={styles.nameContainer}>
-                      <Text style={styles.name}>Mathis Perrault</Text>
-                      <Verify style={styles.verify} />
-                    </View>
-                    <Text style={styles.class}>@BTS SIO</Text>
-                  </View>
-                )}
-              </View>
-              <View>
-                <Text style={styles.textContent}>
-                  Je viens de commencer à regarder One Piece et je suis déjà
-                  accro ! Je suis à l'épisode 20 et je ne peux pas m'arrêter.
-                </Text>
-                {item.image && (
+        {!recentPosts && <Skeleton height={125} width={"100%"} />}
+        {recentPosts &&
+          recentPosts.map((item, _i) => {
+            return (
+              <TouchableOpacity style={styles.postContainer} key={_i}>
+                <Logo style={styles.logoApp} />
+                <View style={styles.header}>
                   <Image
+                    style={styles.pp}
                     source={{
-                      uri: "https://r4.wallpaperflare.com/wallpaper/412/63/634/anime-one-piece-going-merry-one-piece-wallpaper-132a732a18457c5d4812eed34128c221.jpg",
+                      uri: `${apiUrl}/post/pp/${item.id_etudiant}`,
+                      headers: {
+                        Authorization: `Bearer ${token}`,
+                      },
                     }}
-                    style={styles.imageContent}
                   />
-                )}
-                <View style={styles.footer}>
-                  <Text style={styles.textFooter}>12 décembre 2023</Text>
-                  <Text style={styles.textFooter}>12 likes</Text>
-                  <Text style={styles.textFooter}>3 commentaires</Text>
+                  {true && (
+                    <View>
+                      <View style={styles.nameContainer}>
+                        <Text style={styles.name}>
+                          {item.prenom} {item.nom}
+                        </Text>
+                        <Verify style={styles.verify} />
+                      </View>
+                      <Text style={styles.class}>@{item.libelle_section}</Text>
+                    </View>
+                  )}
                 </View>
-              </View>
-            </TouchableOpacity>
-          );
-        })}
+                <View>
+                  <Text style={styles.textContent}>
+                    {croppedText(item.contenu, 150)}
+                  </Text>
+                  {item.path_image && (
+                    <Image
+                      source={{
+                        uri: `${apiUrl}/post/image/${item.id_post}`,
+                        headers: {
+                          Authorization: `Bearer ${token}`,
+                        },
+                      }}
+                      style={styles.imageContent}
+                    />
+                  )}
+                  <View style={styles.footer}>
+                    <Text style={styles.textFooter}>
+                      {new Date(item.created_at).toLocaleDateString("fr-FR", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                      })}
+                    </Text>
+                    <Text style={styles.textFooter}>
+                      {item.like_count} likes
+                    </Text>
+                    <Text style={styles.textFooter}>
+                      {item.comment_count} commentaires
+                    </Text>
+                  </View>
+                </View>
+              </TouchableOpacity>
+            );
+          })}
       </View>
-    </>*/
+    </>
   );
 };
 

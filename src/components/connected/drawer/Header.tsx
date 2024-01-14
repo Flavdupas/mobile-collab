@@ -112,7 +112,7 @@ const HeaderDrawer = () => {
         {!urlPersonnalPhoto && (
           <Skeleton radius={"round"} height={60} width={60} />
         )}
-        {(etudiant.prenom && etudiant.nom ) && (
+        {etudiant.prenom && etudiant.nom && (
           <View>
             <View style={styles.nameContainer}>
               <Text style={styles.name}>
@@ -129,7 +129,9 @@ const HeaderDrawer = () => {
             </Text>
           </View>
         )}
-        {(!etudiant.prenom || !etudiant.nom ) && <Skeleton width={"86%"} height={45}/>}
+        {(!etudiant.prenom || !etudiant.nom) && (
+          <Skeleton width={"86%"} height={45} />
+        )}
       </View>
       {!etudiant.credit && (
         <View style={styles.creditContainerSkeleton}>
