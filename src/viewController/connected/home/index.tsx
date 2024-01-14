@@ -30,6 +30,7 @@ import Paginator from "../../../components/connected/Paginator";
 import Verify from "../../../components/icons/Verify";
 import Logo from "../../../components/icons/Logo";
 const { width } = Dimensions.get("window");
+const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
 interface Service {
   created_at: Date;
@@ -68,6 +69,14 @@ interface Service {
     created_at: Date | null;
     updated_at: Date | null;
   }[];
+  theme: {
+    color_hex: string;
+    created_at: Date;
+    id_theme: number;
+    libelle_theme: string;
+    path_logo: string;
+    updated_at: Date | null;
+  };
 }
 
 const IndexController = () => {
@@ -296,9 +305,6 @@ interface RecentServicesProps {
 }
 
 const RecentServices: React.FC<RecentServicesProps> = ({ data, token }) => {
-  /* VARIABLES */
-  const apiUrl = process.env.EXPO_PUBLIC_API_URL;
-
   /* STYLES */
   const styles = StyleSheet.create({
     containerItems: {
@@ -555,7 +561,7 @@ const ServiceRecommended: React.FC<ServiceRecommendedProps> = ({
                 <TouchableOpacity style={styles.card}>
                   <View style={styles.leftPart}>
                     <View style={styles.containerType}>
-                      <Text style={styles.type}>Informatiques</Text>
+                      <Text style={styles.type}>{item.theme.libelle_theme}</Text>
                     </View>
                     <View style={styles.containerTitle}>
                       <Text style={styles.title}>
@@ -587,7 +593,7 @@ const ServiceRecommended: React.FC<ServiceRecommendedProps> = ({
                       <Circle style={styles.secondCircle} reversed />
                       <Image
                         source={{
-                          uri: `http://192.168.1.19:8000/api/service/image/${item.photos[0].id_service}/${item.photos[0].id_photo}`,
+                          uri: `${apiUrl}/service/image/${item.photos[0].id_service}/${item.photos[0].id_photo}`,
                           headers: {
                             Authorization: `Bearer ${token}`,
                           },
@@ -609,6 +615,11 @@ const ServiceRecommended: React.FC<ServiceRecommendedProps> = ({
       {!data && (
         <View style={styles.bodySkeleton}>
           <Skeleton width={"100%"} height={"100%"} />
+        </View>
+      )}
+      {!data && (
+        <View style={{ alignItems: "center", marginVertical: 10 }}>
+          <Skeleton width={"40%"} height={10} />
         </View>
       )}
     </>

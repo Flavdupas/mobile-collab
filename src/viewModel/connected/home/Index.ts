@@ -46,7 +46,7 @@ interface Service {
   titre: string;
   updated_at: Date | null;
   etudiant: {
-    commentaire_refus: string |null;
+    commentaire_refus: string | null;
     credit: number;
     date_demande: Date;
     date_naissance: Date;
@@ -63,15 +63,21 @@ interface Service {
     telephone: string;
   };
   photos: {
-          id_service: number;
-          id_photo: number;
-          path: string;
-          created_at: Date | null;
-          updated_at: Date | null;
-        }[];
+    id_service: number;
+    id_photo: number;
+    path: string;
+    created_at: Date | null;
+    updated_at: Date | null;
+  }[];
+  theme: {
+    color_hex: string;
+    created_at: Date;
+    id_theme: number;
+    libelle_theme: string;
+    path_logo: string;
+    updated_at: Date | null;
+  };
 }
-
-
 
 export default class IndexViewModel {
   private dataModel: DataModel;
@@ -105,9 +111,7 @@ export default class IndexViewModel {
     }
   }
 
-  public async serviceRecommended(
-    token: string
-  ): Promise<Service[] | null> {
+  public async serviceRecommended(token: string): Promise<Service[] | null> {
     try {
       const data = await this.serviceModel.serviceRecommended(token);
       return data;

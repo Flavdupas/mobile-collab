@@ -2,7 +2,7 @@ import { View, StyleSheet, useWindowDimensions, Animated } from "react-native";
 import { LIGHT_PURPLE, SUPER_LIGHT_PURPLE } from "../../constants/Color";
 
 interface Service {
-  created_at: Date;
+created_at: Date;
   date_debut: Date | null;
   date_fin: Date | null;
   description: string;
@@ -15,7 +15,7 @@ interface Service {
   titre: string;
   updated_at: Date | null;
   etudiant: {
-    commentaire_refus: string |null;
+    commentaire_refus: string | null;
     credit: number;
     date_demande: Date;
     date_naissance: Date;
@@ -30,6 +30,21 @@ interface Service {
     prenom: string;
     rencontre: boolean;
     telephone: string;
+  };
+  photos: {
+    id_service: number;
+    id_photo: number;
+    path: string;
+    created_at: Date | null;
+    updated_at: Date | null;
+  }[];
+  theme: {
+    color_hex: string;
+    created_at: Date;
+    id_theme: number;
+    libelle_theme: string;
+    path_logo: string;
+    updated_at: Date | null;
   };
 }
 

@@ -35,6 +35,14 @@ interface Service {
     created_at: Date | null;
     updated_at: Date | null;
   }[];
+  theme: {
+    color_hex: string;
+    created_at: Date;
+    id_theme: number;
+    libelle_theme: string;
+    path_logo: string;
+    updated_at: Date | null;
+  };
 }
 
 interface ServiceRecommendedResponse {
