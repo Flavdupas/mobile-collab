@@ -1,5 +1,5 @@
 import AuthModel from "../../model/auth/Auth";
-import DataModel from "../../model/data/Data";
+import DataModel from "../../model/data/Theme";
 
 export default class RegisterViewModel {
   private authModel: AuthModel;
