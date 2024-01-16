@@ -17,6 +17,10 @@ const RecentService: React.FC<RecentServiceProps> = ({ data, token }) => {
       marginBottom: 10,
       height: 160,
     },
+    containerItemsSkeleton: {
+      paddingLeft: 20,
+      gap: 20,
+    },
     card: {
       width: 150,
       height: 160,
@@ -69,7 +73,7 @@ const RecentService: React.FC<RecentServiceProps> = ({ data, token }) => {
         </View>
       )}
       {!data && (
-        <View style={[styles.containerItems, { paddingLeft: 20, gap: 20 }]}>
+        <View style={[styles.containerItems, styles.containerItemsSkeleton]}>
           <Skeleton width={150} height={160} />
           <Skeleton width={150} height={160} />
           <Skeleton width={150} height={160} />

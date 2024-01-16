@@ -1,6 +1,5 @@
 import { Text, StyleSheet, View, ScrollView } from "react-native";
-import React, { Component } from "react";
-import { MAIN_COLOR } from "../../../../src/constants/Color";
+import React from "react";
 import connectedStyle from "../../../../src/constants/ConnectedStyle";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../src/store/store";
@@ -19,6 +18,7 @@ const Index = () => {
       paddingHorizontal: 20,
     },
   });
+
   return (
     <ScrollView style={connectedStyle.body}>
       <Text style={[connectedStyle.title, styles.title]}>Bonjour</Text>

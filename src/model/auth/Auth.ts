@@ -100,7 +100,7 @@ export default class AuthModel {
       return data;
     } catch (error) {
       // Gérer les erreurs ici
-      console.error("Erreur lors de l'envoi de la requête :", error);
+      //console.error("Erreur lors de l'envoi de la requête :", error);
     }
   }
 
@@ -277,7 +277,7 @@ export default class AuthModel {
       );
       return base64data;
     } catch (err) {
-      console.error(err);
+      //console.error(err);
       return "";
     }
   }

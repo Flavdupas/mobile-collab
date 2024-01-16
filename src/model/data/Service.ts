@@ -17,7 +17,7 @@ export default class ServiceModel {
       });
 
       let data = null;
-      data = (await response.json()) as ServiceInterface[];
+      data = await response.json() as ServiceInterface[];
 
       return data;
     } catch (error) {

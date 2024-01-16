@@ -1,4 +1,3 @@
-/* CLASSE */
 export default class PostModel {
   constructor() {}
 

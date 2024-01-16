@@ -13,7 +13,8 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated";
-import { useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
+import ConnectedContext from "./context/RouteContext";
 
 const CustomTabs = () => {
   /* VARIABLES */
@@ -21,7 +22,7 @@ const CustomTabs = () => {
   const tabWidth = width > 430 ? 432.5 : width;
   const nbElement = 5;
   const spaceBetweenElements = tabWidth / (nbElement + 1);
-  const [current, setCurrent] = useState<number>(1);
+  const context = useContext(ConnectedContext);
   const translateX = useSharedValue(spaceBetweenElements * (1 - 0.5));
   const icons: { component: React.FC<any>; route: Route<""> }[] = [
     { component: Home, route: "/home/" },
@@ -39,18 +40,18 @@ const CustomTabs = () => {
       width: "100%",
       bottom: 0,
       paddingHorizontal: 15,
-      paddingTop:10,
+      paddingTop: 10,
     },
     tabs: {
       backgroundColor: "#fff",
       width: "100%",
-      maxWidth:400,
+      maxWidth: 400,
       height: 55,
       borderRadius: 50,
       flexDirection: "row",
       justifyContent: "space-evenly",
       alignItems: "center",
-      alignSelf:"center",
+      alignSelf: "center",
     },
     active: {
       position: "absolute",
@@ -68,46 +69,53 @@ const CustomTabs = () => {
   });
 
   /* LOGIQUE */
-  const handleClick = (href: Route<"">, current: number) => {
-    setCurrent(current);
-    router.push(href);
-  };
-
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{ translateX: translateX.value }],
+  if (context) {
+    const handleClick = (href: Route<"">, currentIndexTabBar: number) => {
+      context.setCurrentIndexTabBar(currentIndexTabBar);
+      router.push(href);
     };
-  });
 
-  useEffect(() => {
-    translateX.value = withSpring(spaceBetweenElements * (current - 0.5), {
-      stiffness: 500,
-      damping: 100,
+    const animatedStyle = useAnimatedStyle(() => {
+      return {
+        transform: [{ translateX: translateX.value }],
+      };
     });
-  }, [current]);
 
-  return (
-    <LinearGradient
-      style={styles.body}
-      colors={["rgba(38,30,53,.4)", MAIN_COLOR]}
-    >
-      <View style={styles.tabs}>
-        <Animated.View style={[styles.active, animatedStyle]} />
-        {icons.map(({ component: Icon, route }, index) => (
-          <TouchableOpacity
-            onPress={() => handleClick(route, index + 1)}
-            style={styles.item}
-            key={index}
-          >
-            <Icon
+    useEffect(() => {
+      translateX.value = withSpring(
+        spaceBetweenElements * (context.currentIndexTabBar - 0.5),
+        {
+          stiffness: 500,
+          damping: 100,
+        }
+      );
+    }, [context.currentIndexTabBar]);
+
+    return (
+      <LinearGradient
+        style={styles.body}
+        colors={["rgba(38,30,53,.4)", MAIN_COLOR]}
+      >
+        <View style={styles.tabs}>
+          <Animated.View style={[styles.active, animatedStyle]} />
+          {icons.map(({ component: Icon, route }, index) => (
+            <TouchableOpacity
+              onPress={() => handleClick(route, index + 1)}
+              style={styles.item}
               key={index}
-              color={current === index + 1 ? "#fff" : MAIN_COLOR}
-            />
-          </TouchableOpacity>
-        ))}
-      </View>
-    </LinearGradient>
-  );
+            >
+              <Icon
+                key={index}
+                color={
+                  context.currentIndexTabBar === index + 1 ? "#fff" : MAIN_COLOR
+                }
+              />
+            </TouchableOpacity>
+          ))}
+        </View>
+      </LinearGradient>
+    );
+  }
 };
 
 export default CustomTabs;

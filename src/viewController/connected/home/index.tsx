@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import IndexViewModel from "../../../viewModel/connected/home/Index";
 import { FlatList, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -6,13 +6,15 @@ import { Skeleton } from "moti/skeleton";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import Chevron from "../../../components/icons/Chevron";
-import { router } from "expo-router";
+import { Route, router } from "expo-router";
 import RecentService from "../../../components/connected/data/service/RecentService";
 import ServiceRecommended from "../../../components/connected/data/service/RecommendedService";
 import RecentPost from "../../../components/connected/data/post/RecentPost";
+import ConnectedContext from "../../../components/connected/context/RouteContext";
 
 const IndexController = () => {
   /* VARIABLES */
+  const context = useContext(ConnectedContext);
   const viewModel = new IndexViewModel();
   const token = useSelector((state: RootState) => state.login.token);
   const [serviceRecommended, setServiceRecommened] = useState<
@@ -83,6 +85,14 @@ const IndexController = () => {
     };
     fetchData();
   }, [token]);
+
+  const handleClick = async (href: Route<"">,index:number) => {
+    if(context) {
+      router.push(href);
+      context.setCurrentIndexTabBar(index);
+    }
+  }
+
   return (
     <>
       <View>
@@ -91,7 +101,7 @@ const IndexController = () => {
         <View style={styles.containerTitle}>
           <Text style={styles.title}>Pour vous</Text>
           <TouchableOpacity
-            onPress={() => router.push("/home/")}
+            onPress={() => handleClick("/home/service",2)}
             style={styles.round}
           >
             <Chevron />
@@ -101,7 +111,7 @@ const IndexController = () => {
         <View style={styles.containerTitle}>
           <Text style={styles.title}>Derniers posts</Text>
           <TouchableOpacity
-            onPress={() => router.push("/home/")}
+            onPress={() => handleClick("/home/post",3)}
             style={styles.round}
           >
             <Chevron />
