@@ -60,7 +60,7 @@ function RootLayoutNav() {
     //on regarde si il est deja connecte donc possede un token
     const isAuth = async () => {
       if (token) {
-        router.replace("/home/");
+        router.replace("/service/create");
         for (let attempt = 0; attempt <= 100; attempt++) {
           const data = await viewModel.getUser(token);
           if (data) {

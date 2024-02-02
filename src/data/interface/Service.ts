@@ -43,4 +43,31 @@ interface ServiceInterface {
     path_logo: string;
     updated_at: Date | null;
   };
+  type_service: {
+    id_typeservice: number;
+    libelle_type: string;
+    created_at: Date | null;
+    updated_at: Date | null;
+  };
+  covoiturage: {
+    id_service: number;
+    adresse_depart: string;
+    adresse_arrive: string;
+    nb_place: number;
+    vehicul_personnel: boolean;
+  } | null;
+  evenement: {
+    id_service: number;
+    adresse: string;
+  } | null;
+  echange_competence: { id_service: number } | null;
+  film: {
+    id_service: number;
+    id_lieufilm: number;
+    id_typefilm: number;
+    nom_film: string;
+  } | null;
+  echange_lecture: {
+    id_service: number;
+  } | null;
 }

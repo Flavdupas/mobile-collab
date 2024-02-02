@@ -25,7 +25,17 @@ interface State {
         date_notification: Date | null;
       }[]
     | null;
-  fetchData: { pp: string | null };
+  fetchData: { pp: string | null; themes: ThemeInterface[] | null };
+  data: { currentService: ServiceInterface | null };
+  serviceCreate: {
+    title: string | null;
+    description: string | null;
+    type: "Demande" | "Proposition";
+    price: number | null;
+    idTheme: number | null;
+    dateDebut: string | null;
+    dateFin: string | null;
+  };
 }
 
 const initialState: State = {
@@ -45,6 +55,17 @@ const initialState: State = {
   notifications: null,
   fetchData: {
     pp: null,
+    themes: null,
+  },
+  data: { currentService: null },
+  serviceCreate: {
+    title: null,
+    description: null,
+    type: "Demande",
+    price: null,
+    idTheme: null,
+    dateDebut: null,
+    dateFin: null,
   },
 };
 
@@ -94,6 +115,26 @@ const connectedSlice = createSlice({
     updatePersonnalPhoto: (state, action: PayloadAction<string>) => {
       state.fetchData.pp = action.payload;
     },
+    updateThemes: (state, action: PayloadAction<ThemeInterface[]>) => {
+      state.fetchData.themes = action.payload;
+    },
+    updateCurrentService: (state, action: PayloadAction<ServiceInterface>) => {
+      state.data.currentService = action.payload;
+    },
+    updateServiceCreate: (
+      state,
+      action: PayloadAction<{
+        title: string | null;
+        description: string | null;
+        type: "Demande" | "Proposition";
+        price: number | null;
+        idTheme: number | null;
+        dateDebut: string | null;
+        dateFin: string | null;
+      }>
+    ) => {
+      state.serviceCreate = action.payload;
+    },
   },
 });
 
@@ -102,5 +143,8 @@ export const {
   updateEtudiant,
   updateNotifications,
   updatePersonnalPhoto,
+  updateThemes,
+  updateCurrentService,
+  updateServiceCreate,
 } = connectedSlice.actions;
 export default connectedSlice.reducer;

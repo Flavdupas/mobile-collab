@@ -1,11 +1,11 @@
+const apiUrl = process.env.EXPO_PUBLIC_API_URL;
+
 export default class ServiceModel {
   constructor() {}
 
   public async serviceRecommended(
     token: string
   ): Promise<ServiceInterface[] | null> {
-    const apiUrl = process.env.EXPO_PUBLIC_API_URL;
-
     try {
       const response = await fetch(`${apiUrl}/service/recommended`, {
         method: "GET",
@@ -17,7 +17,7 @@ export default class ServiceModel {
       });
 
       let data = null;
-      data = await response.json() as ServiceInterface[];
+      data = (await response.json()) as ServiceInterface[];
 
       return data;
     } catch (error) {
@@ -29,7 +29,6 @@ export default class ServiceModel {
   public async getRecentServices(
     token: string
   ): Promise<ServiceInterface[] | null> {
-    const apiUrl = process.env.EXPO_PUBLIC_API_URL;
     try {
       const response = await fetch(apiUrl + "/service/recent", {
         method: "GET",
@@ -46,6 +45,61 @@ export default class ServiceModel {
       return data;
     } catch (error) {
       return null;
+    }
+  }
+
+  public async search(
+    token: string,
+    id_theme?: number | null,
+    keyword?: string | null
+  ): Promise<ServiceInterface[] | null> {
+    let formData = {};
+    if (id_theme) {
+      formData = { id_theme: id_theme };
+    }
+    if (keyword) {
+      formData = { keyword: keyword };
+    }
+    if (keyword && id_theme) {
+      formData = { keyword: keyword, id_theme: id_theme };
+    }
+    try {
+      const response = await fetch(apiUrl + "/service/search", {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      // Traitez la réponse ici
+      let data = null;
+      if (response.ok) {
+        data = await response.json();
+      }
+      console.log(data.length);
+      return data;
+    } catch (error) {
+      // Gérer les erreurs ici
+      //console.error("Erreur lors de l'envoi de la requête :", error);
+      return null;
+    }
+  }
+
+  public async answer(idService: number, token: string): Promise<boolean> {
+    try {
+      const response = await fetch(`${apiUrl}/service/answer/${idService}`, {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+      });
+      return response.ok
+    } catch (error) {
+      console.error(error)
+      return false;
     }
   }
 }

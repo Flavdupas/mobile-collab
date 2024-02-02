@@ -1,11 +1,16 @@
 import Svg, { Path } from "react-native-svg";
 
-const Chevron = () => {
+interface ChevronProps {
+    width?: number;
+    height?:number;
+}
+
+const Chevron: React.FC<ChevronProps> = ({width, height}) => {
     return (
         <>
             <Svg
-                width={7}
-                height={12}
+                width={width ?? 7}
+                height={height ?? 12}
                 fill="none"
 
             >

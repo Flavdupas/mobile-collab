@@ -15,7 +15,7 @@ export default class IndexViewModel {
 
   public async getThemes(): Promise<ThemeInterface[] | null> {
     try {
-      const data = await this.themeModel.getThemes();
+      let data = await this.themeModel.getThemes();
       return data;
     } catch (error) {
       console.log(error);
@@ -35,7 +35,9 @@ export default class IndexViewModel {
     }
   }
 
-  public async serviceRecommended(token: string): Promise<ServiceInterface[] | null> {
+  public async serviceRecommended(
+    token: string
+  ): Promise<ServiceInterface[] | null> {
     try {
       const data = await this.serviceModel.serviceRecommended(token);
       return data;
@@ -45,7 +47,7 @@ export default class IndexViewModel {
     }
   }
 
-  public async getRecentPost(token: string):Promise<PostInterface[] | null> {
+  public async getRecentPost(token: string): Promise<PostInterface[] | null> {
     try {
       const data = await this.postModel.getRecentPosts(token);
       return data;

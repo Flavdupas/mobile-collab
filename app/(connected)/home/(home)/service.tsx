@@ -1,15 +1,28 @@
-import { Text, StyleSheet, ScrollView } from "react-native";
-import React, { Component } from "react";
+import {
+  Text,
+  View,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
+import React from "react";
 import connectedStyle from "../../../../src/constants/ConnectedStyle";
+import ServiceController from "../../../../src/viewController/connected/home/service";
+import CreateBtn from "../../../../src/components/connected/CreateBtn";
 
-export default class service extends Component {
-  render() {
-    return (
-      <ScrollView style={connectedStyle.body}>
-        <Text style={[connectedStyle.title,]}>Services</Text>
-      </ScrollView>
-    );
-  }
-}
+const Service = () => {
+  return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={connectedStyle.body}>
+        <Text
+          style={[connectedStyle.title, { marginLeft: 20, marginBottom: 20 }]}
+        >
+          Services
+        </Text>
+        <ServiceController />
+        <CreateBtn href={"/service/create"}/>
+      </View>
+    </TouchableWithoutFeedback>
+  );
+};
 
-const styles = StyleSheet.create({});
+export default Service;

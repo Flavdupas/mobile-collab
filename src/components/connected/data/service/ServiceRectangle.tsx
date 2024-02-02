@@ -14,6 +14,10 @@ import {
   SOFT_PURPLE,
   SUPER_SOFT_PURPLE,
 } from "../../../../constants/Color";
+import { Skeleton } from "moti/skeleton";
+import { updateCurrentService } from "../../../../store/connected/connected";
+import { router } from "expo-router";
+import { useDispatch } from "react-redux";
 const { width } = Dimensions.get("window");
 const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
@@ -23,6 +27,8 @@ interface ServiceRectangleProps {
 }
 
 const ServiceRectangle: React.FC<ServiceRectangleProps> = ({ data, token }) => {
+  /* VARIABLES */
+  const dispatch = useDispatch();
   /* STYLES */
   const styles = StyleSheet.create({
     card: {
@@ -109,6 +115,7 @@ const ServiceRectangle: React.FC<ServiceRectangleProps> = ({ data, token }) => {
     },
     image: {
       borderRadius: 150,
+      position:"absolute"
     },
     rightPart: {
       width: "45%",
@@ -118,11 +125,19 @@ const ServiceRectangle: React.FC<ServiceRectangleProps> = ({ data, token }) => {
       paddingLeft: 20,
     },
   });
+  
+const handleClick = (item?:ServiceInterface) => {
+    if(item) {
+      dispatch(updateCurrentService(item));
+      router.push("/service/show");
+    }
+  }
+
 
   return (
     <>
       {data && (
-        <TouchableOpacity style={styles.card}>
+        <TouchableOpacity style={styles.card} onPress={() => handleClick(data)}>
           <View style={styles.leftPart}>
             <View style={styles.containerType}>
               <Text style={styles.type}>{data.theme.libelle_theme}</Text>
@@ -150,6 +165,8 @@ const ServiceRectangle: React.FC<ServiceRectangleProps> = ({ data, token }) => {
             <View>
               <Circle style={styles.firstCircle} />
               <Circle style={styles.secondCircle} reversed />
+              
+              <Skeleton height={200} width={200} radius={"round"} />
               <Image
                 source={{
                   uri: `${apiUrl}/service/image/${data.photos[0].id_service}/${data.photos[0].id_photo}`,

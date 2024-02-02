@@ -1,23 +1,36 @@
-import { TouchableOpacity, View, Text, Image, StyleSheet } from "react-native";
+import {
+  TouchableOpacity,
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  ViewStyle,
+} from "react-native";
 import { SOFT_PURPLE } from "../../../../constants/Color";
 import { BlurView } from "expo-blur";
 import { croppedText } from "../../../../utils/string";
 import Polygone from "../../../icons/Polygone";
 import { Skeleton } from "moti/skeleton";
+import { updateCurrentService } from "../../../../store/connected/connected";
+import { router } from "expo-router";
+import { useDispatch } from "react-redux";
 const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
 interface ServicesCubeProps {
   data: ServiceInterface | null;
   token: string;
+  style?: ViewStyle;
 }
 
-const ServicesCube: React.FC<ServicesCubeProps> = ({ data, token }) => {
+const ServicesCube: React.FC<ServicesCubeProps> = ({ data, token, style }) => {
+  /* VARIABLES */
+  const dispatch = useDispatch();
   /* STYLES */
   const styles = StyleSheet.create({
     containerItems: {
       flexDirection: "row",
       width: "100%",
-      marginBottom: 10,
+      //marginBottom: 10,
       height: 160,
     },
     card: {
@@ -26,12 +39,12 @@ const ServicesCube: React.FC<ServicesCubeProps> = ({ data, token }) => {
       backgroundColor: SOFT_PURPLE,
       borderRadius: 10,
       overflow: "hidden",
-      marginLeft: 20,
     },
     containerImage: {
       width: "100%",
       height: "50%",
       backgroundColor: "#fff",
+      overflow: "hidden",
     },
     blur: {
       width: "100%",
@@ -43,6 +56,7 @@ const ServicesCube: React.FC<ServicesCubeProps> = ({ data, token }) => {
     image: {
       width: "100%",
       height: "100%",
+      position: "absolute",
     },
     bottomContainer: {
       width: "100%",
@@ -57,11 +71,22 @@ const ServicesCube: React.FC<ServicesCubeProps> = ({ data, token }) => {
       fontWeight: "bold",
     },
   });
+
+  const handleClick = (item?: ServiceInterface) => {
+    if (item) {
+      dispatch(updateCurrentService(item));
+      router.push("/service/show");
+    }
+  };
   return (
     <>
       {data && (
-        <TouchableOpacity style={styles.card}>
+        <TouchableOpacity
+          style={[styles.card, style]}
+          onPress={() => handleClick(data)}
+        >
           <View style={styles.containerImage}>
+            <Skeleton height={"100%"} width={"100%"} />
             <Image
               style={styles.image}
               width={50}

@@ -49,7 +49,7 @@ created_at: Date;
 }
 
 interface PaginatorProps {
-  data: Service[];
+  data: ServiceInterface["photos"] | Service[];
   scrollX: any;
 }
 

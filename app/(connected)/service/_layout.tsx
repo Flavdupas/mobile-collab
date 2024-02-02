@@ -4,7 +4,7 @@ const Tab = () => {
         <Stack screenOptions={{
             headerShown:false
         }}>
-          
+          <Stack.Screen name="show" />
         </Stack>
     )
 }

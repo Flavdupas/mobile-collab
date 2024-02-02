@@ -20,7 +20,7 @@ const Index = () => {
   });
 
   return (
-    <ScrollView style={connectedStyle.body}>
+    <ScrollView style={connectedStyle.body} showsVerticalScrollIndicator={false}>
       <Text style={[connectedStyle.title, styles.title]}>Bonjour</Text>
       {etudiant.nom && etudiant.prenom && (
         <Text style={[connectedStyle.title, styles.title]}>

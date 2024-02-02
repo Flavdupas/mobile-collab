@@ -2,7 +2,7 @@ import { FlatList, View, StyleSheet } from "react-native";
 import { SOFT_PURPLE } from "../../../../constants/Color";
 import { Skeleton } from "moti/skeleton";
 import ServicesCube from "./ServiceCube";
-
+import { Text } from "react-native";
 interface RecentServiceProps {
   data: ServiceInterface[] | null;
   token: string;
@@ -67,7 +67,7 @@ const RecentService: React.FC<RecentServiceProps> = ({ data, token }) => {
             showsHorizontalScrollIndicator={false}
             data={data}
             renderItem={({ item }) => (
-              <ServicesCube data={item} token={token} />
+              <ServicesCube data={item} token={token} style={{marginLeft:20}}/>
             )}
           />
         </View>

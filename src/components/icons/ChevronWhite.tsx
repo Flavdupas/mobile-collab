@@ -1,9 +1,13 @@
-import { View, Image } from "react-native";
+import { View, Image, ViewStyle, ImageStyle } from "react-native";
 
-const Chevron = () => {
+interface ChevronProps {
+  style?: ViewStyle;
+  imageStyle?: ImageStyle;
+}
+const Chevron: React.FC<ChevronProps> = ({style,imageStyle}) => {
   return (
-    <View>
-      <Image source={require("../../assets/images/auth/register/chevron.png")} />
+    <View style={style}>
+      <Image style={imageStyle} source={require("../../assets/images/auth/register/chevron.png")} />
     </View>
   );
 };
