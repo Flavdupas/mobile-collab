@@ -60,7 +60,8 @@ function RootLayoutNav() {
     //on regarde si il est deja connecte donc possede un token
     const isAuth = async () => {
       if (token) {
-        router.replace("/service/create");
+        console.log(token);
+        router.replace("/home/");
         for (let attempt = 0; attempt <= 100; attempt++) {
           const data = await viewModel.getUser(token);
           if (data) {
@@ -70,7 +71,7 @@ function RootLayoutNav() {
             break;
           }
           await delay(5000);
-          console.log("Nouvelle tentative de chargement ...")
+          console.log("Nouvelle tentative de chargement ...");
         }
         //persistor.purge();
       }

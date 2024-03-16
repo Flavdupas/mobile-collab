@@ -1,3 +1,5 @@
+import { BasicService, ServiceInterface } from "../../data/interface/Service";
+
 const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
 export default class ServiceModel {
@@ -96,10 +98,27 @@ export default class ServiceModel {
           "Content-Type": "application/json",
         },
       });
-      return response.ok
+      return response.ok;
     } catch (error) {
-      console.error(error)
+      console.error(error);
       return false;
     }
+  }
+
+  public async create(data: BasicService): Promise<void> {
+    const url = `${apiUrl}/service/create`;
+    const body = JSON.stringify(data);
+    console.log(body)
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        Authorization:
+          "Bearer 159|yeTlNvfZWSOCfYDp1eBxnt0WZBy1qvk8UcINJn2zde97c608",
+        "Content-Type": "application/json",
+      },
+      body: body,
+    });
+
+    console.log(response.ok);
   }
 }

@@ -1,4 +1,4 @@
-interface ServiceInterface {
+export interface ServiceInterface {
   created_at: Date;
   date_debut: Date | null;
   date_fin: Date | null;
@@ -70,4 +70,14 @@ interface ServiceInterface {
   echange_lecture: {
     id_service: number;
   } | null;
+}
+
+export interface BasicService {
+  title: string | null;
+  description: string | null;
+  type: 0 | 1;
+  price: number | null;
+  id_theme: number | null;
+  dateDebut: number | null;
+  dateFin: number | null;
 }

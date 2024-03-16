@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { BasicService, ServiceInterface } from "../../data/interface/Service";
 
 interface State {
   utilisateur: {
@@ -27,15 +28,7 @@ interface State {
     | null;
   fetchData: { pp: string | null; themes: ThemeInterface[] | null };
   data: { currentService: ServiceInterface | null };
-  serviceCreate: {
-    title: string | null;
-    description: string | null;
-    type: "Demande" | "Proposition";
-    price: number | null;
-    idTheme: number | null;
-    dateDebut: string | null;
-    dateFin: string | null;
-  };
+  serviceCreate: BasicService;
 }
 
 const initialState: State = {
@@ -61,9 +54,9 @@ const initialState: State = {
   serviceCreate: {
     title: null,
     description: null,
-    type: "Demande",
+    type: 0,
     price: null,
-    idTheme: null,
+    id_theme: null,
     dateDebut: null,
     dateFin: null,
   },
@@ -126,11 +119,11 @@ const connectedSlice = createSlice({
       action: PayloadAction<{
         title: string | null;
         description: string | null;
-        type: "Demande" | "Proposition";
+        type: 0 | 1;
         price: number | null;
-        idTheme: number | null;
-        dateDebut: string | null;
-        dateFin: string | null;
+        id_theme: number | null;
+        dateDebut: number | null;
+        dateFin: number | null;
       }>
     ) => {
       state.serviceCreate = action.payload;
