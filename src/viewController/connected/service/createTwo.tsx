@@ -22,6 +22,8 @@ import {
 import DatePicker from "react-native-modern-datepicker";
 import { BasicService } from "../../../data/interface/Service";
 import ServiceCrud from "../../../viewModel/connected/service/Crud";
+import { router } from "expo-router";
+import resetHistory from "../../../utils/router";
 
 const CreateTwoViewController = () => {
   const dispatch = useDispatch();
@@ -106,6 +108,9 @@ const CreateTwoViewController = () => {
         dateFin: dateEnd?.getTime() / 1000 ?? 0,
       };
       viewModelCrud.createService(createData);
+      resetHistory().then(() => {
+        router.replace("/home/service");
+      })
     }
   };
 

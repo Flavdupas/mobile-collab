@@ -80,7 +80,7 @@ export default class ServiceModel {
       if (response.ok) {
         data = await response.json();
       }
-      console.log(data.length);
+      //console.log(data.length);
       return data;
     } catch (error) {
       // Gérer les erreurs ici
@@ -98,6 +98,7 @@ export default class ServiceModel {
           "Content-Type": "application/json",
         },
       });
+      //console.log(await response.json())
       return response.ok;
     } catch (error) {
       console.error(error);
