@@ -1,0 +1,18 @@
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyAfOXcAMPMc9jSgWIthS2OyghlNylmrfV4",
+  authDomain: "collab-3e1b7.firebaseapp.com",
+  databaseURL: "https://collab-3e1b7-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "collab-3e1b7",
+  storageBucket: "collab-3e1b7.appspot.com",
+  messagingSenderId: "511546369262",
+  appId: "1:511546369262:web:93162563246aa08e547fff"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
