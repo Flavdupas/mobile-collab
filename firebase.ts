@@ -1,9 +1,7 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import firebase from 'firebase/compat/app';
+import {getDatabase} from 'firebase/database';
+import { getStorage } from "firebase/storage";
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyAfOXcAMPMc9jSgWIthS2OyghlNylmrfV4",
   authDomain: "collab-3e1b7.firebaseapp.com",
@@ -14,5 +12,11 @@ const firebaseConfig = {
   appId: "1:511546369262:web:93162563246aa08e547fff"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+if(firebase.app.length === 1) {
+  firebase.initializeApp(firebaseConfig);
+}
+
+const db = getDatabase();
+const storage = getStorage();
+
+export { db,storage };

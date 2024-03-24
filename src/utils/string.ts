@@ -40,3 +40,11 @@ export const croppedText = (text: string, length:number): string => {
     return text.substring(0, length) + '...';
   }
 };
+
+export function getFirstLetter(inputString: string): string {
+    if (inputString.length > 0) {
+        return inputString.charAt(0);
+    } else {
+        return ''; 
+    }
+}

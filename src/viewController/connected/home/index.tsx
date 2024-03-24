@@ -11,8 +11,6 @@ import RecentService from "../../../components/connected/data/service/RecentServ
 import ServiceRecommended from "../../../components/connected/data/service/RecommendedService";
 import RecentPost from "../../../components/connected/data/post/RecentPost";
 import ConnectedContext from "../../../components/connected/context/RouteContext";
-import Themes from "../../../components/connected/Themes";
-import { updateThemes } from "../../../store/connected/connected";
 
 const IndexController = () => {
   /* VARIABLES */

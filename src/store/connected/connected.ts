@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { BasicService, ServiceInterface } from "../../data/interface/Service";
+import { Direct, Groupe } from "../../data/interface/Group";
 
 interface State {
   utilisateur: {
@@ -29,6 +30,8 @@ interface State {
   fetchData: { pp: string | null; themes: ThemeInterface[] | null };
   data: { currentService: ServiceInterface | null };
   serviceCreate: BasicService;
+  direct: Direct | null;
+  groupe: Groupe | null;
 }
 
 const initialState: State = {
@@ -60,6 +63,8 @@ const initialState: State = {
     dateDebut: null,
     dateFin: null,
   },
+  direct:null,
+  groupe:null,
 };
 
 const connectedSlice = createSlice({
@@ -128,6 +133,12 @@ const connectedSlice = createSlice({
     ) => {
       state.serviceCreate = action.payload;
     },
+    updateDirect: (state, action: PayloadAction<Direct | null>) => {
+      state.direct = action.payload;
+    },
+     updateGroupe: (state, action: PayloadAction<Groupe | null>) => {
+      state.groupe = action.payload;
+    }
   },
 });
 
@@ -139,5 +150,7 @@ export const {
   updateThemes,
   updateCurrentService,
   updateServiceCreate,
+  updateDirect,
+  updateGroupe
 } = connectedSlice.actions;
 export default connectedSlice.reducer;
