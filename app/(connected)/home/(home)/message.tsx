@@ -12,9 +12,17 @@ import { useEffect, useState } from "react";
 import { GroupModel } from "../../../../src/model/data/Group";
 import connectedStyle from "../../../../src/constants/ConnectedStyle";
 import SearchBarGroup from "../../../../src/components/connected/SearchBarGroup";
-import { Direct, GroupMessage, Groupe } from "../../../../src/data/interface/Group";
+import {
+  Direct,
+  GroupMessage,
+  Groupe,
+} from "../../../../src/data/interface/Group";
+import LottieView from "lottie-react-native";
 import { getFirstLetter } from "../../../../src/utils/string";
-import { updateDirect, updateGroupe } from "../../../../src/store/connected/connected";
+import {
+  updateDirect,
+  updateGroupe,
+} from "../../../../src/store/connected/connected";
 import { router } from "expo-router";
 
 const Message = () => {
@@ -23,10 +31,15 @@ const Message = () => {
   const dispatch = useDispatch();
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
   const [data, setData] = useState<GroupMessage | null>(null);
-  const [search, setSearch] = useState<string>('');
+  const [search, setSearch] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
   useEffect(() => {
     const handle = async () => {
-      if (token) setData(await model.getGroup(token, search));
+      if (token){
+        setData(await model.getGroup(token, search));
+        setIsLoading(false);
+      } 
     };
     handle();
   }, [search]);
@@ -61,26 +74,30 @@ const Message = () => {
     containerPP: {
       borderWidth: 1,
       borderColor: "#3F3655",
-      justifyContent:"center",
-      alignItems:"center",
+      justifyContent: "center",
+      alignItems: "center",
     },
     letterPP: {
       color: "#fff",
-      fontSize:16,
-      fontWeight:"bold",
-    }
+      fontSize: 16,
+      fontWeight: "bold",
+    },
+      lottie: {
+      height: 40,
+      alignSelf: "center",
+    },
   });
 
-  const handleDirect = (item:Direct) => {
+  const handleDirect = (item: Direct) => {
     dispatch(updateDirect(item));
     dispatch(updateGroupe(null));
     router.push("/message/direct");
-  }
-   const handleGroup = (item:Groupe) => {
+  };
+  const handleGroup = (item: Groupe) => {
     dispatch(updateDirect(null));
     dispatch(updateGroupe(item));
     router.push("/message/group");
-  }
+  };
 
   return (
     <ScrollView
@@ -90,10 +107,22 @@ const Message = () => {
     >
       <SearchBarGroup onChange={setSearch} />
       <Text style={styles.title}>Messages</Text>
+       {isLoading && (
+        <LottieView
+          autoPlay
+          loop
+          style={styles.lottie}
+          source={require("../../../../src/assets/animations/Loading.json")}
+        />
+      )}
       {data?.direct &&
         data.direct.map((item, index) => {
           return (
-            <TouchableOpacity key={index} style={styles.btn} onPress={() => handleDirect(item)}>
+            <TouchableOpacity
+              key={index}
+              style={styles.btn}
+              onPress={() => handleDirect(item)}
+            >
               <Image
                 style={styles.pp}
                 source={{ uri: `${apiUrl}/post/pp/${item.id_utilisateur}` }}
@@ -107,9 +136,15 @@ const Message = () => {
       {data?.groupes &&
         data.groupes.map((item, index) => {
           return (
-            <TouchableOpacity key={index} style={styles.btn} onPress={() => handleGroup(item)}>
+            <TouchableOpacity
+              key={index}
+              style={styles.btn}
+              onPress={() => handleGroup(item)}
+            >
               <View style={[styles.pp, styles.containerPP]}>
-                <Text style={styles.letterPP}>{getFirstLetter(item.nom_groupe)}</Text>
+                <Text style={styles.letterPP}>
+                  {getFirstLetter(item.nom_groupe)}
+                </Text>
               </View>
               <Text style={styles.btnTitle}>{item.nom_groupe}</Text>
             </TouchableOpacity>

@@ -2,6 +2,7 @@ import { FlatList, View, StyleSheet } from "react-native";
 import ServicesCube from "./ServiceCube";
 import LottieView from "lottie-react-native";
 import ServiceRectangeTwo from "./ServiceRectangleTwo";
+import { ServiceInterface } from "../../../../data/interface/Service";
 
 interface AllServiceProps {
   isLoading: boolean;

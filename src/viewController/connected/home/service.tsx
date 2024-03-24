@@ -7,6 +7,7 @@ import Themes from "../../../components/connected/Themes";
 import { View } from "react-native";
 import AllService from "../../../components/connected/data/service/AllService";
 import { updateThemes } from "../../../store/connected/connected";
+import { ServiceInterface } from "../../../data/interface/Service";
 const ServiceController = () => {
   /* VARIABLES */
   const token = useSelector((state: RootState) => state.login.token);
