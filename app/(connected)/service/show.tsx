@@ -24,6 +24,7 @@ import {
   SOFT_PURPLE,
 } from "../../../src/constants/Color";
 import ShowController from "../../../src/viewController/connected/service/show";
+import { ServiceInterface } from "../../../src/data/interface/Service";
 const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 const { width } = Dimensions.get("window");
 

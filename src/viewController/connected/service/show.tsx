@@ -7,6 +7,7 @@ import LottieView from "lottie-react-native";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import ShowViewModel from "../../../viewModel/connected/service/Show";
+import { ServiceInterface } from "../../../data/interface/Service";
 
 interface ShowControllerProps {
   item: ServiceInterface;

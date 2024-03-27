@@ -24,6 +24,7 @@ import {
   updateGroupe,
 } from "../../../../src/store/connected/connected";
 import { router } from "expo-router";
+import CreateBtn from "../../../../src/components/connected/CreateBtn";
 
 const Message = () => {
   const token = useSelector((state: RootState) => state.login.token);
@@ -36,10 +37,10 @@ const Message = () => {
 
   useEffect(() => {
     const handle = async () => {
-      if (token){
+      if (token) {
         setData(await model.getGroup(token, search));
         setIsLoading(false);
-      } 
+      }
     };
     handle();
   }, [search]);
@@ -82,7 +83,7 @@ const Message = () => {
       fontSize: 16,
       fontWeight: "bold",
     },
-      lottie: {
+    lottie: {
       height: 40,
       alignSelf: "center",
     },
@@ -100,57 +101,56 @@ const Message = () => {
   };
 
   return (
-    <ScrollView
-      style={[connectedStyle.body, styles.body]}
-      showsVerticalScrollIndicator={false}
-      bounces={false}
-    >
-      <SearchBarGroup onChange={setSearch} />
-      <Text style={styles.title}>Messages</Text>
-       {isLoading && (
-        <LottieView
-          autoPlay
-          loop
-          style={styles.lottie}
-          source={require("../../../../src/assets/animations/Loading.json")}
-        />
-      )}
-      {data?.direct &&
-        data.direct.map((item, index) => {
-          return (
-            <TouchableOpacity
-              key={index}
-              style={styles.btn}
-              onPress={() => handleDirect(item)}
-            >
-              <Image
-                style={styles.pp}
-                source={{ uri: `${apiUrl}/post/pp/${item.id_utilisateur}` }}
-              />
-              <Text style={styles.btnTitle}>
-                {item.prenom} {item.nom}
-              </Text>
-            </TouchableOpacity>
-          );
-        })}
-      {data?.groupes &&
-        data.groupes.map((item, index) => {
-          return (
-            <TouchableOpacity
-              key={index}
-              style={styles.btn}
-              onPress={() => handleGroup(item)}
-            >
-              <View style={[styles.pp, styles.containerPP]}>
-                <Text style={styles.letterPP}>
-                  {getFirstLetter(item.nom_groupe)}
+    <View style={[connectedStyle.body, styles.body]}>
+      <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
+        <SearchBarGroup onChange={setSearch} />
+        <Text style={styles.title}>Messages</Text>
+        {isLoading && (
+          <LottieView
+            autoPlay
+            loop
+            style={styles.lottie}
+            source={require("../../../../src/assets/animations/Loading.json")}
+          />
+        )}
+        {data?.direct &&
+          data.direct.map((item, index) => {
+            return (
+              <TouchableOpacity
+                key={index}
+                style={styles.btn}
+                onPress={() => handleDirect(item)}
+              >
+                <Image
+                  style={styles.pp}
+                  source={{ uri: `${apiUrl}/post/pp/${item.id_utilisateur}` }}
+                />
+                <Text style={styles.btnTitle}>
+                  {item.prenom} {item.nom}
                 </Text>
-              </View>
-              <Text style={styles.btnTitle}>{item.nom_groupe}</Text>
-            </TouchableOpacity>
-          );
-        })}
-    </ScrollView>
+              </TouchableOpacity>
+            );
+          })}
+        {data?.groupes &&
+          data.groupes.map((item, index) => {
+            return (
+              <TouchableOpacity
+                key={index}
+                style={styles.btn}
+                onPress={() => handleGroup(item)}
+              >
+                <View style={[styles.pp, styles.containerPP]}>
+                  <Text style={styles.letterPP}>
+                    {getFirstLetter(item.nom_groupe)}
+                  </Text>
+                </View>
+                <Text style={styles.btnTitle}>{item.nom_groupe}</Text>
+              </TouchableOpacity>
+            );
+          })}
+      </ScrollView>
+      <CreateBtn href={"/service/create"} />
+    </View>
   );
 };
 

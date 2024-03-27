@@ -11,6 +11,7 @@ import RecentService from "../../../components/connected/data/service/RecentServ
 import ServiceRecommended from "../../../components/connected/data/service/RecommendedService";
 import RecentPost from "../../../components/connected/data/post/RecentPost";
 import ConnectedContext from "../../../components/connected/context/RouteContext";
+import { ServiceInterface } from "../../../data/interface/Service";
 
 const IndexController = () => {
   /* VARIABLES */
