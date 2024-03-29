@@ -86,7 +86,8 @@ const Groupe = () => {
       </View>
       <ScrollView
         bounces={false}
-        contentContainerStyle={{ justifyContent: "flex-end", flex: 1 }}
+        contentContainerStyle={{ justifyContent: "flex-end"}}
+        showsVerticalScrollIndicator={false}
       >
         {message.map((item, index) => {
           if (item.id_envoyeur === user.id_utilisateur) {
@@ -95,7 +96,7 @@ const Groupe = () => {
                 key={index}
                 style={[
                   styles.containerMessage,
-                  { flexDirection: "row-reverse", marginBottom: 20 },
+                  { flexDirection: "row-reverse", marginBottom: 20,flexWrap:"wrap" },
                 ]}
               >
                 <Image
@@ -109,7 +110,7 @@ const Groupe = () => {
                     Moi
                   </Text>
                   <Text
-                    style={{ color: SUPER_LIGHT_PURPLE, fontWeight: "normal" }}
+                    style={{ color: SUPER_LIGHT_PURPLE, fontWeight: "normal",  }}
                   >
                     {item.contenu}
                   </Text>
@@ -123,7 +124,7 @@ const Groupe = () => {
                 key={index}
                 style={[
                   styles.containerMessage,
-                  { flexDirection: "row", marginBottom: 20 },
+                  { flexDirection: "row", marginBottom: 20,flexWrap:"wrap" },
                 ]}
               >
                 <Image
@@ -132,7 +133,7 @@ const Groupe = () => {
                 />
                 <View style={{ alignItems: "flex-start" }}>
                   <Text style={{ color: "#fff", fontWeight: "600" }}>
-                    Interlocuteur
+                    {item.user.prenom}
                   </Text>
                   <Text style={{ color: "#fff", fontWeight: "normal" }}>
                     {item.contenu}
@@ -166,7 +167,6 @@ const Groupe = () => {
             style={{
               height: 30,
               width: 30,
-
               borderRadius: 50,
             }}
           >

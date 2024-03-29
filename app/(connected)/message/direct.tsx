@@ -20,6 +20,7 @@ import { Message } from "../../../src/data/interface/Message";
 import ArrowUp from "../../../src/components/icons/ArrowUp";
 import { LinearGradient } from "expo-linear-gradient";
 import MessageModel from "../../../src/model/data/Message";
+import Trash from "../../../src/components/icons/Trash";
 
 const Direct = () => {
   const direct = useSelector((state: RootState) => state.connected.direct);
@@ -59,6 +60,10 @@ const Direct = () => {
     }
   };
 
+  const deleteMessage = async () => {
+    
+  };
+
   const styles = StyleSheet.create({
     pp: {
       height: 40,
@@ -80,12 +85,17 @@ const Direct = () => {
         style={{
           height: 130,
           width: "100%",
-          justifyContent: "flex-end",
+          justifyContent: "space-between",
+          alignItems:"flex-end",
+          flexDirection:"row",
           marginBottom: 50,
         }}
       >
-        <TouchableOpacity onPress={router.back}>
+        <TouchableOpacity onPress={router.back} style={{bottom:7.5}}>
           <Chevron />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={router.back} style={{backgroundColor:"#df6060", padding:7.5, borderRadius:50}}>
+          <Trash />
         </TouchableOpacity>
       </View>
       <ScrollView
@@ -99,7 +109,7 @@ const Direct = () => {
                 key={index}
                 style={[
                   styles.containerMessage,
-                  { flexDirection: "row-reverse", marginBottom: 20 },
+                  { flexDirection: "row-reverse", marginBottom: 20,flexWrap:"wrap" },
                 ]}
               >
                 <Image
@@ -113,7 +123,7 @@ const Direct = () => {
                     Moi
                   </Text>
                   <Text
-                    style={{ color: SUPER_LIGHT_PURPLE, fontWeight: "normal" }}
+                    style={{ color: SUPER_LIGHT_PURPLE, fontWeight: "normal",  }}
                   >
                     {item.contenu}
                   </Text>
@@ -127,7 +137,7 @@ const Direct = () => {
                 key={index}
                 style={[
                   styles.containerMessage,
-                  { flexDirection: "row", marginBottom: 20 },
+                  { flexDirection: "row", marginBottom: 20,flexWrap:"wrap" },
                 ]}
               >
                 <Image
