@@ -158,7 +158,7 @@ const Message = () => {
             );
           })}
       </ScrollView>
-      <CreateBtn href={"/service/create"} />
+      <CreateBtn href={"/message/create"} />
     </View>
   );
 };

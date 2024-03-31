@@ -1,3 +1,5 @@
+import { UserInterface } from "../../data/interface/User";
+
 export default class MessageModel {
   private apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
@@ -38,7 +40,11 @@ export default class MessageModel {
     }
   }
 
-  public async delete(token:string, idReceveur:number|null,idRecevoirGroupe:number|null): Promise<void> {
+  public async delete(
+    token: string,
+    idReceveur: number | null,
+    idRecevoirGroupe: number | null
+  ): Promise<void> {
     try {
       let sendData = {};
       if (idReceveur) {
@@ -60,10 +66,27 @@ export default class MessageModel {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(sendData),
-      })
-      console.log(await res.json())
-    } catch(e) {
-      console.log(e)
+      });
+      console.log(await res.json());
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  public async getContact(token: string): Promise<UserInterface[]> {
+    try {
+      const res = await fetch(`${this.apiUrl}/message/contact`, {
+        headers: {
+          Authorization: "Bearer " + token,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+      const data:UserInterface[] = await res.json()
+      return data;
+    } catch (e) {
+      console.log(e);
+      return [];
     }
   }
 }

@@ -11,7 +11,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { MAIN_COLOR, SUPER_LIGHT_PURPLE } from "../../../src/constants/Color";
 import Chevron from "../../../src/components/icons/ChevronWhite";
 import { router } from "expo-router";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../src/store/store";
 import { useEffect, useState } from "react";
 import { onValue, ref } from "firebase/database";
@@ -21,6 +21,7 @@ import ArrowUp from "../../../src/components/icons/ArrowUp";
 import { LinearGradient } from "expo-linear-gradient";
 import MessageModel from "../../../src/model/data/Message";
 import Trash from "../../../src/components/icons/Trash";
+import { updateLoadMessage } from "../../../src/store/connected/connected";
 
 const Direct = () => {
   const direct = useSelector((state: RootState) => state.connected.direct);
@@ -30,6 +31,7 @@ const Direct = () => {
   const [content, setContent] = useState<string>("");
   const token = useSelector((state: RootState) => state.login.token);
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
+  const dispatch = useDispatch();
 
   useEffect(() => {
     let fakeMessage: Message[] = [];
@@ -66,6 +68,10 @@ const Direct = () => {
       router.push("/(connected)/home/(home)/message")
     }
   }
+  const handleBack = () => {
+    dispatch(updateLoadMessage(true));
+    router.back()
+  }
   const styles = StyleSheet.create({
     pp: {
       height: 40,
@@ -93,7 +99,7 @@ const Direct = () => {
           marginBottom: 50,
         }}
       >
-        <TouchableOpacity onPress={router.back} style={{bottom:7.5}}>
+        <TouchableOpacity onPress={handleBack} style={{bottom:7.5}}>
           <Chevron />
         </TouchableOpacity>
         <TouchableOpacity onPress={handleDelete} style={{backgroundColor:"#df6060", padding:7.5, borderRadius:50}}>
