@@ -60,10 +60,12 @@ const Direct = () => {
     }
   };
 
-  const deleteMessage = async () => {
-    
-  };
-
+  const handleDelete = async () => {
+    if(token !== null && direct !== null) {
+      model.delete(token,direct.id_utilisateur,null);
+      router.push("/(connected)/home/(home)/message")
+    }
+  }
   const styles = StyleSheet.create({
     pp: {
       height: 40,
@@ -94,7 +96,7 @@ const Direct = () => {
         <TouchableOpacity onPress={router.back} style={{bottom:7.5}}>
           <Chevron />
         </TouchableOpacity>
-        <TouchableOpacity onPress={router.back} style={{backgroundColor:"#df6060", padding:7.5, borderRadius:50}}>
+        <TouchableOpacity onPress={handleDelete} style={{backgroundColor:"#df6060", padding:7.5, borderRadius:50}}>
           <Trash />
         </TouchableOpacity>
       </View>

@@ -1,4 +1,8 @@
-import { BasicService, ServiceInterface } from "../../data/interface/Service";
+import {
+  BasicService,
+  InterestedArray,
+  ServiceInterface,
+} from "../../data/interface/Service";
 
 const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
@@ -74,17 +78,12 @@ export default class ServiceModel {
         },
         body: JSON.stringify(formData),
       });
-
-      // Traitez la réponse ici
       let data = null;
       if (response.ok) {
         data = await response.json();
       }
-      //console.log(data.length);
       return data;
     } catch (error) {
-      // Gérer les erreurs ici
-      //console.error("Erreur lors de l'envoi de la requête :", error);
       return null;
     }
   }
@@ -98,7 +97,6 @@ export default class ServiceModel {
           "Content-Type": "application/json",
         },
       });
-      //console.log(await response.json())
       return response.ok;
     } catch (error) {
       console.error(error);
@@ -106,20 +104,60 @@ export default class ServiceModel {
     }
   }
 
-  public async create(data: BasicService): Promise<void> {
+  public async create(data: BasicService, token: string): Promise<void> {
     const url = `${apiUrl}/service/create`;
     const body = JSON.stringify(data);
-    console.log(body)
+    console.log(body);
     const response = await fetch(url, {
       method: "POST",
       headers: {
-        Authorization:
-          "Bearer 159|yeTlNvfZWSOCfYDp1eBxnt0WZBy1qvk8UcINJn2zde97c608",
+        Authorization: "Bearer " + token,
         "Content-Type": "application/json",
       },
       body: body,
     });
 
     console.log(response.ok);
+  }
+
+  public async getInterested(
+    token: string,
+    idService: number
+  ): Promise<InterestedArray> {
+    try {
+      const res = await fetch(`${apiUrl}/service/${idService}/interested`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      const data: InterestedArray = await res.json();
+      return data;
+    } catch (e) {
+      console.log("Erreur : " + e);
+      return [];
+    }
+  }
+
+  public async validate(
+    token: string,
+    idService: number,
+    id_etudiant: number[]
+  ) {
+    try {
+      const res = await fetch(`${apiUrl}/service/validate/${idService}`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({id_etudiant:id_etudiant}),
+      });
+      console.log(res.ok);
+      return res.ok
+    } catch (e) {
+      console.log(e);
+      return false
+    }
   }
 }

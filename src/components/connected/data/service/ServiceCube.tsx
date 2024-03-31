@@ -14,6 +14,7 @@ import { Skeleton } from "moti/skeleton";
 import { updateCurrentService } from "../../../../store/connected/connected";
 import { router } from "expo-router";
 import { useDispatch } from "react-redux";
+import { ServiceInterface } from "../../../../data/interface/Service";
 const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
 interface ServicesCubeProps {

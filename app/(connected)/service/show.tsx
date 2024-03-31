@@ -9,7 +9,7 @@ import {
   View,
   Dimensions,
   Animated,
-  TouchableOpacity,
+
   ScrollView,
 } from "react-native";
 import { Skeleton } from "moti/skeleton";
@@ -17,12 +17,6 @@ import Paginator from "../../../src/components/connected/Paginator";
 import { useRef } from "react";
 import Polygone from "../../../src/components/icons/Polygone";
 import Money from "../../../src/components/icons/Money";
-import { LinearGradient } from "expo-linear-gradient";
-import {
-  LIGHT_PURPLE,
-  MAIN_COLOR,
-  SOFT_PURPLE,
-} from "../../../src/constants/Color";
 import ShowController from "../../../src/viewController/connected/service/show";
 import { ServiceInterface } from "../../../src/data/interface/Service";
 const apiUrl = process.env.EXPO_PUBLIC_API_URL;

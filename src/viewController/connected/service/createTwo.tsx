@@ -107,10 +107,10 @@ const CreateTwoViewController = () => {
         dateDebut: dateBegin?.getTime() / 1000 ?? 0,
         dateFin: dateEnd?.getTime() / 1000 ?? 0,
       };
-      viewModelCrud.createService(createData);
+      if (token) viewModelCrud.createService(createData, token);
       resetHistory().then(() => {
         router.replace("/home/service");
-      })
+      });
     }
   };
 

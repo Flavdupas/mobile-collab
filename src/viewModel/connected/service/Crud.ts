@@ -8,9 +8,9 @@ export default class ServiceCrud {
     this.serviceModel = new ServiceModel();
   }
 
-  public async createService(data: BasicService) {
+  public async createService(data: BasicService, token:string) {
     try {
-        return await this.serviceModel.create(data);
+        return await this.serviceModel.create(data,token);
     } catch (e) {
         console.log(e)
     }

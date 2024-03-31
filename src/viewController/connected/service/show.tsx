@@ -4,10 +4,12 @@ import { TouchableOpacity, StyleSheet, Text, Modal, View } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { useState } from "react";
 import LottieView from "lottie-react-native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import ShowViewModel from "../../../viewModel/connected/service/Show";
 import { ServiceInterface } from "../../../data/interface/Service";
+import { router } from "expo-router";
+import { updateLoadMessage } from "../../../store/connected/connected";
 
 interface ShowControllerProps {
   item: ServiceInterface;
@@ -20,6 +22,7 @@ const ShowController: React.FC<ShowControllerProps> = ({ item }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [showSuccess, setShowSuccess] = useState<boolean>(false);
   const [showError, setShowError] = useState<boolean>(false);
+  const dispatch = useDispatch();
 
   const currentMoney = useSelector(
     (state: RootState) => state.connected.etudiant.credit
@@ -97,6 +100,8 @@ const ShowController: React.FC<ShowControllerProps> = ({ item }) => {
         if (res) {
           setIsLoading(false);
           setShowSuccess(true);
+          dispatch(updateLoadMessage(true))
+          
         } else {
           setIsLoading(false);
           setShowError(true);

@@ -81,3 +81,31 @@ export interface BasicService {
   dateDebut: number | null;
   dateFin: number | null;
 }
+
+export type InterestedArray = Interested[]
+
+export interface Interested {
+  id_service: number
+  id_etudiant: number
+  validation_createur: boolean
+  validation_repondeur: boolean
+  etudiant: Etudiant
+}
+
+export interface Etudiant {
+  id_utilisateur: number
+  id_admin_refuser: any
+  id_admin_valider: number
+  credit: number
+  nom: string
+  prenom: string
+  telephone: string
+  date_naissance: string
+  rencontre: boolean
+  path_carteetu: string
+  date_traitement: any
+  date_demande: string
+  date_validation: string
+  date_refus: any
+  commentaire_refus: any
+}

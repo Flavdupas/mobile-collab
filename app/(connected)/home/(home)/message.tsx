@@ -22,6 +22,7 @@ import { getFirstLetter } from "../../../../src/utils/string";
 import {
   updateDirect,
   updateGroupe,
+  updateLoadMessage,
 } from "../../../../src/store/connected/connected";
 import { router } from "expo-router";
 import CreateBtn from "../../../../src/components/connected/CreateBtn";
@@ -34,16 +35,24 @@ const Message = () => {
   const [data, setData] = useState<GroupMessage | null>(null);
   const [search, setSearch] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const loadMessage = useSelector(
+    (state: RootState) => state.connected.loadMessage
+  );
 
   useEffect(() => {
     const handle = async () => {
-      if (token) {
-        setData(await model.getGroup(token, search));
-        setIsLoading(false);
+      if (loadMessage) {
+        setData(null);
+        setIsLoading(true);
+        if (token) {
+          setData(await model.getGroup(token, search));
+          setIsLoading(false);
+        }
       }
+      dispatch(updateLoadMessage(false))
     };
     handle();
-  }, [search]);
+  }, [search, loadMessage]);
 
   const styles = StyleSheet.create({
     body: {
