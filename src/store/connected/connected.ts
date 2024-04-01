@@ -34,6 +34,7 @@ interface State {
   groupe: Groupe | null;
   loadMessage: boolean;
   loadPost: boolean;
+  currentPost: PostInterface | null;
 }
 
 const initialState: State = {
@@ -69,6 +70,7 @@ const initialState: State = {
   groupe:null,
   loadMessage:true,
   loadPost:true,
+  currentPost: null,
 };
 
 const connectedSlice = createSlice({
@@ -148,6 +150,9 @@ const connectedSlice = createSlice({
     },
     updateLoadPost: (state, action: PayloadAction<boolean>) => {
       state.loadPost = action.payload
+    },
+    updateCurrentPost: (state, action: PayloadAction<PostInterface>) => {
+      state.currentPost = action.payload
     }
   },
 });
@@ -164,5 +169,6 @@ export const {
   updateGroupe,
   updateLoadMessage,
   updateLoadPost,
+  updateCurrentPost
 } = connectedSlice.actions;
 export default connectedSlice.reducer;

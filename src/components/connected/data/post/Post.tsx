@@ -1,20 +1,37 @@
 import { Skeleton } from "moti/skeleton";
 import { SOFT_PURPLE } from "../../../../constants/Color";
-import { TouchableOpacity, Text, View, StyleSheet, Image, ViewStyle } from "react-native";
+import {
+  TouchableOpacity,
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  ViewStyle,
+} from "react-native";
 import Verify from "../../../icons/Verify";
 import { croppedText } from "../../../../utils/string";
 import Logo from "../../../icons/Logo";
+import { useDispatch } from "react-redux";
+import { updateCurrentPost } from "../../../../store/connected/connected";
+import { router } from "expo-router";
 const apiUrl = process.env.EXPO_PUBLIC_API_URL;
-
 
 interface PostProps {
   data: PostInterface | null;
   token: string;
-  style?: ViewStyle
-  disabled:boolean
+  style?: ViewStyle;
+  disabled: boolean;
 }
 
-const Post: React.FC<PostProps> = ({ data, token,style,disabled }) => {
+const Post: React.FC<PostProps> = ({ data, token, style, disabled }) => {
+  const dispatch = useDispatch();
+  const handleClick = () => {
+    if (data) {
+      dispatch(updateCurrentPost(data));
+      router.push("/post/show")
+    }
+  };
+
   /* STYLES */
   const styles = StyleSheet.create({
     body: {
@@ -100,7 +117,11 @@ const Post: React.FC<PostProps> = ({ data, token,style,disabled }) => {
   return (
     <>
       {data && (
-        <TouchableOpacity disabled={disabled} style={[styles.postContainer,style]}>
+        <TouchableOpacity
+          disabled={disabled}
+          style={[styles.postContainer, style]}
+          onPress={handleClick}
+        >
           <Logo style={styles.logoApp} />
           <View style={styles.header}>
             <Image

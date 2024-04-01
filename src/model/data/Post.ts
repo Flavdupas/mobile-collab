@@ -1,7 +1,8 @@
 import { Platform } from "react-native";
+import { Comment } from "../../data/interface/Comment";
 
 export default class PostModel {
-      private apiUrl = process.env.EXPO_PUBLIC_API_URL;
+  private apiUrl = process.env.EXPO_PUBLIC_API_URL;
   constructor() {}
 
   public async getRecentPosts(token: string): Promise<PostInterface[] | null> {
@@ -26,7 +27,6 @@ export default class PostModel {
   }
 
   public async getAll(token: string): Promise<PostInterface[] | null> {
-
     try {
       const response = await fetch(`${this.apiUrl}/post/all`, {
         method: "GET",
@@ -47,7 +47,6 @@ export default class PostModel {
     }
   }
   public async getUserPost(token: string): Promise<PostInterface[] | null> {
-
     try {
       const response = await fetch(`${this.apiUrl}/post/user`, {
         method: "GET",
@@ -68,7 +67,12 @@ export default class PostModel {
     }
   }
 
-  public async create(token: string, title: string, content: string, image?: string): Promise<boolean> {
+  public async create(
+    token: string,
+    title: string,
+    content: string,
+    image?: string
+  ): Promise<boolean> {
     try {
       const formData = new FormData();
       if (image) {
@@ -94,30 +98,69 @@ export default class PostModel {
           "Content-Type": "multipart/form-data",
         },
         body: formData,
-      }) 
-      console.log(res.ok)
+      });
+      console.log(res.ok);
       return res.ok;
     } catch (e) {
-      console.log(e)
-      return false
+      console.log(e);
+      return false;
     }
   }
 
-  public async delete(token:string, id:number[]) {
+  public async delete(token: string, id: number[]) {
     try {
-      const res = await fetch(`${this.apiUrl}/post/delete`,{
-        method:"POST",
+      const res = await fetch(`${this.apiUrl}/post/delete`, {
+        method: "POST",
         headers: {
-           Authorization: "Bearer " + token,
+          Authorization: "Bearer " + token,
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({id:id})
-      })
-      console.log(res.ok)
-      return res.ok
-    } catch(e) {
-      console.log(e)
+        body: JSON.stringify({ id: id }),
+      });
+      console.log(res.ok);
+      return res.ok;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  public async getComment(
+    token: string,
+    idPost: number
+  ): Promise<Comment[]> {
+    try {
+      const response = await fetch(`${this.apiUrl}/post/comment/${idPost}`, {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+      const data = response.json();
+      console.log(data)
+      return data;
+    } catch (e) {
+      console.log(e);
+      return [];
+    }
+  }
+
+   public async createComment(token: string, comment: string, idPost:number) {
+    try {
+      const res = await fetch(`${this.apiUrl}/post/comment/${idPost}`, {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + token,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ contenu: comment }),
+      });
+      return res.ok;
+    } catch (e) {
+      console.log(e);
     }
   }
 }

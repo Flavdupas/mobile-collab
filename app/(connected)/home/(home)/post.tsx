@@ -61,7 +61,7 @@ const PostIndex = () => {
             data.map((item, _i) => {
               return (
                 <View key={_i}>
-                  <Post data={item} token={token} />
+                  <Post disabled={false} data={item} token={token} />
                 </View>
               );
             })}

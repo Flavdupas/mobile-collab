@@ -18,7 +18,7 @@ const IndexController = () => {
   const context = useContext(ConnectedContext);
   const viewModel = new IndexViewModel();
   const dispatch = useDispatch();
-  const [idTheme, setIdTheme] = useState<number | null>(null);
+  const loadPost = useSelector((state: RootState) => state.connected.loadPost);
   const token = useSelector((state: RootState) => state.login.token);
   const [serviceRecommended, setServiceRecommened] = useState<
     ServiceInterface[] | null
@@ -75,6 +75,18 @@ const IndexController = () => {
     fetchData();
   }, [token]);
 
+  useEffect(() => {
+    const handle = async () => {
+      if (loadPost && token) {
+        const recentPosts = await viewModel.getRecentPost(token);
+        if (recentPosts) {
+          setRecentPosts(recentPosts);
+        }
+      }
+    };
+    handle();
+  }, [loadPost]);
+
   const handleClick = async (href: Route<"">, index: number) => {
     if (context) {
       router.push(href);
@@ -85,7 +97,9 @@ const IndexController = () => {
   return (
     <>
       <View>
-        <Text style={[styles.title,{marginLeft:20,marginVertical:10}]}>Nouveautés</Text>
+        <Text style={[styles.title, { marginLeft: 20, marginVertical: 10 }]}>
+          Nouveautés
+        </Text>
         <RecentService data={recentServices} token={token ?? ""} />
         <View style={styles.containerTitle}>
           <Text style={styles.title}>Pour vous</Text>
