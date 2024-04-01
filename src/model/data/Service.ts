@@ -160,4 +160,60 @@ export default class ServiceModel {
       return false
     }
   }
+
+  public async report(token:string,idService:number,remarque:string) {
+    try {
+      const res = await fetch(`${apiUrl}/service/${idService}/report`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({remarque:remarque}),
+      });
+      console.log(res.ok);
+      return res.ok
+    } catch (e) {
+      console.log(e);
+      return false
+    }
+  }
+  public async getUserService(token: string): Promise<ServiceInterface[] | null> {
+    try {
+      const response = await fetch(`${apiUrl}/service/user`, {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+      let data: ServiceInterface[] | null = null;
+      if (response.ok) {
+        data = await response.json();
+      }
+      return data;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
+
+  public async delete(token: string, id: number[]) {
+    try {
+      const res = await fetch(`${apiUrl}/service/delete`, {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + token,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: id }),
+      });
+      console.log(res.ok);
+      return res.ok;
+    } catch (e) {
+      console.log(e);
+    }
+  }
 }

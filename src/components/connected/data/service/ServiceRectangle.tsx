@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Dimensions,
   Image,
+  ViewStyle,
 } from "react-native";
 import { croppedText } from "../../../../utils/string";
 import Money from "../../../icons/Money";
@@ -18,15 +19,18 @@ import { Skeleton } from "moti/skeleton";
 import { updateCurrentService } from "../../../../store/connected/connected";
 import { router } from "expo-router";
 import { useDispatch } from "react-redux";
+import { ServiceInterface } from "../../../../data/interface/Service";
 const { width } = Dimensions.get("window");
 const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
 interface ServiceRectangleProps {
   data: ServiceInterface | null;
   token: string;
+  disabled?:boolean;
+  style:ViewStyle
 }
 
-const ServiceRectangle: React.FC<ServiceRectangleProps> = ({ data, token }) => {
+const ServiceRectangle: React.FC<ServiceRectangleProps> = ({ data, token, disabled,style }) => {
   /* VARIABLES */
   const dispatch = useDispatch();
   /* STYLES */
@@ -137,7 +141,7 @@ const handleClick = (item?:ServiceInterface) => {
   return (
     <>
       {data && (
-        <TouchableOpacity style={styles.card} onPress={() => handleClick(data)}>
+        <TouchableOpacity disabled={disabled} style={[styles.card,style]} onPress={() => handleClick(data)}>
           <View style={styles.leftPart}>
             <View style={styles.containerType}>
               <Text style={styles.type}>{data.theme.libelle_theme}</Text>

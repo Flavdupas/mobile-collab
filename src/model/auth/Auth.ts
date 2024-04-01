@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Platform } from "react-native";
+import { Role } from "../../data/interface/Role";
 
 export default class AuthModel {
   constructor() {}
@@ -230,6 +231,7 @@ export default class AuthModel {
           telephone: string;
           date_naissance: string;
           rencontre: boolean;
+          roles: Role[];
         };
         notifications:
           | {
@@ -255,12 +257,15 @@ export default class AuthModel {
   public async getPP(token: string): Promise<any> {
     const apiUrl = process.env.EXPO_PUBLIC_API_URL;
     try {
-      const response = await fetch(apiUrl + "/connected/pp" + '?' + new Date(), {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      });
+      const response = await fetch(
+        apiUrl + "/connected/pp" + "?" + new Date(),
+        {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);

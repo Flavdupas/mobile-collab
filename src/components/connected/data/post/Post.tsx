@@ -21,9 +21,10 @@ interface PostProps {
   token: string;
   style?: ViewStyle;
   disabled: boolean;
+  full?:boolean
 }
 
-const Post: React.FC<PostProps> = ({ data, token, style, disabled }) => {
+const Post: React.FC<PostProps> = ({ data, token, style, disabled, full }) => {
   const dispatch = useDispatch();
   const handleClick = () => {
     if (data) {
@@ -147,7 +148,7 @@ const Post: React.FC<PostProps> = ({ data, token, style, disabled }) => {
           </View>
           <View>
             <Text style={styles.textContent}>
-              {croppedText(data.contenu, 150)}
+              {full ? data.contenu : croppedText(data.contenu, 150)}
             </Text>
             {data.path_image && (
               <Image

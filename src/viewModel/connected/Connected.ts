@@ -1,3 +1,4 @@
+import { Role } from "../../data/interface/Role";
 import AuthModel from "../../model/auth/Auth";
 
 export default class ConnectedViewModel {
@@ -19,7 +20,8 @@ export default class ConnectedViewModel {
       prenom: string;
       telephone: string;
       date_naissance: string;
-      rencontre: boolean;
+      rencontre: boolean;    
+      roles: Role[]
     };
     notifications: {
       id_notification: number;
@@ -30,6 +32,7 @@ export default class ConnectedViewModel {
       titre: string;
       date_notification: Date | null;
     }[];
+
   } | null> {
     try {
         return await this.authViewModel.getUser(token);

@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { BasicService, ServiceInterface } from "../../data/interface/Service";
 import { Direct, Groupe } from "../../data/interface/Group";
+import { Role } from "../../data/interface/Role";
 
 interface State {
   utilisateur: {
@@ -15,6 +16,7 @@ interface State {
     telephone: string | null;
     date_naissance: string | null;
     rencontre: boolean | null;
+    roles: Role[]
   };
   notifications:
     | {
@@ -50,6 +52,7 @@ const initialState: State = {
     telephone: null,
     date_naissance: null,
     rencontre: null,
+    roles:[]
   },
   notifications: null,
   fetchData: {
@@ -96,6 +99,7 @@ const connectedSlice = createSlice({
         telephone: string | null;
         date_naissance: string | null;
         rencontre: boolean | null;
+        roles:Role[]
       }>
     ) => {
       state.etudiant = action.payload;

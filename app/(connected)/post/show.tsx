@@ -1,4 +1,11 @@
-import { Image, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import Layout from "../../../src/components/connected/Layout";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../src/store/store";
@@ -19,11 +26,11 @@ const Show = () => {
   const apiUrl = process.env.EXPO_PUBLIC_API_URL;
   const model = new PostModel();
   const handleClick = async () => {
-    if(token && content !== '' && data) {
-        await model.createComment(token,content,data?.id_post);
-        setContent('');
-        setComment(await model.getComment(token, data?.id_post));
-        dispatch(updateLoadPost(true));
+    if (token && content !== "" && data) {
+      await model.createComment(token, content, data?.id_post);
+      setContent("");
+      setComment(await model.getComment(token, data?.id_post));
+      dispatch(updateLoadPost(true));
     }
   };
   useEffect(() => {
@@ -37,14 +44,23 @@ const Show = () => {
   return (
     <Layout>
       <View style={{ paddingTop: 150, paddingHorizontal: 20, flex: 1 }}>
-        {data && token && <Post data={data} token={token} disabled={false} />}
-        <Text style={{ color: "#fff", fontSize: 18, fontWeight: "bold" }}>
-          Commentaires
-        </Text>
-        <ScrollView style={{paddingTop:20, marginBottom:125}} bounces={false} showsVerticalScrollIndicator={false}>
+        {data && token && (
+          <Post data={data} token={token} disabled={false} full />
+        )}
+        <View>
+          <Text style={{ color: "#fff", fontSize: 18, fontWeight: "bold" }}>
+            Commentaires
+          </Text>
+        </View>
+
+        <ScrollView
+          style={{ paddingTop: 20, marginBottom: 125 }}
+          bounces={false}
+          showsVerticalScrollIndicator={false}
+        >
           {comment.map((item, index) => {
             return (
-              <View key={index} style={{gap:10, marginBottom:20}} >
+              <View key={index} style={{ gap: 10, marginBottom: 20 }}>
                 <View style={{ flexDirection: "row", gap: 10 }}>
                   <Image
                     source={{ uri: `${apiUrl}/post/pp/${item.id_etudiant}` }}
@@ -62,8 +78,20 @@ const Show = () => {
                   </Text>
                 </View>
                 <View>
-                  <Text style={{ color:"#fff", opacity:.8  }}>{item.contenu}</Text>
-                  <Text style={{ color:"#fff", textAlign:"right", opacity:.8, marginTop:5, fontSize:10 }}>{new Date(item.created_at).toLocaleDateString('fr')}</Text>
+                  <Text style={{ color: "#fff", opacity: 0.8 }}>
+                    {item.contenu}
+                  </Text>
+                  <Text
+                    style={{
+                      color: "#fff",
+                      textAlign: "right",
+                      opacity: 0.8,
+                      marginTop: 5,
+                      fontSize: 10,
+                    }}
+                  >
+                    {new Date(item.created_at).toLocaleDateString("fr")}
+                  </Text>
                 </View>
               </View>
             );

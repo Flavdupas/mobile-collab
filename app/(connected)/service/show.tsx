@@ -9,16 +9,22 @@ import {
   View,
   Dimensions,
   Animated,
-
   ScrollView,
+  TouchableOpacity,
+  Modal,
+  TouchableWithoutFeedback,
+  TextInput,
+  Keyboard,
 } from "react-native";
 import { Skeleton } from "moti/skeleton";
 import Paginator from "../../../src/components/connected/Paginator";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Polygone from "../../../src/components/icons/Polygone";
 import Money from "../../../src/components/icons/Money";
 import ShowController from "../../../src/viewController/connected/service/show";
 import { ServiceInterface } from "../../../src/data/interface/Service";
+import { MAIN_COLOR, SOFT_PURPLE } from "../../../src/constants/Color";
+import ServiceModel from "../../../src/model/data/Service";
 const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 const { width } = Dimensions.get("window");
 
@@ -28,6 +34,9 @@ const Show = () => {
     (state: RootState) => state.connected.data.currentService
   );
   const token = useSelector((state: RootState) => state.login.token);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const model = new ServiceModel();
+  const [reportMessage, setReportMessage] = useState<string>("");
 
   /* STYLES */
   const styles = StyleSheet.create({
@@ -55,8 +64,89 @@ const Show = () => {
     },
   });
 
+  const toogleModal = () => {
+    setShowModal(!showModal);
+  };
+
+  const handleReport = async () => {
+    setShowModal(false);
+    if (token && item) {
+      model.report(token, item?.id_service, reportMessage);
+    }
+  };
+
   return (
     <Layout>
+      <Modal transparent visible={showModal}>
+        <TouchableWithoutFeedback onPress={() => setShowModal(!showModal)}>
+          <View
+            style={{
+              flex: 1,
+              backgroundColor: "rgba(0,0,0,.3)",
+              padding: 20,
+              paddingVertical: 100,
+            }}
+          >
+            <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+              <View
+                style={{
+                  flex: 1,
+                  backgroundColor: MAIN_COLOR,
+                  borderRadius: 20,
+                  padding: 20,
+                }}
+              >
+                <TextInput
+                  value={reportMessage}
+                  onChangeText={setReportMessage}
+                  style={{
+                    backgroundColor: SOFT_PURPLE,
+                    flex: 1,
+                    borderRadius: 10,
+                    color: "#fff",
+                  }}
+                  multiline
+                ></TextInput>
+                <TouchableOpacity
+                  onPress={handleReport}
+                  style={{
+                    height: 40,
+                    width: "100%",
+                    backgroundColor: "rgba(249,142,142,1)",
+                    borderRadius: 50,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    marginTop: 20,
+                  }}
+                >
+                  <Text style={{ color: "#fff", fontWeight: "bold" }}>
+                    Signaler
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
+      <TouchableOpacity
+        onPress={toogleModal}
+        style={{
+          backgroundColor: "rgba(249,142,142,1)",
+          height: 30,
+          width: 30,
+          borderRadius: 50,
+          position: "absolute",
+          top: 25,
+          right: 30,
+          zIndex: 9999,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Text style={{ color: "#fff", fontWeight: "bold", fontSize: 16 }}>
+          !
+        </Text>
+      </TouchableOpacity>
       <Carouselle data={item} token={token ?? ""} />
       {item && (
         <>
