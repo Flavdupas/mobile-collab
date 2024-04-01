@@ -1,18 +1,21 @@
 import { ScrollView, StyleSheet, View } from "react-native";
 import PostModel from "../../../../src/model/data/Post";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../../src/store/store";
 import Post from "../../../../src/components/connected/data/post/Post";
 import { MAIN_COLOR } from "../../../../src/constants/Color";
 import CreateBtn from "../../../../src/components/connected/CreateBtn";
 import LottieView from "lottie-react-native";
+import { updateLoadPost } from "../../../../src/store/connected/connected";
 
 const PostIndex = () => {
   const model = new PostModel();
   const token = useSelector((state: RootState) => state.login.token);
   const [data, setData] = useState<PostInterface[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const loadPost = useSelector((state: RootState) => state.connected.loadPost);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const handle = async () => {
@@ -22,10 +25,11 @@ const PostIndex = () => {
           setData(tempData);
           setIsLoading(false);
         }
+        dispatch(updateLoadPost(false));
       }
     };
     handle();
-  }, []);
+  }, [loadPost]);
 
   const styles = StyleSheet.create({
     body: {
@@ -64,7 +68,7 @@ const PostIndex = () => {
         </ScrollView>
       )}
 
-      <CreateBtn href={"/service/create"} />
+      <CreateBtn href={"/post/create"} />
     </View>
   );
 };

@@ -33,6 +33,7 @@ interface State {
   direct: Direct | null;
   groupe: Groupe | null;
   loadMessage: boolean;
+  loadPost: boolean;
 }
 
 const initialState: State = {
@@ -66,7 +67,8 @@ const initialState: State = {
   },
   direct:null,
   groupe:null,
-  loadMessage:true
+  loadMessage:true,
+  loadPost:true,
 };
 
 const connectedSlice = createSlice({
@@ -143,6 +145,9 @@ const connectedSlice = createSlice({
     },
     updateLoadMessage: (state, action: PayloadAction<boolean>) => {
       state.loadMessage = action.payload
+    },
+    updateLoadPost: (state, action: PayloadAction<boolean>) => {
+      state.loadPost = action.payload
     }
   },
 });
@@ -158,5 +163,6 @@ export const {
   updateDirect,
   updateGroupe,
   updateLoadMessage,
+  updateLoadPost,
 } = connectedSlice.actions;
 export default connectedSlice.reducer;

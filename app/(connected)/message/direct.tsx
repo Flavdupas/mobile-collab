@@ -63,15 +63,16 @@ const Direct = () => {
   };
 
   const handleDelete = async () => {
-    if(token !== null && direct !== null) {
-      model.delete(token,direct.id_utilisateur,null);
-      router.push("/(connected)/home/(home)/message")
+    if (token !== null && direct !== null) {
+      model.delete(token, direct.id_utilisateur, null);
+      dispatch(updateLoadMessage(true));
+      router.push("/(connected)/home/(home)/message");
     }
-  }
+  };
   const handleBack = () => {
     dispatch(updateLoadMessage(true));
-    router.back()
-  }
+    router.back();
+  };
   const styles = StyleSheet.create({
     pp: {
       height: 40,
@@ -94,15 +95,18 @@ const Direct = () => {
           height: 130,
           width: "100%",
           justifyContent: "space-between",
-          alignItems:"flex-end",
-          flexDirection:"row",
+          alignItems: "flex-end",
+          flexDirection: "row",
           marginBottom: 50,
         }}
       >
-        <TouchableOpacity onPress={handleBack} style={{bottom:7.5}}>
+        <TouchableOpacity onPress={handleBack} style={{ bottom: 7.5 }}>
           <Chevron />
         </TouchableOpacity>
-        <TouchableOpacity onPress={handleDelete} style={{backgroundColor:"#df6060", padding:7.5, borderRadius:50}}>
+        <TouchableOpacity
+          onPress={handleDelete}
+          style={{ backgroundColor: "#df6060", padding: 7.5, borderRadius: 50 }}
+        >
           <Trash />
         </TouchableOpacity>
       </View>
@@ -117,7 +121,11 @@ const Direct = () => {
                 key={index}
                 style={[
                   styles.containerMessage,
-                  { flexDirection: "row-reverse", marginBottom: 20,flexWrap:"wrap" },
+                  {
+                    flexDirection: "row-reverse",
+                    marginBottom: 20,
+                    flexWrap: "wrap",
+                  },
                 ]}
               >
                 <Image
@@ -131,7 +139,7 @@ const Direct = () => {
                     Moi
                   </Text>
                   <Text
-                    style={{ color: SUPER_LIGHT_PURPLE, fontWeight: "normal",  }}
+                    style={{ color: SUPER_LIGHT_PURPLE, fontWeight: "normal" }}
                   >
                     {item.contenu}
                   </Text>
@@ -145,7 +153,7 @@ const Direct = () => {
                 key={index}
                 style={[
                   styles.containerMessage,
-                  { flexDirection: "row", marginBottom: 20,flexWrap:"wrap" },
+                  { flexDirection: "row", marginBottom: 20, flexWrap: "wrap" },
                 ]}
               >
                 <Image
