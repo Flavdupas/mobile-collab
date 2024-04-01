@@ -14,6 +14,7 @@ import Post from "../../../src/components/connected/data/post/Post";
 import { SOFT_PURPLE } from "../../../src/constants/Color";
 import { router } from "expo-router";
 import { updateLoadPost } from "../../../src/store/connected/connected";
+import LottieView from "lottie-react-native";
 
 const UserPost = () => {
   const model = new PostModel();
@@ -21,6 +22,8 @@ const UserPost = () => {
   const token = useSelector((state: RootState) => state.login.token);
   const [selected, setSelected] = useState<number[]>([]);
   const dispatch = useDispatch();
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+
 
   useEffect(() => {
     const handle = async () => {
@@ -29,6 +32,7 @@ const UserPost = () => {
         if (tempData) {
           console.log(tempData);
           setData(tempData);
+          setIsLoading(false)
         }
       }
     };
@@ -54,7 +58,15 @@ const UserPost = () => {
   };
   return (
     <Layout>
-      <ScrollView
+    {isLoading && (
+        <LottieView
+          autoPlay
+          loop
+          style={{ height: 40, alignSelf: "center", marginTop:150 }}
+          source={require("../../../src/assets/animations/Loading.json")}
+        />
+      )}
+      {!isLoading && (<ScrollView
         style={{ paddingHorizontal: 20, paddingTop: 150, }}
         contentContainerStyle={{justifyContent:"space-between", flex:1}}
         bounces={false}
@@ -101,7 +113,7 @@ const UserPost = () => {
             Supprimer
           </Text>
         </TouchableOpacity>
-      </ScrollView>
+      </ScrollView>)} 
     </Layout>
   );
 };

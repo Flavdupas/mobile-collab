@@ -6,20 +6,20 @@ import {
   View,
 } from "react-native";
 import Layout from "../../../src/components/connected/Layout";
-import PostModel from "../../../src/model/data/Post";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../src/store/store";
-import Post from "../../../src/components/connected/data/post/Post";
 import { SOFT_PURPLE } from "../../../src/constants/Color";
 import { router } from "expo-router";
 import { updateLoadPost } from "../../../src/store/connected/connected";
 import ServiceModel from "../../../src/model/data/Service";
 import { ServiceInterface } from "../../../src/data/interface/Service";
 import ServiceRectangle from "../../../src/components/connected/data/service/ServiceRectangle";
+import LottieView from "lottie-react-native";
 
 const UserPost = () => {
   const model = new ServiceModel();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [data, setData] = useState<ServiceInterface[]>([]);
   const token = useSelector((state: RootState) => state.login.token);
   const [selected, setSelected] = useState<number[]>([]);
@@ -32,6 +32,7 @@ const UserPost = () => {
         if (tempData) {
           console.log(tempData);
           setData(tempData);
+          setIsLoading(false)
         }
       }
     };
@@ -57,9 +58,22 @@ const UserPost = () => {
   };
   return (
     <Layout>
-      <ScrollView
+      {isLoading && (
+        <LottieView
+          autoPlay
+          loop
+          style={{ height: 40, alignSelf: "center", marginTop:150 }}
+          source={require("../../../src/assets/animations/Loading.json")}
+        />
+      )}
+      {!isLoading && (<><ScrollView
         style={{ paddingTop: 150 }}
-        contentContainerStyle={{ justifyContent: "space-between", minHeight:"100%", width:"100%", paddingBottom:150 }}
+        contentContainerStyle={{
+          justifyContent: "space-between",
+          minHeight: "100%",
+          width: "100%",
+          paddingBottom: 150,
+        }}
         bounces={false}
       >
         <View>
@@ -86,18 +100,16 @@ const UserPost = () => {
                       borderColor: selected.includes(item.id_service)
                         ? "#63DF7F"
                         : "transparent",
-                    }}
-                  />
+                    }} />
                 </TouchableOpacity>
               );
             })}
         </View>
-      </ScrollView>
-      <TouchableOpacity
+      </ScrollView><TouchableOpacity
         onPress={handleDelete}
         style={{
           backgroundColor: SOFT_PURPLE,
-          width: "100%",
+          width: "90%",
           height: 50,
           marginBottom: 50,
           marginHorizontal: 20,
@@ -107,10 +119,10 @@ const UserPost = () => {
           alignItems: "center",
         }}
       >
-        <Text style={{ color: "#fff", fontSize: 16, fontWeight: "700" }}>
-          Supprimer
-        </Text>
-      </TouchableOpacity>
+          <Text style={{ color: "#fff", fontSize: 16, fontWeight: "700" }}>
+            Supprimer
+          </Text>
+        </TouchableOpacity></>)}
     </Layout>
   );
 };
