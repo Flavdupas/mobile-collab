@@ -141,7 +141,7 @@ const HeaderDrawer = () => {
       {etudiant.credit && (
         <TouchableOpacity
           style={styles.creditContainer}
-          onPress={() => router.push("/home/")}
+          onPress={() => router.push("/credit/")}
         >
           <View style={styles.moneyContainer}>
             <Money />

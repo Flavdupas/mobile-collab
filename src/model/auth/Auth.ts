@@ -3,6 +3,8 @@ import { Platform } from "react-native";
 import { Role } from "../../data/interface/Role";
 
 export default class AuthModel {
+  private apiUrl = process.env.EXPO_PUBLIC_API_URL;
+
   constructor() {}
 
   /* METHODES REGISTER */
@@ -284,6 +286,22 @@ export default class AuthModel {
     } catch (err) {
       //console.error(err);
       return "";
+    }
+  }
+
+  public async addCredit(token: string, credit: number) {
+    try {
+      const res = await fetch(`${this.apiUrl}/user/credit/add`, {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ credit: credit }),
+      });
+      console.log(res.ok);
+    } catch (e) {
+      console.log(e);
     }
   }
 }
