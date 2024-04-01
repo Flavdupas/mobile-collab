@@ -59,8 +59,8 @@ const CustomDrawer:React.FC<CustomDrawerProps> = ({props}) => {
             icon={require("../../../src/assets/images/connected/drawer/service.png")}
           />
           <DrawerItem
-            title="Mes propositions"
-            href="/home/"
+            title="Mes posts"
+            href="/post/user"
             icon={require("../../../src/assets/images/connected/drawer/proposition.png")}
           />
           <Text style={styles.titleSection}>Support</Text>

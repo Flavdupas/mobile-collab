@@ -1,6 +1,6 @@
 import { Skeleton } from "moti/skeleton";
 import { SOFT_PURPLE } from "../../../../constants/Color";
-import { TouchableOpacity, Text, View, StyleSheet, Image } from "react-native";
+import { TouchableOpacity, Text, View, StyleSheet, Image, ViewStyle } from "react-native";
 import Verify from "../../../icons/Verify";
 import { croppedText } from "../../../../utils/string";
 import Logo from "../../../icons/Logo";
@@ -10,9 +10,11 @@ const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 interface PostProps {
   data: PostInterface | null;
   token: string;
+  style?: ViewStyle
+  disabled:boolean
 }
 
-const Post: React.FC<PostProps> = ({ data, token }) => {
+const Post: React.FC<PostProps> = ({ data, token,style,disabled }) => {
   /* STYLES */
   const styles = StyleSheet.create({
     body: {
@@ -98,7 +100,7 @@ const Post: React.FC<PostProps> = ({ data, token }) => {
   return (
     <>
       {data && (
-        <TouchableOpacity style={styles.postContainer}>
+        <TouchableOpacity disabled={disabled} style={[styles.postContainer,style]}>
           <Logo style={styles.logoApp} />
           <View style={styles.header}>
             <Image

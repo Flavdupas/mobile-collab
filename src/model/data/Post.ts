@@ -46,6 +46,27 @@ export default class PostModel {
       return null;
     }
   }
+  public async getUserPost(token: string): Promise<PostInterface[] | null> {
+
+    try {
+      const response = await fetch(`${this.apiUrl}/post/user`, {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+      let data: PostInterface[] | null = null;
+      if (response.ok) {
+        data = await response.json();
+      }
+      return data;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
 
   public async create(token: string, title: string, content: string, image?: string): Promise<boolean> {
     try {
@@ -79,6 +100,24 @@ export default class PostModel {
     } catch (e) {
       console.log(e)
       return false
+    }
+  }
+
+  public async delete(token:string, id:number[]) {
+    try {
+      const res = await fetch(`${this.apiUrl}/post/delete`,{
+        method:"POST",
+        headers: {
+           Authorization: "Bearer " + token,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({id:id})
+      })
+      console.log(res.ok)
+      return res.ok
+    } catch(e) {
+      console.log(e)
     }
   }
 }
