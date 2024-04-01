@@ -49,7 +49,7 @@ const CustomDrawer:React.FC<CustomDrawerProps> = ({props}) => {
           <Text style={styles.titleSection}>Paramètres</Text>
           <DrawerItem
             title="Mon compte"
-            href="/home/"
+            href="/account/"
             icon={require("../../../src/assets/images/connected/drawer/person.png")}
           />
           <Text style={styles.titleSection}>Compte</Text>
@@ -65,15 +65,8 @@ const CustomDrawer:React.FC<CustomDrawerProps> = ({props}) => {
           />
           <Text style={styles.titleSection}>Support</Text>
           <DrawerItem
-            title="Paramètres"
-            href="/home/"
-            icon={require("../../../src/assets/images/connected/drawer/setting.png")}
-            iconHeight={30}
-            iconWidth={30}
-          />
-          <DrawerItem
             title="Nous contacter"
-            href="/home/"
+            href="/contact/"
             icon={require("../../../src/assets/images/connected/drawer/contact.png")}
             iconHeight={25}
             iconWidth={25}

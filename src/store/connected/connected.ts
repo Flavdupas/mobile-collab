@@ -16,17 +16,24 @@ interface State {
     telephone: string | null;
     date_naissance: string | null;
     rencontre: boolean | null;
-    roles: Role[]
+    roles: Role[];
   };
   notifications:
     | {
         id_notification: number;
         id_etudiant: number;
-        id_message: string | null;
-        id_post: number | null;
-        id_groupe: number | null;
+        id_message: any;
+        id_post: any;
+        id_groupe: number;
         titre: string;
-        date_notification: Date | null;
+        date_visionné: any;
+        date_notification: string;
+        id_createur: number;
+        id_classe: any;
+        id_service: number;
+        nom_groupe: string;
+        created_at: string;
+        updated_at: any;
       }[]
     | null;
   fetchData: { pp: string | null; themes: ThemeInterface[] | null };
@@ -52,7 +59,7 @@ const initialState: State = {
     telephone: null,
     date_naissance: null,
     rencontre: null,
-    roles:[]
+    roles: [],
   },
   notifications: null,
   fetchData: {
@@ -69,10 +76,10 @@ const initialState: State = {
     dateDebut: null,
     dateFin: null,
   },
-  direct:null,
-  groupe:null,
-  loadMessage:true,
-  loadPost:true,
+  direct: null,
+  groupe: null,
+  loadMessage: true,
+  loadPost: true,
   currentPost: null,
 };
 
@@ -99,7 +106,7 @@ const connectedSlice = createSlice({
         telephone: string | null;
         date_naissance: string | null;
         rencontre: boolean | null;
-        roles:Role[]
+        roles: Role[];
       }>
     ) => {
       state.etudiant = action.payload;
@@ -110,11 +117,18 @@ const connectedSlice = createSlice({
         {
           id_notification: number;
           id_etudiant: number;
-          id_message: string | null;
-          id_post: number | null;
-          id_groupe: number | null;
+          id_message: any;
+          id_post: any;
+          id_groupe: number;
           titre: string;
-          date_notification: Date | null;
+          date_visionné: any;
+          date_notification: string;
+          id_createur: number;
+          id_classe: any;
+          id_service: number;
+          nom_groupe: string;
+          created_at: string;
+          updated_at: any;
         }[]
       >
     ) => {
@@ -146,18 +160,18 @@ const connectedSlice = createSlice({
     updateDirect: (state, action: PayloadAction<Direct | null>) => {
       state.direct = action.payload;
     },
-     updateGroupe: (state, action: PayloadAction<Groupe | null>) => {
+    updateGroupe: (state, action: PayloadAction<Groupe | null>) => {
       state.groupe = action.payload;
     },
     updateLoadMessage: (state, action: PayloadAction<boolean>) => {
-      state.loadMessage = action.payload
+      state.loadMessage = action.payload;
     },
     updateLoadPost: (state, action: PayloadAction<boolean>) => {
-      state.loadPost = action.payload
+      state.loadPost = action.payload;
     },
     updateCurrentPost: (state, action: PayloadAction<PostInterface>) => {
-      state.currentPost = action.payload
-    }
+      state.currentPost = action.payload;
+    },
   },
 });
 
@@ -173,6 +187,6 @@ export const {
   updateGroupe,
   updateLoadMessage,
   updateLoadPost,
-  updateCurrentPost
+  updateCurrentPost,
 } = connectedSlice.actions;
 export default connectedSlice.reducer;

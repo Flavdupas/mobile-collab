@@ -1,3 +1,4 @@
+import { Requete } from "../../data/interface/Requete";
 import {
   BasicService,
   InterestedArray,
@@ -151,17 +152,17 @@ export default class ServiceModel {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({id_etudiant:id_etudiant}),
+        body: JSON.stringify({ id_etudiant: id_etudiant }),
       });
       console.log(res.ok);
-      return res.ok
+      return res.ok;
     } catch (e) {
       console.log(e);
-      return false
+      return false;
     }
   }
 
-  public async report(token:string,idService:number,remarque:string) {
+  public async report(token: string, idService: number, remarque: string) {
     try {
       const res = await fetch(`${apiUrl}/service/${idService}/report`, {
         method: "POST",
@@ -169,16 +170,18 @@ export default class ServiceModel {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({remarque:remarque}),
+        body: JSON.stringify({ remarque: remarque }),
       });
       console.log(res.ok);
-      return res.ok
+      return res.ok;
     } catch (e) {
       console.log(e);
-      return false
+      return false;
     }
   }
-  public async getUserService(token: string): Promise<ServiceInterface[] | null> {
+  public async getUserService(
+    token: string
+  ): Promise<ServiceInterface[] | null> {
     try {
       const response = await fetch(`${apiUrl}/service/user`, {
         method: "GET",
@@ -212,6 +215,40 @@ export default class ServiceModel {
       });
       console.log(res.ok);
       return res.ok;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  public async getRequest(token: string): Promise<Requete[]> {
+    try {
+      const res = await fetch(`${apiUrl}/user/request`, {
+        headers: {
+          Authorization: "Bearer " + token,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(res.ok);
+      return await res.json();
+    } catch (e) {
+      console.log(e);
+      return [];
+    }
+  }
+
+  public async createRequest(token: string, content: string) {
+    try {
+      const res = await fetch(`${apiUrl}/user/request`, {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + token,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({contenu:content})
+      });
+      console.log(res.ok);
     } catch (e) {
       console.log(e);
     }

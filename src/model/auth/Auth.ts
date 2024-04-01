@@ -239,11 +239,18 @@ export default class AuthModel {
           | {
               id_notification: number;
               id_etudiant: number;
-              id_message: string | null;
-              id_post: number | null;
-              id_groupe: number | null;
+              id_message: any;
+              id_post: any;
+              id_groupe: number;
               titre: string;
-              date_notification: Date | null;
+              date_visionné: any;
+              date_notification: string;
+              id_createur: number;
+              id_classe: any;
+              id_service: number;
+              nom_groupe: string;
+              created_at: string;
+              updated_at: any;
             }[];
       } | null = null;
       if (response.ok) {
@@ -298,6 +305,37 @@ export default class AuthModel {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ credit: credit }),
+      });
+      console.log(res.ok);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  public async closeAccount(token: string) {
+    try {
+      const res = await fetch(`${this.apiUrl}/user/close`, {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(res.ok);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  public async watchNotif(token: string, id: number[]) {
+    try {
+      const res = await fetch(`${this.apiUrl}/notifications/see`, {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({id:id}),
       });
       console.log(res.ok);
     } catch (e) {

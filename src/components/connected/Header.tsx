@@ -18,7 +18,7 @@ import {
   DrawerNavigationProp,
   DrawerToggleButton,
 } from "@react-navigation/drawer";
-import { useNavigation } from "expo-router";
+import { router, useNavigation } from "expo-router";
 import { ParamListBase } from "@react-navigation/native";
 
 const Header = () => {
@@ -32,7 +32,7 @@ const Header = () => {
   const notifications = useSelector(
     (state: RootState) => state.connected.notifications
   );
-  const active = notifications ? notifications.length > 1 : false;
+  const active = notifications ? notifications.length >= 1 : false;
   const [url, setUrl] = useState<string | null>(null);
   const dispatch = useDispatch();
 
@@ -125,7 +125,7 @@ const Header = () => {
         {!credit && <Skeleton width={165} height={30} radius={"round"} />}
         <View style={styles.containerIcons}>
           {notifications && (
-            <TouchableOpacity style={styles.notificationContainer}>
+            <TouchableOpacity style={styles.notificationContainer} onPress={() => router.push("/notification/")}>
               <Notification active={active} />
             </TouchableOpacity>
           )}

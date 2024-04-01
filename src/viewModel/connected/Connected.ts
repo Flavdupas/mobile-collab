@@ -2,10 +2,10 @@ import { Role } from "../../data/interface/Role";
 import AuthModel from "../../model/auth/Auth";
 
 export default class ConnectedViewModel {
-    private authViewModel;
+  private authViewModel;
 
   constructor() {
-    this.authViewModel = new AuthModel
+    this.authViewModel = new AuthModel();
   }
 
   public async getUser(token: string): Promise<{
@@ -20,25 +20,31 @@ export default class ConnectedViewModel {
       prenom: string;
       telephone: string;
       date_naissance: string;
-      rencontre: boolean;    
-      roles: Role[]
+      rencontre: boolean;
+      roles: Role[];
     };
     notifications: {
       id_notification: number;
       id_etudiant: number;
-      id_message: string | null;
-      id_post: number | null;
-      id_groupe: number | null;
+      id_message: any;
+      id_post: any;
+      id_groupe: number;
       titre: string;
-      date_notification: Date | null;
+      date_visionné: any;
+      date_notification: string;
+      id_createur: number;
+      id_classe: any;
+      id_service: number;
+      nom_groupe: string;
+      created_at: string;
+      updated_at: any;
     }[];
-
   } | null> {
     try {
-        return await this.authViewModel.getUser(token);
+      return await this.authViewModel.getUser(token);
     } catch (error) {
-      console.log("Erreur : " + error)
-        return null;
+      console.log("Erreur : " + error);
+      return null;
     }
   }
 }

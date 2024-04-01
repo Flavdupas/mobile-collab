@@ -1,14 +1,10 @@
-import { Text, StyleSheet, View } from 'react-native'
-import React, { Component } from 'react'
+import { View } from "react-native"
+import { MAIN_COLOR } from "../../../../src/constants/Color"
 
-export default class match extends Component {
-  render() {
-    return (
-      <View style={{backgroundColor:"red", flex:1}}>
-        <Text>match</Text>
-      </View>
-    )
-  }
+const Match = () => {
+  return (
+    <View style={{flex:1, backgroundColor:MAIN_COLOR}}></View>
+  )
 }
 
-const styles = StyleSheet.create({})
+export default Match;

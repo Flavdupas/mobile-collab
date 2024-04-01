@@ -12,7 +12,7 @@ const loginSlice = createSlice({
   name: "login",
   initialState,
   reducers: {
-    updateToken: (state, action: PayloadAction<string>) => {
+    updateToken: (state, action: PayloadAction<string | null>) => {
       state.token = action.payload;
     },
   },
