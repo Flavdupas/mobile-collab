@@ -79,6 +79,7 @@ const UserPost = () => {
         <View>
           {token &&
             data.map((item, index) => {
+              console.log(item.photos)
               return (
                 <TouchableOpacity
                   key={index}

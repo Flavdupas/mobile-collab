@@ -80,6 +80,7 @@ export interface BasicService {
   id_theme: number | null;
   dateDebut: number | null;
   dateFin: number | null;
+  image:string | null;
 }
 
 export type InterestedArray = Interested[]

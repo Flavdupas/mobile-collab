@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { Platform } from "react-native";
 import { Role } from "../../data/interface/Role";
+import {
+  isValidEmail,
+  isValidPhoneNumber,
+  validePassword,
+} from "../../utils/string";
 
 export default class AuthModel {
   private apiUrl = process.env.EXPO_PUBLIC_API_URL;
@@ -335,8 +340,48 @@ export default class AuthModel {
           Authorization: "Bearer " + token,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({id:id}),
+        body: JSON.stringify({ id: id }),
       });
+      console.log(res.ok);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  public async modifyAccount(
+    token: string,
+    firstname: string,
+    surname: string,
+    phone: string,
+    email: string,
+    password: string
+  ) {
+    try {
+      const requestBody: Record<string, string | null> = {};
+
+      if (firstname !== "") {
+        requestBody["prenom"] = firstname;
+      }
+      if (surname !== "") {
+        requestBody["nom"] = surname;
+      }
+      if (phone !== "" && isValidPhoneNumber(phone)) {
+        requestBody["telephone"] = phone;
+      }
+      if (email !== "" && isValidEmail(email)) {
+        requestBody["email"] = email;
+      }
+      if (password !== "" && validePassword(password)) {
+        requestBody["password"] = password;
+      }
+      const res = await fetch(`${this.apiUrl}/user/modify`, {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
+
       console.log(res.ok);
     } catch (e) {
       console.log(e);

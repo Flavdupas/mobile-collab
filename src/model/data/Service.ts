@@ -1,3 +1,4 @@
+import { Platform } from "react-native";
 import { Requete } from "../../data/interface/Requete";
 import {
   BasicService,
@@ -106,16 +107,46 @@ export default class ServiceModel {
   }
 
   public async create(data: BasicService, token: string): Promise<void> {
+    const formData = new FormData();
+    if (data.image) {
+      const uri =
+        Platform.OS === "android"
+          ? data.image
+          : data.image.replace("file://", "");
+      const filename = data.image.split("/").pop();
+
+      const match = /\.(\w+)$/.exec(filename as string);
+      const ext = match?.[1];
+      const type = match ? `image/${match[1]}` : `image`;
+      formData.append("image", {
+        uri,
+        name: `image.${ext}`,
+        type,
+      } as any);
+    }
+    if (data) {
+      if(data.title)
+      formData.append("title", data.title.toString());
+      formData.append("type", data.type.toString());
+      if( data.price)
+      formData.append("price", data.price.toString());
+      if(data.id_theme)
+      formData.append("id_theme", data.id_theme.toString());
+      if(data.description)
+      formData.append("description", data.description.toString());
+      if(data.dateFin)
+      formData.append("dateFin", data.dateFin.toString());
+      if(data.dateDebut)
+      formData.append("dateDebut", data.dateDebut.toString());
+    }
     const url = `${apiUrl}/service/create`;
-    const body = JSON.stringify(data);
-    console.log(body);
     const response = await fetch(url, {
       method: "POST",
       headers: {
         Authorization: "Bearer " + token,
         "Content-Type": "application/json",
       },
-      body: body,
+      body: formData,
     });
 
     console.log(response.ok);
@@ -246,7 +277,7 @@ export default class ServiceModel {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({contenu:content})
+        body: JSON.stringify({ contenu: content }),
       });
       console.log(res.ok);
     } catch (e) {

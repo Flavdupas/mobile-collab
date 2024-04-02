@@ -48,3 +48,13 @@ export function getFirstLetter(inputString: string): string {
         return ''; 
     }
 }
+
+export function isValidEmail(email:string) {
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return regex.test(email);
+}
+
+export function isValidPhoneNumber(phoneNumber:string) {
+    const regex = /^(0|\+33)[1-9]\d{8}$/;
+    return regex.test(phoneNumber);
+}

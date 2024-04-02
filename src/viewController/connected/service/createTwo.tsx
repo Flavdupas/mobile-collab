@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
+  Image
 } from "react-native";
 import {
   MAIN_COLOR,
@@ -24,6 +25,7 @@ import { BasicService } from "../../../data/interface/Service";
 import ServiceCrud from "../../../viewModel/connected/service/Crud";
 import { router } from "expo-router";
 import resetHistory from "../../../utils/router";
+import CarteEtudiantModal from "../../../components/auth/register/CarteEtudiantModal";
 
 const CreateTwoViewController = () => {
   const dispatch = useDispatch();
@@ -37,6 +39,8 @@ const CreateTwoViewController = () => {
   const [price, setPrice] = useState<number>(0);
   const [index, setIndex] = useState<0 | 1>(0);
   const viewModelCrud = new ServiceCrud();
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [image, setImage] = useState<string>("");
 
   /* VARIABLES */
   const themes = useSelector(
@@ -45,6 +49,9 @@ const CreateTwoViewController = () => {
   const [idTheme, setIdTheme] = useState<number | null>(null);
 
   /* LOGIQUE */
+    const toogleShowModal = () => {
+    setShowModal(!showModal);
+  };
   useEffect(() => {
     const fetchData = async () => {
       const themes = await viewModel.getThemes();
@@ -106,6 +113,7 @@ const CreateTwoViewController = () => {
         id_theme: idTheme,
         dateDebut: dateBegin?.getTime() / 1000 ?? 0,
         dateFin: dateEnd?.getTime() / 1000 ?? 0,
+        image:image
       };
       if (token) viewModelCrud.createService(createData, token);
       resetHistory().then(() => {
@@ -204,6 +212,34 @@ const CreateTwoViewController = () => {
               >
                 <Text style={{ color: "#fff" }}>{dateEnd?.toDateString()}</Text>
               </TouchableOpacity>
+              <TouchableWithoutFeedback onPress={toogleShowModal}>
+            <View
+              style={{
+                borderRadius: 10,
+                height: 150,
+                width: "100%",
+                backgroundColor: SOFT_PURPLE,
+                marginVertical: 10,
+                overflow: "hidden",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              {image !== "" && (
+                <Image
+                  source={{ uri: image }}
+                  style={{ width: "100%", height: "100%", resizeMode: "cover" }}
+                />
+              )}
+              {image === "" && (
+                <Text
+                  style={{ color: "#fff", fontSize: 16, fontWeight: "600" }}
+                >
+                  Cliquer pour insérer une image
+                </Text>
+              )}
+            </View>
+          </TouchableWithoutFeedback>
             </>
           )}
         </View>
@@ -222,6 +258,13 @@ const CreateTwoViewController = () => {
           Créer
         </Text>
       </TouchableOpacity>
+      {showModal && (
+        <CarteEtudiantModal
+          setShowModal={setShowModal}
+          setSelectedImage={setImage}
+          title="Image"
+        />
+      )}
     </View>
   );
 };

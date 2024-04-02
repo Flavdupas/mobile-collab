@@ -41,7 +41,7 @@ const Index = () => {
             bounces={false}
             showsVerticalScrollIndicator={false}
           >
-            {data.map((item, index) => {
+            {data && data.map((item, index) => {
               return (
                 <View
                   key={index}
