@@ -6,7 +6,6 @@ import { RootState } from "../../../store/store";
 import Themes from "../../../components/connected/Themes";
 import {
   Modal,
-  Platform,
   Text,
   TextInput,
   TouchableOpacity,
@@ -15,9 +14,9 @@ import {
   Image
 } from "react-native";
 import {
+  LIGHT_PURPLE,
   MAIN_COLOR,
   SOFT_PURPLE,
-  SUPER_LIGHT_PURPLE,
   SUPER_SOFT_PURPLE,
 } from "../../../constants/Color";
 import DatePicker from "react-native-modern-datepicker";
@@ -26,6 +25,7 @@ import ServiceCrud from "../../../viewModel/connected/service/Crud";
 import { router } from "expo-router";
 import resetHistory from "../../../utils/router";
 import CarteEtudiantModal from "../../../components/auth/register/CarteEtudiantModal";
+import { LinearGradient } from "expo-linear-gradient";
 
 const CreateTwoViewController = () => {
   const dispatch = useDispatch();
@@ -104,7 +104,7 @@ const CreateTwoViewController = () => {
     setPrice(Number(price));
   };
   const handleCreate = () => {
-    if (dateBegin && dateEnd) {
+    if (dateBegin && dateEnd && dateBegin <= dateEnd) {
       const createData: BasicService = {
         title: data.title,
         description: data.title,
@@ -244,20 +244,32 @@ const CreateTwoViewController = () => {
           )}
         </View>
       </View>
-      <TouchableOpacity
-        onPress={handleCreate}
-        style={{
-          backgroundColor: SUPER_LIGHT_PURPLE,
-          justifyContent: "center",
-          alignItems: "center",
-          height: 50,
-          borderRadius: 35,
-        }}
-      >
-        <Text style={{ color: "#fff", fontSize: 18, fontWeight: "bold" }}>
-          Créer
-        </Text>
-      </TouchableOpacity>
+       <LinearGradient
+          style={{
+            height: 50,
+            width: "100%",
+            borderRadius: 35,
+            justifyContent: "center",
+            alignItems: "center",
+            marginBottom: 20,
+            marginTop: 10,
+          }}
+          start={[1,0]} end={[0,1]}
+          colors={[LIGHT_PURPLE, "rgba(161,152,218,1)"]}
+        >
+          <TouchableOpacity
+            onPress={handleCreate}
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Text style={{ color: "#fff", fontSize: 18, fontWeight: "bold" }}>
+              Créer
+            </Text>
+          </TouchableOpacity>
+        </LinearGradient>
       {showModal && (
         <CarteEtudiantModal
           setShowModal={setShowModal}

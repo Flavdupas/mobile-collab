@@ -304,7 +304,7 @@ const Groupe = () => {
           <Chevron />
         </TouchableOpacity>
         <View style={{ flexDirection: "row", gap: 10 }}>
-          {groupe?.id_createur === user.id_utilisateur && (
+          {groupe?.id_createur === user.id_utilisateur && groupe.id_service && (
             <TouchableOpacity
               onPress={handleClickValidate}
               style={{

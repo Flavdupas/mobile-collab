@@ -24,6 +24,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateServiceCreate } from "../../../store/connected/connected";
 import { router } from "expo-router";
+import { LinearGradient } from "expo-linear-gradient";
 
 const CreateViewController = () => {
   /* VARIABLES */
@@ -42,6 +43,7 @@ const CreateViewController = () => {
         id_theme: null,
         dateDebut: null,
         dateFin: null,
+        image: null
       })
     );
     if (title !== "" && description !== "") {
@@ -49,14 +51,14 @@ const CreateViewController = () => {
     }
   };
 
-  const handleToogle = (data:string) => {
-    console.log(data)
-    if(data === "Demande") {
+  const handleToogle = (data: string) => {
+    console.log(data);
+    if (data === "Demande") {
       setType(0);
     } else {
       setType(1);
     }
-  }
+  };
 
   return (
     <Pressable
@@ -72,22 +74,33 @@ const CreateViewController = () => {
           <TitleController setTitle={setTitle} />
           <DescriptionController setDescription={setDescription} />
         </View>
-
-        <TouchableOpacity
-          onPress={handleClick}
+        <LinearGradient
           style={{
-            backgroundColor: SUPER_LIGHT_PURPLE,
             height: 50,
             width: "100%",
             borderRadius: 35,
             justifyContent: "center",
             alignItems: "center",
+            marginBottom: 20,
+            marginTop: 10,
           }}
+          start={[1,0]} end={[0,1]}
+          colors={[LIGHT_PURPLE, "rgba(161,152,218,1)"]}
         >
-          <Text style={{ color: "#fff", fontSize: 18, fontWeight: "bold" }}>
-            Continuer
-          </Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            onPress={handleClick}
+            style={{
+              width:'100%',
+              height:"100%",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Text style={{ color: "#fff", fontSize: 18, fontWeight: "bold" }}>
+              Continuer
+            </Text>
+          </TouchableOpacity>
+        </LinearGradient>
       </>
     </Pressable>
   );
@@ -122,9 +135,8 @@ const DescriptionController: React.FC<DescriptionControllerProps> = ({
           borderRadius: 10,
           padding: 20,
           color: "#fff",
-          textAlignVertical:"top"
+          textAlignVertical: "top",
         }}
-        
         multiline
       />
     </View>
@@ -137,7 +149,7 @@ interface TitleControllerProps {
 
 const TitleController: React.FC<TitleControllerProps> = ({ setTitle }) => {
   return (
-    <View style={{ marginVertical: 10, gap: 5 }}>
+    <View style={{ marginTop: 10, gap: 5, marginBottom: 15 }}>
       <Text
         style={{
           color: "#fff",

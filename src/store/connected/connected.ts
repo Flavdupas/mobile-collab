@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { BasicService, ServiceInterface } from "../../data/interface/Service";
 import { Direct, Groupe } from "../../data/interface/Group";
 import { Role } from "../../data/interface/Role";
+import { Match } from "../../data/interface/Match";
 
 interface State {
   utilisateur: {
@@ -44,6 +45,7 @@ interface State {
   loadMessage: boolean;
   loadPost: boolean;
   currentPost: PostInterface | null;
+  currentMatch: Match | null;
 }
 
 const initialState: State = {
@@ -75,12 +77,14 @@ const initialState: State = {
     id_theme: null,
     dateDebut: null,
     dateFin: null,
+    image: null
   },
   direct: null,
   groupe: null,
   loadMessage: true,
   loadPost: true,
   currentPost: null,
+  currentMatch: null,
 };
 
 const connectedSlice = createSlice({
@@ -153,6 +157,7 @@ const connectedSlice = createSlice({
         id_theme: number | null;
         dateDebut: number | null;
         dateFin: number | null;
+        image: string | null;
       }>
     ) => {
       state.serviceCreate = action.payload;
@@ -172,6 +177,9 @@ const connectedSlice = createSlice({
     updateCurrentPost: (state, action: PayloadAction<PostInterface>) => {
       state.currentPost = action.payload;
     },
+    updateCurrentMatch: (state, action: PayloadAction<Match>) => {
+      state.currentMatch = action.payload;
+    }
   },
 });
 
@@ -188,5 +196,6 @@ export const {
   updateLoadMessage,
   updateLoadPost,
   updateCurrentPost,
+  updateCurrentMatch
 } = connectedSlice.actions;
 export default connectedSlice.reducer;
