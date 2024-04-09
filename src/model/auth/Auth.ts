@@ -342,7 +342,7 @@ export default class AuthModel {
         },
         body: JSON.stringify({ id: id }),
       });
-      console.log(res.ok);
+      console.log(res.status)
     } catch (e) {
       console.log(e);
     }

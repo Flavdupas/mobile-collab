@@ -26,7 +26,7 @@ const Index = () => {
   }, []);
   return (
     <Layout>
-      <View style={{ flex: 1, paddingTop: 150, paddingHorizontal: 20 }}>
+      <View style={{ flex: 1, paddingTop: 150, paddingHorizontal: 20, gap:10 }}>
         {notif &&
           notif.map((item, index) => {
             return (
