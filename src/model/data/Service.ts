@@ -5,6 +5,7 @@ import {
   InterestedArray,
   ServiceInterface,
 } from "../../data/interface/Service";
+import { AnswerService } from "../../data/interface/ServiceAnswer";
 
 const apiUrl = process.env.EXPO_PUBLIC_API_URL;
 
@@ -223,6 +224,28 @@ export default class ServiceModel {
         },
       });
       let data: ServiceInterface[] | null = null;
+      if (response.ok) {
+        data = await response.json();
+      }
+      return data;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
+  public async getUserAnswerService(
+    token: string
+  ): Promise<AnswerService[] | null> {
+    try {
+      const response = await fetch(`${apiUrl}/service/user/answer`, {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+      let data: AnswerService[] | null = null;
       if (response.ok) {
         data = await response.json();
       }

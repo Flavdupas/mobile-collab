@@ -63,6 +63,12 @@ const CustomDrawer:React.FC<CustomDrawerProps> = ({props}) => {
             href="/post/user"
             icon={require("../../../src/assets/images/connected/drawer/proposition.png")}
           />
+           <DrawerItem
+            title="Mes réponses"
+            href="/service/answer"
+            icon={require("../../../src/assets/images/connected/drawer/service.png")}
+          />
+          
           <Text style={styles.titleSection}>Support</Text>
           <DrawerItem
             title="Nous contacter"
