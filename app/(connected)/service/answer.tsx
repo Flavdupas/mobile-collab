@@ -93,16 +93,10 @@ import { AnswerService } from "../../../src/data/interface/ServiceAnswer";
                     }}
                   >
                     <ServiceRectangle
-                      disabled
                       key={index}
                       token={token}
                       data={item.service[0]}
-                      style={{
-                        borderWidth: 1,
-                        borderColor: selected.includes(item.id_service)
-                          ? "#63DF7F"
-                          : "transparent",
-                      }} />
+                      style={{}} />
                   </TouchableOpacity>
                 );
               })}
