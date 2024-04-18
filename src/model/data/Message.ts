@@ -67,7 +67,7 @@ export default class MessageModel {
         },
         body: JSON.stringify(sendData),
       });
-      console.log(await res.json());
+      console.log(res.ok);
     } catch (e) {
       console.log(e);
     }

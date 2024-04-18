@@ -129,9 +129,6 @@ const Post: React.FC<PostProps> = ({ data, token, style, disabled, full }) => {
               style={styles.pp}
               source={{
                 uri: `${apiUrl}/post/pp/${data.id_etudiant}`,
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
               }}
             />
             {true && (
