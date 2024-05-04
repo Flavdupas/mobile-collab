@@ -1,3 +1,4 @@
+import { ServiceInterface } from "../../../data/interface/Service";
 import ServiceModel from "../../../model/data/Service";
 import ThemeModel from "../../../model/data/Theme";
 

@@ -18,7 +18,6 @@ const Tab = () => {
         <Stack.Screen name="post" />
         <Stack.Screen name="service" />
         <Stack.Screen name="message" />
-        <Stack.Screen name="match" />
       </Stack>
     </ConnectedContext.Provider>
   );
