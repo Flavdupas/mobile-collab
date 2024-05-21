@@ -27,7 +27,8 @@ interface PostProps {
 const Post: React.FC<PostProps> = ({ data, token, style, disabled, full }) => {
   const dispatch = useDispatch();
   const handleClick = () => {
-    if (data) {
+    console.log(true)
+    if (data && disabled == false) {
       dispatch(updateCurrentPost(data));
       router.push("/post/show")
     }

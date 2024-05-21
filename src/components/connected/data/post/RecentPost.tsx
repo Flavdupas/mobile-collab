@@ -99,7 +99,7 @@ const RecentPost: React.FC<RecentPostProps> = ({ recentPosts, token }) => {
           recentPosts.map((item, _i) => {
             return (
               <View key={_i}>
-                <Post data={item} token={token} />
+                <Post data={item} token={token} disabled={false} />
               </View>
             );
           })}

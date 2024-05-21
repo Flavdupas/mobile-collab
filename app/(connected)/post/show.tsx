@@ -45,7 +45,7 @@ const Show = () => {
     <Layout>
       <View style={{ paddingTop: 150, paddingHorizontal: 20, flex: 1 }}>
         {data && token && (
-          <Post data={data} token={token} disabled={false} full />
+          <Post data={data} token={token} disabled={true} full />
         )}
         <View>
           <Text style={{ color: "#fff", fontSize: 18, fontWeight: "bold" }}>
@@ -58,7 +58,7 @@ const Show = () => {
           bounces={false}
           showsVerticalScrollIndicator={false}
         >
-          {comment.map((item, index) => {
+          {comment.length != 0 && comment.map((item, index) => {
             return (
               <View key={index} style={{ gap: 10, marginBottom: 20 }}>
                 <View style={{ flexDirection: "row", gap: 10 }}>

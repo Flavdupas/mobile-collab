@@ -6,7 +6,7 @@ import { Skeleton } from "moti/skeleton";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import Chevron from "../../../components/icons/Chevron";
-import { Route, router } from "expo-router";
+import { router } from "expo-router";
 import RecentService from "../../../components/connected/data/service/RecentService";
 import ServiceRecommended from "../../../components/connected/data/service/RecommendedService";
 import RecentPost from "../../../components/connected/data/post/RecentPost";
@@ -87,7 +87,7 @@ const IndexController = () => {
     handle();
   }, [loadPost]);
 
-  const handleClick = async (href: Route<"">, index: number) => {
+  const handleClick = async (href: string, index: number) => {
     if (context) {
       router.push(href);
       context.setCurrentIndexTabBar(index);

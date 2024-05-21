@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 import { updateToken } from "../../../store/login/login";
 import { updateEtudiant, updateNotifications, updateUtilisateur } from "../../../store/connected/connected";
 import ConnectedViewModel from "../../../viewModel/connected/Connected";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const IndexController = () => {
   /* Variables */
@@ -98,7 +99,7 @@ const IndexController = () => {
   };
 
   return (
-    <>
+    <GestureHandlerRootView style={{flex:1, justifyContent:"space-between"}}>
       <View style={styles.container}>
         <Logo style={global.logo} />
         <Text style={global.title}>Connexion</Text>
@@ -126,7 +127,7 @@ const IndexController = () => {
         setError={setError}
         setShowError={setShowError}
       />
-    </>
+    </GestureHandlerRootView>
   );
 };
 
