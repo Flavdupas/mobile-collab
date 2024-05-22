@@ -3,10 +3,12 @@ import LottieView from "lottie-react-native";
 import global from "../../../src/constants/Global";
 import { MAIN_COLOR } from "../../../src/constants/Color";
 import ForgotFourController from "../../../src/viewController/auth/forgot/4";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const ForgotPasswordFour = () => {
   return (
-    <View style={[global.body, styles.body]}>
+    <GestureHandlerRootView>
+        <View style={[global.body, styles.body]}>
       <View style={styles.container}>
         <LottieView
           autoPlay
@@ -19,6 +21,8 @@ const ForgotPasswordFour = () => {
       </View>
       <ForgotFourController />
     </View>
+    </GestureHandlerRootView>
+
   );
 };
 

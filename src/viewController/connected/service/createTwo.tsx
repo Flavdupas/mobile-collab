@@ -26,6 +26,7 @@ import { router } from "expo-router";
 import resetHistory from "../../../utils/router";
 import CarteEtudiantModal from "../../../components/auth/register/CarteEtudiantModal";
 import { LinearGradient } from "expo-linear-gradient";
+import { RollInLeft } from "react-native-reanimated";
 
 const CreateTwoViewController = () => {
   const dispatch = useDispatch();
@@ -104,8 +105,18 @@ const CreateTwoViewController = () => {
     setPrice(Number(price));
   };
   const handleCreate = () => {
+    let createData: BasicService = {
+      title: data.title,
+      description: data.title,
+      type: data.type,
+      price: price,
+      id_theme: idTheme,
+      dateDebut: null,
+      dateFin: null,
+      image: null
+    }
     if (dateBegin && dateEnd && dateBegin <= dateEnd) {
-      const createData: BasicService = {
+      createData = {
         title: data.title,
         description: data.title,
         type: data.type,
@@ -115,11 +126,11 @@ const CreateTwoViewController = () => {
         dateFin: dateEnd?.getTime() / 1000 ?? 0,
         image:image
       };
-      if (token) viewModelCrud.createService(createData, token);
-      resetHistory().then(() => {
-        router.replace("/home/service");
-      });
     }
+    if (token) viewModelCrud.createService(createData, token);
+    resetHistory().then(() => {
+      router.replace("/home/service");
+    });
   };
 
   return (

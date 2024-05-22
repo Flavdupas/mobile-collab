@@ -12,7 +12,7 @@ export default class ServiceCrud {
     try {
         return await this.serviceModel.create(data,token);
     } catch (e) {
-        console.log(e)
+      console.log(e)
     }
   }
 }

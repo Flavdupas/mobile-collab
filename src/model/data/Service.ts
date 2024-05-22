@@ -145,12 +145,12 @@ export default class ServiceModel {
       method: "POST",
       headers: {
         Authorization: "Bearer " + token,
-        "Content-Type": "application/json",
+        "Content-Type": "multipart/form-data",
       },
       body: formData,
     });
 
-    console.log(response.ok);
+    console.log(response.status);
   }
 
   public async getInterested(
