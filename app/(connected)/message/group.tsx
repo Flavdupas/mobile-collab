@@ -9,7 +9,7 @@ import {
   Modal,
   TouchableWithoutFeedback,
 } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { GestureHandlerRootView, ScrollView } from "react-native-gesture-handler";
 import LottieView from "lottie-react-native";
 import {
   MAIN_COLOR,
@@ -146,7 +146,8 @@ const Groupe = () => {
   });
 
   return (
-    <KeyboardAvoidingView
+    <GestureHandlerRootView>
+      <KeyboardAvoidingView
       behavior="padding"
       style={{ flex: 1, backgroundColor: MAIN_COLOR, paddingHorizontal: 25 }}
     >
@@ -432,6 +433,8 @@ const Groupe = () => {
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
+    </GestureHandlerRootView>
+  
   );
 };
 

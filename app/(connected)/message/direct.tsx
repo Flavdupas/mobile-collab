@@ -7,7 +7,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
 } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { GestureHandlerRootView, ScrollView } from "react-native-gesture-handler";
 import { MAIN_COLOR, SUPER_LIGHT_PURPLE } from "../../../src/constants/Color";
 import Chevron from "../../../src/components/icons/ChevronWhite";
 import { router } from "expo-router";
@@ -86,7 +86,8 @@ const Direct = () => {
   });
 
   return (
-    <KeyboardAvoidingView
+    <GestureHandlerRootView>
+       <KeyboardAvoidingView
       behavior="padding"
       style={{ flex: 1, backgroundColor: MAIN_COLOR, paddingHorizontal: 25 }}
     >
@@ -213,6 +214,8 @@ const Direct = () => {
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
+    </GestureHandlerRootView>
+ 
   );
 };
 
